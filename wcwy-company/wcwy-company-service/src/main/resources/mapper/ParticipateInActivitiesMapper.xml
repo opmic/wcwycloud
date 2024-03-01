@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.ParticipateInActivitiesMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.ParticipateInActivities">
+            <id property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        recommend_id,create_time
+    </sql>
+</mapper>

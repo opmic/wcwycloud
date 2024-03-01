@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.OrderApplyForMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.OrderApplyFor">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="cause" column="cause" jdbcType="VARCHAR"/>
+            <result property="state" column="state" jdbcType="INTEGER"/>
+            <result property="feedbackTime" column="feedback_time" jdbcType="TIMESTAMP"/>
+            <result property="serviceTel" column="service_tel" jdbcType="VARCHAR"/>
+            <result property="feedbackCause" column="feedback_cause" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+            <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+            <result property="auditId" column="audit_id" jdbcType="VARCHAR"/>
+            <result property="disposeState" column="dispose_state" jdbcType="INTEGER"/>
+        <result property="attachment" column="attachment" jdbcType="INTEGER" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,cause,state,
+        feedback_time,service_tel,feedback_cause,
+        create_time,order_id,create_id,
+        audit_id,dispose_state,attachment
+    </sql>
+</mapper>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.PromotionPostDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.PromotionPostDetail">
+        <id property="promotionPostDetailId" column="promotion_post_detail_id" jdbcType="BIGINT"/>
+        <result property="promotionTime" column="promotion_time" jdbcType="TIMESTAMP"/>
+        <result property="promotionPostId" column="promotion_post_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        promotion_post_detail_id
+        ,promotion_time,promotion_post_id
+    </sql>
+    <select id="select" resultType="com.wcwy.company.dto.PromotionPostDTO">
+        SELECT
+        promotion_post.promotion_post_id,
+        promotion_post.promotion_time,
+        ei_company_post.post_label,
+        t_company.company_name,
+        t_company.avatar
+        FROM
+        promotion_post
+        INNER JOIN
+        ei_company_post
+        ON
+        promotion_post.post_id = ei_company_post.post_id
+        INNER JOIN
+        t_company
+        ON
+        ei_company_post.company_id = t_company.company_id
+        <where>
+            promotion_post.recommend_id =#{promotionPostQuery.recommend}
+            <if test="promotionPostQuery.keyword !=null and promotionPostQuery.keyword !=''">
+                AND
+                (
+                t_company.company_name LIKE concat('%',#{promotionPostQuery.keyword},'%') or
+                ei_company_post.post_label LIKE concat('%',#{promotionPostQuery.keyword},'%')
+                )
+            </if>
+            <if test="promotionPostQuery.endDate !=null  and promotionPostQuery.startDate !=null ">
+                and promotion_post.promotion_time  BETWEEN #{promotionPostQuery.startDate} AND
+                #{promotionPostQuery.endDate}
+            </if>
+            <if test=" promotionPostQuery.endDate !=null  and promotionPostQuery.startDate ==null ">
+                and promotion_post.promotion_time  &lt;= #{promotionPostQuery.endDate}
+            </if>
+            <if test="promotionPostQuery.endDate ==null and promotionPostQuery.startDate !=null ">
+                and promotion_post.promotion_time  >= #{promotionPostQuery.startDate}
+            </if>
+        </where>
+
+
+        ORDER BY
+        promotion_post.promotion_time DESC
+
+    </select>
+    <select id="listCount" resultType="com.wcwy.company.dto.PromotionPostDTO">
+        SELECT
+            COUNT(promotion_post_detail.promotion_post_detail_id) AS count,
+	promotion_post_detail.promotion_post_id
+        FROM
+            promotion_post_detail
+        <where>
+        <if test="query.size() > 0">
+            promotion_post_detail.promotion_post_id in
+            <foreach collection="query" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        </where>
+        GROUP BY
+            promotion_post_detail.promotion_post_id
+
+    </select>
+    <select id="getDetail" resultType="com.wcwy.company.dto.PromotionPostDTO">
+        SELECT
+            COUNT(promotion_post_detail.promotion_post_detail_id) AS count,
+	promotion_post_detail.promotion_post_id,
+	promotion_post_detail.promotion_time
+        FROM
+            promotion_post_detail
+        WHERE
+            promotion_post_detail.promotion_post_id =#{promotionPostId}
+
+        GROUP BY
+            DATE_FORMAT(
+            promotion_post_detail.promotion_time,
+            '%Y-%m-%d %H:%i'
+            )
+        ORDER BY
+            promotion_post_detail.promotion_time DESC
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            promotion_post
+                LEFT JOIN
+            ei_company_post
+            ON
+                promotion_post.post_id = ei_company_post.post_id
+        <where>
+            promotion_post.recommend_id =#{id}AND
+            promotion_post.promotion_time BETWEEN #{beginDate} AND #{endDate}
+            <if test="city !=null and city !=''">
+                AND    ei_company_post.work_city ->'$.city'=#{city}
+            </if>
+        </where>
+
+
+
+    </select>
+    <select id="mapList" resultType="java.util.Map">
+        SELECT
+        COUNT(*) as counts,
+        DATE_FORMAT(FLOOR(promotion_post.promotion_time),'%Y-%m-%d') time
+        FROM
+        promotion_post
+        LEFT JOIN
+        ei_company_post
+        ON
+        promotion_post.post_id = ei_company_post.post_id
+        <where>
+            promotion_post.recommend_id =#{id}AND
+            promotion_post.promotion_time BETWEEN #{beginDate} AND #{endDate}
+            <if test="city !=null and city !=''">
+                AND    ei_company_post.work_city ->'$.city'=#{city}
+            </if>
+        </where>
+        GROUP BY time
+        ORDER BY time desc
+
+
+    </select>
+</mapper>

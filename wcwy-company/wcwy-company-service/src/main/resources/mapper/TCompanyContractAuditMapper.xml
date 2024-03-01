@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TCompanyContractAuditMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TCompanyContractAudit">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="contractId" column="contract_id" jdbcType="VARCHAR"/>
+            <result property="auditTime" column="audit_time" jdbcType="TIMESTAMP"/>
+            <result property="auditCause" column="audit_cause" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="auditContract" column="audit_contract" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,contract_id,audit_time,audit_contract,
+        audit_cause,phone
+    </sql>
+</mapper>

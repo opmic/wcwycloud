@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TCompanyMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TCompany">
+        <id property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="businessLicense" column="business_license" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="signContract" column="sign_contract" jdbcType="VARCHAR"/>
+        <result property="contractDate" column="contract_date" jdbcType="TIMESTAMP"/>
+        <result property="logoPath" column="logo_path" jdbcType="VARCHAR"/>
+        <result property="customLogo" column="custom_logo" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="provincesCities" column="provinces_cities" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="welfare" column="welfare" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="regTime" column="reg_time" jdbcType="TIMESTAMP"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="jobTitle" column="job_title" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <result property="subsidiary" column="subsidiary" jdbcType="TINYINT"/>
+        <result property="relationImg" column="relation_img" jdbcType="VARCHAR"/>
+        <result property="workImg" column="work_img" jdbcType="VARCHAR"/>
+        <result property="currencyCount" column="currency_count" jdbcType="DECIMAL"/>
+        <result property="gold" column="gold" jdbcType="DECIMAL"/>
+        <result property="examineStatus" column="examine_status" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="CHAR"/>
+        <result property="serachResumeStatus" column="serach_resume_status" jdbcType="INTEGER"/>
+        <result property="viewResumeStatus" column="view_resume_status" jdbcType="INTEGER"/>
+        <result property="examineResult" column="examine_result" jdbcType="VARCHAR"/>
+        <result property="chatId" column="chat_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="openid" column="openid" jdbcType="VARCHAR"/>
+        <result property="sharePerson" column="share_person" jdbcType="VARCHAR"/>
+        <result property="gradeIntegral" column="grade_integral" jdbcType="BIGINT"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <result property="logoutTime" column="logout_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="origin" column="origin" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        company_id
+        ,login_name,password,
+        phone_number,avatar,company_name,
+        short_name,company_type,business_license,
+        company_type_id,sign_contract,contract_date,logo_path,custom_logo,
+        description,remark,address,reg_time,url,birthday,
+        provinces_cities,contact_name,sex,job_title,
+        contact_phone,email,firm_size,welfare,
+        industry,parent_id,subsidiary,origin,
+        relation_img,work_img,currency_count,gold,
+        examine_status,status,serach_resume_status,
+        view_resume_status,examine_result,chat_id,
+        create_time,update_time,openid,
+        share_person,grade_integral,login_time,
+        logout_time,deleted
+    </sql>
+    <update id="updateMoney" parameterType="com.wcwy.company.vo.ProportionVO">
+
+        update t_company
+        set t_company.currency_count=t_company.currency_count - #{money}
+        WHERE currency_count - #{money} > 0
+          and company_id = #{tCompanyId}
+
+    </update>
+    <update id="updateUserinfo">
+        UPDATE t_company
+        SET avatar=#{tCompanyUserVO.avatar},
+            contact_name=#{tCompanyUserVO.contactName},
+            sex=#{tCompanyUserVO.sex},
+            job_title=#{tCompanyUserVO.jobTitle},
+            contact_phone=#{tCompanyUserVO.contactPhone},
+            update_time=now(),
+            birthday=#{tCompanyUserVO.birthday}
+        WHERE deleted = 0
+          AND (company_id = #{companyId})
+    </update>
+    <select id="rolePermission" resultType="com.wcwy.company.entity.TPermission">
+        SELECT *
+        FROM t_permission
+        WHERE id IN (select permission_id
+                     from t_role_permission
+                     where role_id in (SELECT t_company_role.role_id
+                                       FROM t_company_role
+                                       WHERE t_company_role.user_id = #{companyId}))
+    </select>
+
+    <select id="getId" resultMap="BaseResultMap">
+        SELECT t_company.company_id,
+               t_company.login_name,
+               t_company.`password`,
+               t_company.phone_number,
+               t_company.avatar,
+               t_company.company_name,
+               t_company.short_name,
+               t_company.company_type,
+               t_company.business_license,
+               t_company.company_type_id,
+               t_company.logo_path,
+               t_company.contract_date,
+               t_company.sign_contract,
+               t_company.remark,
+               t_company.description,
+               t_company.address,
+               t_company.provinces_cities,
+               t_company.contact_name,
+               t_company.job_title,
+               t_company.contact_phone,
+               t_company.email,
+               t_company.firm_size,
+               t_company.industry,
+               t_company.parent_id,
+               t_company.subsidiary,
+               t_company.relation_img,
+               t_company.work_img,
+               t_company.currency_count,
+               t_company.gold,
+               t_company.examine_status,
+               t_company.`status`,
+               t_company.serach_resume_status,
+               t_company.view_resume_status,
+               t_company.examine_result,
+               t_company.chat_id,
+               t_company.sex,
+               t_company.create_time,
+               t_company.birthday,
+               t_company.update_time,
+               t_company.openid,
+               t_company.share_person,
+               t_company.grade_integral,
+               t_company.login_time,
+               t_company.url,
+               t_company.reg_time,
+               t_company.welfare,
+               t_company.logout_time
+        FROM t_company
+        where company_id = #{userid}
+    </select>
+    <select id="CompanyIndustryPutInResume" resultType="com.wcwy.company.dto.CompanyCollerctPutInResume">
+
+
+    </select>
+    <select id="pageList" resultMap="TCompanyPOMap">
+        SELECT
+        t_company.phone_number,
+        t_company.company_id,
+        t_company.avatar,
+        t_company.company_name,
+        t_company.short_name,
+        t_company.company_type,
+        t_company.business_license,
+        t_company.company_type_id,
+        t_company.sign_contract,
+        t_company.logo_path,
+        t_company.description,
+        t_company.remark,
+        t_company.address,
+        t_company.provinces_cities,
+        t_company.contact_name,
+        t_company.sex,
+        t_company.job_title,
+        t_company.contact_phone,
+        t_company.email,
+        t_company.firm_size,
+        t_company.industry,
+        t_company.subsidiary,
+        t_company.parent_id,
+        t_company.work_img,
+        t_company.relation_img,
+        t_company.currency_count,
+        t_company.examine_status,
+        t_company.logout_time,
+        t_company.login_time
+        FROM
+        t_company
+        <where>
+            <if test="query.companyId !=null and query.companyId!='' ">
+                t_company.company_id = #{query.companyId}
+            </if>
+
+            <if test="query.phoneNumber !=null and query.phoneNumber!='' ">
+                AND t_company.phone_number = #{query.phoneNumber}
+            </if>
+            <if test="query.companyName !=null and query.companyName!='' ">
+                AND t_company.company_id LIKE concat('%',#{query.companyName},'%')
+            </if>
+            AND deleted=0 AND status=0
+        </where>
+    </select>
+
+
+    <resultMap id="TCompanyPOMap" type="com.wcwy.company.po.TCompanyPO">
+        <id property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="businessLicense" column="business_license" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="logoPath" column="logo_path" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="provincesCities" column="provinces_cities" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="jobTitle" column="job_title" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+
+    </resultMap>
+
+
+    <select id="listInviterCompany" resultMap="TCompanyPOMap">
+        SELECT
+        t_company.phone_number,
+        t_company.company_id,
+        t_company.avatar,
+        t_company.company_name,
+        t_company.short_name,
+        t_company.company_type,
+        t_company.business_license,
+        t_company.company_type_id,
+        t_company.sign_contract,
+        t_company.logo_path,
+        t_company.description,
+        t_company.remark,
+        t_company.address,
+        t_company.provinces_cities,
+        t_company.contact_name,
+        t_company.job_title,
+        t_company.contact_phone,
+        t_company.email,
+        t_company.firm_size,
+        t_company.industry,
+        t_company.subsidiary,
+        t_company.parent_id,
+        t_company.work_img,
+        t_company.relation_img,
+        t_company.currency_count,
+        t_company.examine_status,
+        t_company.logout_time,
+        t_company.login_time
+        FROM
+        t_company
+        <where>
+            <if test="inviterQuery.id !=null and inviterQuery.id!='' ">
+                t_company.company_id = #{inviterQuery.id}
+            </if>
+
+            <if test="inviterQuery.phoneNumber !=null and inviterQuery.phoneNumber!='' ">
+                AND t_company.phone_number = #{inviterQuery.phoneNumber}
+            </if>
+            <if test="inviterQuery.companyName !=null and inviterQuery.companyName!='' ">
+                AND t_company.company_id LIKE concat('%',#{inviterQuery.companyName},'%')
+            </if>
+            <if test="inviterQuery.beginDate !=null and inviterQuery.endDate !=null ">
+                t_company.create_time BETWEEN #{inviterQuery.beginDate} and #{inviterQuery.endDate}
+            </if>
+            AND deleted=0 AND t_company.share_person =#{inviterQuery.loginUser} and status=0
+        </where>
+
+
+    </select>
+    <select id="selectSubsidiaryCorporation" resultType="com.wcwy.company.entity.TCompany">
+        SELECT
+        t_company.company_id,
+        t_company.login_name,
+        t_company.avatar,
+        t_company.logo_path,
+        t_company.company_name,
+        t_company.create_time,
+        t_company.job_title,
+        t_company.contact_phone,
+        t_company.contact_name
+        FROM
+        t_company
+        <where>
+            <if test="loginName !='' and loginName !=null ">
+                t_company.parent_id =#{loginName}
+            </if>
+            <if test="keyword !='' and keyword !=null ">
+
+                AND
+                (t_company.contact_name LIKE concat('%',#{keyword},'%') or
+                t_company.login_name LIKE concat('%',#{keyword},'%') OR t_company.job_title LIKE
+                concat('%',#{keyword},'%'))
+            </if>
+            AND t_company.deleted = 0
+        </where>
+
+
+        ORDER BY
+        t_company.create_time DESC
+
+
+    </select>
+    <select id="basicInformation" resultMap="TCompanyBasicInformationMap">
+        SELECT t_company.company_id,
+               t_company.avatar,
+               t_company.company_name,
+               t_company.custom_logo,
+               t_company.short_name,
+               t_company.company_type_id,
+               t_company.company_type,
+               t_company.logo_path,
+               t_company.contact_name,
+               t_company.sex,
+               t_company.job_title,
+               t_company.firm_size,
+               t_company.industry,
+               t_company.login_time,
+               t_company.examine_status
+        FROM t_company
+        WHERE t_company.company_id = #{tCompanyId}
+    </select>
+
+    <resultMap id="TCompanyBasicInformationMap" type="com.wcwy.company.po.TCompanyBasicInformation">
+        <id property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="logoPath" column="logo_path" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="jobTitle" column="job_title" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="examineStatus" column="examine_status" jdbcType="INTEGER"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <select id="sendAResumeRecord" resultMap="SendAResumeRecordMap">
+        SELECT t_company.company_id,
+               t_company.phone_number,
+               t_company.avatar,
+               t_company.company_name,
+               t_company.sex,
+               t_company.logo_path,
+               t_company.contact_name,
+               t_company.job_title,
+               t_company.contact_phone
+        FROM t_company
+        WHERE t_company.parent_id = #{userid}
+          AND t_company.company_id = #{tCompanyId}
+          AND t_company.deleted = 0
+
+
+    </select>
+    <select id="getWeChat" resultType="java.lang.String">
+        SELECT wechat_user.nickname
+        FROM t_company
+                 INNER JOIN
+             wechat_user
+             ON
+                 t_company.openid = wechat_user.openid
+        WHERE t_company.company_id = #{userid}
+    </select>
+
+    <resultMap id="SendAResumeRecordMap" type="com.wcwy.company.dto.SendAResumeRecord">
+        <id property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="logoPath" column="logo_path" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="jobTitle" column="job_title" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <select id="shareTCompany" resultType="com.wcwy.company.po.TCompanySharePO">
+        SELECT
+        t_company.company_id,
+        t_company.avatar,
+        t_company.company_name,
+        t_company.create_time,
+        t_company.firm_size,
+        t_company.origin,
+        t_company.company_type_id,
+        SUM(source_of_returns.aggregate_amount) as costs,
+        SUM(source_of_returns.earnings) as earnings
+        FROM
+        t_company
+        LEFT JOIN
+        source_of_returns
+        ON
+        t_company.company_id = source_of_returns.source_user
+        <where>
+            t_company.share_person =#{userid}
+            <if test="shareQuery.origin !=null">
+              and  t_company.origin=#{shareQuery.origin}
+            </if>
+            <if test="shareQuery.endDate !=null  and shareQuery.startDate !=null ">
+                and t_company.create_time BETWEEN #{shareQuery.startDate} AND #{shareQuery.endDate}
+            </if>
+            <if test=" shareQuery.endDate !=null  and shareQuery.startDate ==null ">
+                and t_company.create_time &lt;= #{shareQuery.endDate}
+            </if>
+            <if test="shareQuery.endDate ==null and shareQuery.startDate !=null ">
+                and t_company.create_time >= #{shareQuery.startDate}
+            </if>
+            <if test="shareQuery.keyword !='' and shareQuery.keyword !=null">
+                and t_company.company_name LIKE CONCAT('%',#{shareQuery.keyword},'%')
+            </if>
+        </where>
+        GROUP BY
+        t_company.company_id
+        ORDER BY
+        t_company.create_time DESC
+    </select>
+
+    <resultMap id="TCompanySharePOMap" type="com.wcwy.company.po.TCompanySharePO">
+        <id property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="graph" resultType="java.util.Map">
+
+        SELECT date_format(create_time, '%Y-%m') AS `month`,
+               COUNT(*)                          as amount
+        FROM t_company
+        WHERE DATE_FORMAT(create_time, '%Y') = DATE_FORMAT(#{year}, '%Y')
+          AND t_company.share_person = #{userid}
+        GROUP BY date_format(create_time, '%Y-%m')
+        ORDER BY date_format(create_time, '%Y-%m') ASC
+    </select>
+    <select id="selectCompanyName" resultType="java.lang.String">
+
+        SELECT DISTINCT t_company.company_name FROM t_company
+        <where>
+            <if test="keyword !=null and keyword !=''">
+                t_company.company_name LIKE concat('%',#{keyword},'%')
+            </if>
+        </where>
+
+    </select>
+    <select id="selectCompanyNameS" resultType="java.lang.String">
+        SELECT DISTINCT
+        t_company.company_name
+        FROM
+        t_company
+        INNER JOIN
+        put_in_resume
+        ON
+        t_company.company_id = put_in_resume.put_in_comppany
+        WHERE
+
+        put_in_resume.resume_state != 3 and
+        put_in_resume.resume_state != 7 and put_in_resume.resume_state != 9 and put_in_resume.resume_state != 10
+        AND
+        put_in_resume.put_in_jobhunter =#{userid} and t_company.company_name in
+        <foreach collection="companyName" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+
+    </select>
+    <select id="companyLists" resultMap="BaseResultMap">
+        SELECT
+        t_company.company_name,
+        t_company.company_id,
+        t_company.firm_size,
+        t_company.industry,
+        t_company.logo_path,
+        t_company.company_type_id
+        FROM
+        t_company
+        <where>
+            <if test="id !=null and id.size>0">
+                t_company.company_id in
+                <foreach collection="id" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            t_company
+     <where>
+         t_company.share_person =#{id}  AND   t_company.create_time BETWEEN #{currentStartDate} AND #{currentEndTime} AND 	t_company.company_type=#{i}
+            <if test=" city !=null and city !='' ">
+                AND   t_company.provinces_cities  ->'$.city'=#{city}
+            </if>
+     </where>
+
+
+    </select>
+    <select id="mapList" resultType="java.util.Map">
+        SELECT
+        COUNT(*) counts,
+        DATE_FORMAT(FLOOR(t_company.create_time),'%Y-%m-%d') AS time
+        FROM
+        t_company
+        <where>
+            t_company.share_person =#{id}  AND   t_company.create_time BETWEEN #{currentStartDate} AND #{currentEndTime} AND 	t_company.company_type=#{i}
+            <if test=" city !=null and city !='' ">
+                AND   t_company.provinces_cities  ->'$.city'=#{city}
+            </if>
+        </where>
+        GROUP BY
+        time
+        ORDER BY
+        time DESC
+    </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.RunningWaterMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.RunningWater">
+            <id property="runningWaterId" column="running_water_id" jdbcType="VARCHAR"/>
+            <result property="source" column="source" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="money" column="money" jdbcType="DECIMAL"/>
+            <result property="ifIncome" column="if_income" jdbcType="INTEGER"/>
+            <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+            <result property="instructions" column="instructions" jdbcType="VARCHAR"/>
+            <result property="remainingSum" column="remaining_sum" jdbcType="DECIMAL"/>
+            <result property="crateTime" column="crate_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        running_water_id,source,type,
+        user_id,money,if_income,
+        order_id,instructions,remaining_sum,
+        crate_time,deleted
+    </sql>
+</mapper>

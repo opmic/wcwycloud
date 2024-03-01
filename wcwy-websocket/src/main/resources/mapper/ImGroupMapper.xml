@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.websocket.mapper.ImGroupMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.websocket.entity.ImGroup">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="master" column="master" jdbcType="BIGINT"/>
+            <result property="announcement" column="announcement" jdbcType="VARCHAR"/>
+            <result property="needCheck" column="need_check" jdbcType="CHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="delFlag" column="del_flag" jdbcType="CHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,avatar,
+        master,announcement,need_check,
+        create_time,update_time,create_by,
+        update_by,del_flag,remark
+    </sql>
+    <select id="getUserGroups" parameterType="string" resultMap="BaseResultMap">
+        <include refid="Base_Column_List"/>
+        WHERE id IN (SELECT cg.group_id
+        FROM im_group_user cg
+        WHERE cg.user_id = #{userId} and cg.del_flag='0') and del_flag='0'
+    </select>
+</mapper>

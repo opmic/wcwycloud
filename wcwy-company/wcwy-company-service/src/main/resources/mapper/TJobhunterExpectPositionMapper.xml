@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobhunterExpectPositionMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobhunterExpectPosition">
+            <id property="postionId" column="postion_id" jdbcType="VARCHAR"/>
+            <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+            <result property="positionName" column="position_name" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="desiredIndustry" column="desired_industry" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="workCity" column="work_city" jdbcType="VARCHAR"  typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+            <result property="expectSalary" column="expect_salary" jdbcType="DECIMAL"/>
+        <result property="endExpectSalary" column="end_expect_salary" jdbcType="DECIMAL"/>
+            <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        postion_id,resume_id,position_name,desired_industry,
+        work_city,current_salary,expect_salary,end_expect_salary,
+        arrival_time,create_time,update_time
+    </sql>
+    <select id="selectId" resultMap="TJobHunterExpectPositionMap" >
+        SELECT
+            t_jobhunter_expect_position.postion_id,
+            t_jobhunter_expect_position.position_name,
+            t_jobhunter_expect_position.desired_industry,
+            t_jobhunter_expect_position.work_city,
+            t_jobhunter_expect_position.current_salary,
+            t_jobhunter_expect_position.expect_salary,
+            t_jobhunter_expect_position.arrival_time
+        FROM
+            t_jobhunter_expect_position
+        WHERE
+            t_jobhunter_expect_position.resume_id =#{resume_id}
+
+    </select>
+    <resultMap id="TJobHunterExpectPositionMap" type="com.wcwy.company.entity.TJobhunterExpectPosition">
+        <id property="postionId" column="postion_id" jdbcType="VARCHAR"/>
+        <result property="positionName" column="position_name" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="desiredIndustry" column="desired_industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+        <result property="expectSalary" column="expect_salary" jdbcType="DECIMAL"/>
+        <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="positionName" resultType="java.lang.String">
+        SELECT
+            t_jobhunter_expect_position.position_name
+        FROM
+            t_jobhunter_expect_position
+        WHERE
+            t_jobhunter_expect_position.resume_id =#{resume_id}
+        ORDER BY
+            t_jobhunter_expect_position.create_time DESC
+            LIMIT 1
+    </select>
+    <select id="selectPositionName" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+            t_jobhunter_expect_position.position_name
+        FROM
+            t_jobhunter
+                INNER JOIN
+            t_jobhunter_resume
+            ON
+                t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+                INNER JOIN
+            t_jobhunter_expect_position
+            ON
+                t_jobhunter_expect_position.resume_id = t_jobhunter_resume.resume_id
+        WHERE
+            t_jobhunter.user_id =#{userid}
+        ORDER BY
+            t_jobhunter_expect_position.update_time DESC
+    </select>
+
+
+</mapper>

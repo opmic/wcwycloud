@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.websocket.mapper.ChatUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.websocket.entity.ChatUser">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="anotherId" column="another_id" jdbcType="VARCHAR"/>
+            <result property="chatId" column="chat_id" jdbcType="VARCHAR"/>
+            <result property="state" column="state" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,another_id,
+        chat_id,state
+    </sql>
+    <select id="getList" resultType="com.wcwy.websocket.dto.ChatUserDTO">
+        SELECT
+            chat_user.user_id,
+            chat_user.another_id,
+            chat_user.id,
+            chat_record.unread
+        FROM
+            chat_record
+                INNER JOIN
+            chat_user
+            ON
+                chat_record.chat_id = chat_user.id
+        WHERE
+            chat_record.user_id =#{userid}
+        ORDER BY
+            chat_record.update_time DESC
+    </select>
+
+
+</mapper>

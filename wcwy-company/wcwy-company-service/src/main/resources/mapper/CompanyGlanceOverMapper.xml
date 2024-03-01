@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.CompanyGlanceOverMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.CompanyGlanceOver">
+        <id property="glanceOverId" column="glance_over_id" jdbcType="VARCHAR"/>
+        <result property="glanceOverUserId" column="glance_over_user_id" jdbcType="VARCHAR"/>
+        <result property="glanceOverTime" column="glance_over_time" jdbcType="TIMESTAMP"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="deletedTime" column="deleted_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        glance_over_id
+        ,glance over_user_id,glance over_time,
+        company_id,deleted_time,deleted
+    </sql>
+    <select id="seletcPage" resultMap="CompanyGlanceOverDTOMAP">
+        SELECT
+        company_glance_over.glance_over_id,
+        company_glance_over.glance_over_time,
+        t_company.company_id,
+        t_company.phone_number,
+        t_company.avatar,
+        t_company.company_name,
+        t_company.short_name,
+        t_company.company_type,
+        t_company.logo_path,
+        t_company.description,
+        t_company.remark,
+        t_company.address,
+        t_company.provinces_cities,
+        t_company.contact_name,
+        t_company.job_title,
+        t_company.contact_phone,
+        t_company.email,
+        t_company.firm_size,
+        t_company.industry
+        FROM
+        company_glance_over
+        INNER JOIN
+        t_company
+        ON
+        company_glance_over.company_id = t_company.company_id
+        <where>
+            <if test="selectCompanyGlanceOver.glanceOverId !=null and selectCompanyGlanceOver.glanceOverId !='' ">
+                company_glance_over.glance_over_id =#{selectCompanyGlanceOver.glanceOverId}
+            </if>
+            <if test="selectCompanyGlanceOver.glanceOverUserId !=null and selectCompanyGlanceOver.glanceOverUserId !='' ">
+                AND company_glance_over.glance_over_user_id =#{selectCompanyGlanceOver.glanceOverUserId}
+            </if>
+            <if test="selectCompanyGlanceOver.companyId !=null and selectCompanyGlanceOver.companyId !='' ">
+                AND company_glance_over.company_id =#{selectCompanyGlanceOver.companyId}
+            </if>
+        </where>
+        ORDER BY
+        company_glance_over.glance_over_time DESC
+    </select>
+    <resultMap id="CompanyGlanceOverDTOMAP" type="com.wcwy.company.dto.CompanyGlanceOverDTO">
+        <id property="glanceOverId" column="glance_over_id" jdbcType="VARCHAR"/>
+        <result property="glanceOverTime" column="glance_over_time" jdbcType="TIMESTAMP"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="businessLicense" column="business_license" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="signContract" column="sign_contract" jdbcType="VARCHAR"/>
+        <result property="logoPath" column="logo_path" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="provincesCities" column="provinces_cities" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+    </resultMap>
+</mapper>

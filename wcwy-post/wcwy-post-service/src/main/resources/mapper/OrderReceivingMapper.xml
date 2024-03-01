@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.OrderReceivingMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.OrderReceiving">
+        <id property="orderReceivingId" column="order_receiving_id" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="recommerd" column="recommerd" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="collect" column="collect" jdbcType="INTEGER"/>
+        <result property="collectTime" column="collect_time" jdbcType="TIMESTAMP"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        order_receiving_id
+        ,post_id,recommerd,
+        create_time,collect,collect_time,
+        cancel,update_time,deleted
+    </sql>
+
+    <select id="selectCollect" resultMap="OrderReceivingPostDTOMap">
+        SELECT
+        order_receiving.order_receiving_id,
+        order_receiving.post_id,
+        order_receiving.create_time,
+        order_receiving.collect,
+        order_receiving.collect_time,
+        order_receiving.cancel,
+        t_company_post.company_id,
+        t_company_post.company_name,
+        t_company_post.post_label,
+        t_company_post.company_type,
+        t_company_post.post_type,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.`status`
+        FROM
+        order_receiving
+        INNER JOIN
+        t_company_post
+        ON
+        order_receiving.post_id = t_company_post.post_id
+        <where>
+            order_receiving.recommerd =#{userid} and order_receiving.collect = 1
+            <!--    <if test="orderReceivingCollectQuery.position !=null and orderReceivingCollectQuery.position.size>0">
+                    <foreach collection="orderReceivingCollectQuery.position" item="itemPosition">
+                        <bind name="indexPositionDind" value="'%'+itemPosition+'%'"/>
+                        and position LIKE #{indexPositionDind}
+                    </foreach>
+                </if>-->
+            <if test="orderReceivingCollectQuery.postType !=null ">
+                and t_company_post.post_type =#{orderReceivingCollectQuery.postType}
+            </if>
+            <if test="orderReceivingCollectQuery.keyword !=null and orderReceivingCollectQuery.keyword !=''  ">
+                AND (t_company_post.company_name LIKE CONCAT('%',#{orderReceivingCollectQuery.keyword}, '%') OR
+                t_company_post.post_label LIKE CONCAT('%',#{orderReceivingCollectQuery.keyword}, '%') )
+            </if>
+            <if test="orderReceivingCollectQuery.beginTime !=null and orderReceivingCollectQuery.endTime ==null ">
+                and order_receiving.collect_time > #{orderReceivingCollectQuery.beginTime}
+            </if>
+            <if test="orderReceivingCollectQuery.beginTime ==null and orderReceivingCollectQuery.endTime !=null ">
+                and order_receiving.collect_time &lt; #{orderReceivingCollectQuery.endTime}
+            </if>
+            <if test="orderReceivingCollectQuery.beginTime !=null and orderReceivingCollectQuery.endTime !=null ">
+                and order_receiving.collect_time BETWEEN #{orderReceivingCollectQuery.beginTime} and
+                #{orderReceivingCollectQuery.endTime}
+            </if>
+        </where>
+
+
+    </select>
+
+    <resultMap id="OrderReceivingPostDTOMap" type="com.wcwy.post.dto.OrderReceivingPostDTO">
+        <id property="orderReceivingId" column="order_receiving_id" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="collect" column="collect" jdbcType="INTEGER"/>
+        <result property="collectTime" column="collect_time" jdbcType="TIMESTAMP"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="getCount" resultType="com.wcwy.post.dto.PostShare">
+        SELECT
+        COUNT(*) as orderReceiving,
+        order_receiving.post_id
+        FROM
+        order_receiving
+        WHERE
+        order_receiving.post_id in
+        <foreach collection="postId" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY
+        order_receiving.post_id
+
+    </select>
+    <select id="orderReceivingCompanyName" resultType="java.lang.String">
+        SELECT
+        distinct t_company_post.company_name
+        FROM
+        order_receiving
+        INNER JOIN
+        t_company_post
+        ON
+        order_receiving.post_id = t_company_post.post_id
+        <where>
+            order_receiving.recommerd =#{userid}
+            <if test="keyword !=null and keyword !=''">
+                AND t_company_post.company_name LIKE CONCAT('%',#{keyword}, '%')
+            </if>
+        </where>
+
+
+    </select>
+    <select id="orderReceivingPostName" resultType="java.lang.String">
+        SELECT
+        distinct t_company_post.post_label
+        FROM
+        order_receiving
+        INNER JOIN
+        t_company_post
+        ON
+        order_receiving.post_id = t_company_post.post_id
+        <where>
+            order_receiving.recommerd =#{userid}
+            <if test="keyword !=null and keyword !=''">
+                AND t_company_post.post_label LIKE CONCAT('%',#{keyword}, '%')
+            </if>
+        </where>
+    </select>
+    <select id="orderReceivingPost" resultMap="OrderReceivingDTOMap">
+        SELECT
+        order_receiving.create_time,
+        t_company_post.post_id,
+        t_company_post.company_name,
+        t_company_post.logo,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.company_type,
+        t_company_post.company_type_id,
+        t_company_post.firm_size,
+        t_company_post.work_city,
+        t_company_post.end_salary,
+        t_company_post.begin_salary,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.college_type,
+        t_company_post.workday,
+        t_company_post.`status`,
+        t_company_post.day_time,
+        t_company_post.top,
+        t_company_post.post_count,
+        t_company_post.post_type,
+        t_company_post.expiration_date,
+        t_company_post.work_experience
+        FROM
+        order_receiving
+        INNER JOIN
+        t_company_post
+        ON
+        order_receiving.post_id = t_company_post.post_id
+        <where>
+            order_receiving.recommerd = #{orderReceivingPostQuery.userId}
+            <if test=" orderReceivingPostQuery.company !=null  and orderReceivingPostQuery.company !=''">
+                AND t_company_post.company_name =#{orderReceivingPostQuery.company}
+            </if>
+            <if test=" orderReceivingPostQuery.postName !=null  and orderReceivingPostQuery.postName !=''">
+                AND t_company_post.post_label =#{orderReceivingPostQuery.postName}
+            </if>
+            <if test=" orderReceivingPostQuery.postType !=null  and orderReceivingPostQuery.postType !=''">
+                AND t_company_post.post_type =#{orderReceivingPostQuery.postType}
+            </if>
+            <if test="orderReceivingPostQuery.keyword !='' and orderReceivingPostQuery.keyword !=null ">
+                AND (
+                t_company_post.education_type LIKE CONCAT('%',#{orderReceivingPostQuery.keyword}, '%') OR
+                t_company_post.work_city LIKE CONCAT('%',#{orderReceivingPostQuery.keyword}, '%')
+                )
+            </if>
+        </where>
+
+        ORDER BY
+        order_receiving.create_time DESC
+
+    </select>
+    <select id="orderReceivingDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(order_receiving.order_receiving_id) AS counts,
+            DATE_FORMAT(FLOOR(order_receiving.create_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            order_receiving
+            LEFT JOIN
+            t_company_post
+        ON
+            order_receiving.post_id = t_company_post.post_id
+       <where>
+           DATE(order_receiving.create_time) = DATE(#{localDate}) AND
+           order_receiving.recommerd =#{id}
+            <if test="city !=null and city !=''">
+                AND  t_company_post.work_city -> "$.city"=#{city}
+            </if>
+        <if test="postType !=null and postType !=4">
+          AND  t_company_post.post_type =#{postType}
+        </if>
+           <if test="postType !=null and postType ==4">
+               AND    t_company_post.post_type in (4,5)
+           </if>
+       </where>
+
+
+        GROUP BY
+            time
+    </select>
+    <select id="orderReceivingWeek" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(order_receiving.order_receiving_id) AS counts,
+            DATE_FORMAT(FLOOR(order_receiving.create_time),'%Y-%m-%d') time
+        FROM
+            order_receiving
+            LEFT JOIN
+            t_company_post
+        ON
+            order_receiving.post_id = t_company_post.post_id
+        <where>
+            DATE(order_receiving.create_time)BETWEEN DATE(#{beginDate})AND DATE(#{allEndDate}) AND
+            order_receiving.recommerd =#{id}
+            <if test="city !=null and city !=''">
+                AND  t_company_post.work_city -> "$.city"=#{city}
+            </if>
+            <if test="postType !=null and postType !=4">
+                AND t_company_post.post_type =#{postType}
+            </if>
+            <if test="postType !=null and postType ==4">
+                AND  t_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+            time
+
+    </select>
+
+
+    <resultMap id="OrderReceivingDTOMap" type="com.wcwy.post.dto.OrderReceivingDTO">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="virtualName" column="virtual_name" jdbcType="VARCHAR"/>
+        <result property="conceal" column="conceal" jdbcType="INTEGER"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="orderReceivingId" column="order_receiving_id" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="recommerd" column="recommerd" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="collect" column="collect" jdbcType="INTEGER"/>
+        <result property="collectTime" column="collect_time" jdbcType="TIMESTAMP"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="shareSize" column="share_size" jdbcType="BIGINT"/>
+        <result property="browseSize" column="browse_size" jdbcType="BIGINT"/>
+        <result property="entrySize" column="entry_size" jdbcType="BIGINT"/>
+        <result property="weedOut" column="weed_out" jdbcType="BIGINT"/>
+        <result property="subscribe" column="subscribe" jdbcType="BIGINT"/>
+        <result property="offerSize" column="offer_size" jdbcType="BIGINT"/>
+        <result property="posts" column="posts" jdbcType="BIGINT"/>
+    </resultMap>
+</mapper>

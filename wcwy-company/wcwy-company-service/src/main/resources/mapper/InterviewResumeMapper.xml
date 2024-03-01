@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.InterviewResumeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.InterviewResume">
+        <id property="interviewId" column="interview_id" jdbcType="VARCHAR"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewWay" column="interview_way" jdbcType="VARCHAR"/>
+        <result property="platform" column="platform" jdbcType="INTEGER"/>
+        <result property="minute" column="minute" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="remarkOption" column="remark_option" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="place" column="place" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="onAccess" column="on_access" jdbcType="VARCHAR"/>
+        <result property="interviewer" column="interviewer" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="take" column="take" jdbcType="INTEGER"/>
+        <result property="stage" column="stage" jdbcType="INTEGER"/>
+        <result property="suggestTime" column="suggest_time" jdbcType="TIMESTAMP"/>
+        <result property="noTakeCause" column="no_take_cause" jdbcType="VARCHAR"/>
+        <result property="accept" column="accept" jdbcType="INTEGER"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateInterviewTime" column="update_interview_time" jdbcType="TIMESTAMP"/>
+        <result property="updateInterviewCause" column="update_interview_cause" jdbcType="VARCHAR"/>
+        <result property="updatePlace" column="update_place" jdbcType="VARCHAR"/>
+        <result property="updateRemark" column="update_remark" jdbcType="VARCHAR"/>
+        <result property="updateInterviewWay" column="update_interview_way" jdbcType="VARCHAR"/>
+        <result property="updateOnAccess" column="update_on_access" jdbcType="VARCHAR"/>
+        <result property="updatePhone" column="update_phone" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="auditState" column="audit_state" jdbcType="INTEGER"/>
+        <result property="auditCause" column="audit_cause" jdbcType="VARCHAR"/>
+        <result property="auditUser" column="audit_user" jdbcType="VARCHAR"/>
+        <result property="auditTime" column="audit_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="completionStatus" column="completion_status" jdbcType="INTEGER"/>
+        <result property="stateCause" column="state_cause" jdbcType="INTEGER"/>
+        <result property="stateTime" column="state_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        interview_id
+        ,put_in_resume_id,interview_time,
+        interview_way,remark,place,
+        on_access,phone,take,stage,
+        suggest_time,no_take_cause,accept,
+        create_user,create_time,update_interview_time,
+        update_interview_cause,update_place,update_remark,
+        update_interview_way,update_on_access,update_phone,
+        update_user,update_time,audit_state,
+        audit_cause,audit_user,audit_time,cancel_if,cancel_cause,cancel_time,
+        deleted
+    </sql>
+
+    <select id="selectInterviewResume" resultMap="InterviewResumeMap" parameterType="string">
+        SELECT interview_resume.interview_id,
+               interview_resume.put_in_resume_id,
+               interview_resume.interview_time,
+               interview_resume.platform,
+               interview_resume.interview_way,
+               interview_resume.remark,
+               interview_resume.place,
+               interview_resume.on_access,
+               interview_resume.interviewer,
+               interview_resume.phone,
+               interview_resume.take,
+               interview_resume.no_take_cause,
+               interview_resume.create_user,
+               interview_resume.create_time,
+               interview_resume.update_interview_time,
+               interview_resume.update_interview_cause,
+               interview_resume.update_user,
+               interview_resume.update_time,
+               interview_resume.audit_state,
+               interview_resume.audit_cause,
+               interview_resume.audit_user,
+               interview_resume.audit_time,
+               interview_resume.suggest_time,
+               interview_resume.accept,
+               interview_resume.update_place,
+               interview_resume.update_remark,
+               interview_resume.update_interview_way,
+               interview_resume.update_on_access,
+               interview_resume.update_phone
+        FROM interview_resume
+        WHERE interview_resume.put_in_resume_id = #{put_in_resume_id}
+        ORDER BY interview_resume.create_time DESC
+
+    </select>
+    <resultMap id="InterviewResumeMap" type="com.wcwy.company.entity.InterviewResume">
+        <id property="interviewId" column="interview_id" jdbcType="VARCHAR"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewWay" column="interview_way" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="platform" column="platform" jdbcType="INTEGER"/>
+        <result property="place" column="place" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="onAccess" column="on_access" jdbcType="VARCHAR"/>
+        <result property="interviewer" column="interviewer" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="take" column="take" jdbcType="INTEGER"/>
+        <result property="suggestTime" column="suggest_time" jdbcType="TIMESTAMP"/>
+        <result property="noTakeCause" column="no_take_cause" jdbcType="VARCHAR"/>
+        <result property="accept" column="accept" jdbcType="INTEGER"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateInterviewTime" column="update_interview_time" jdbcType="TIMESTAMP"/>
+        <result property="updateInterviewCause" column="update_interview_cause" jdbcType="VARCHAR"/>
+        <result property="updatePlace" column="update_place" jdbcType="VARCHAR"/>
+        <result property="updateRemark" column="update_remark" jdbcType="VARCHAR"/>
+        <result property="updateInterviewWay" column="update_interview_way" jdbcType="VARCHAR"/>
+        <result property="updateOnAccess" column="update_on_access" jdbcType="VARCHAR"/>
+        <result property="updatePhone" column="update_phone" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="auditState" column="audit_state" jdbcType="INTEGER"/>
+        <result property="auditCause" column="audit_cause" jdbcType="VARCHAR"/>
+        <result property="auditUser" column="audit_user" jdbcType="VARCHAR"/>
+        <result property="auditTime" column="audit_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="completionStatus" column="completion_status" jdbcType="INTEGER"/>
+        <result property="stateCause" column="state_cause" jdbcType="INTEGER"/>
+        <result property="stateTime" column="state_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+    
+    <select id="putInResumeId" resultMap="InterviewResumeMap" >
+        SELECT
+            interview_resume.interview_id,
+            interview_resume.put_in_resume_id,
+            interview_resume.interview_time,
+            interview_resume.interview_way,
+            interview_resume.platform,
+            interview_resume.remark,
+            interview_resume.place,
+            interview_resume.on_access,
+            interview_resume.interviewer,
+            interview_resume.phone,
+            interview_resume.take,
+            interview_resume.suggest_time,
+            interview_resume.no_take_cause,
+            interview_resume.accept,
+            interview_resume.create_user,
+            interview_resume.create_time,
+            interview_resume.update_interview_time,
+            interview_resume.update_interview_cause,
+            interview_resume.update_place,
+            interview_resume.update_remark,
+            interview_resume.update_interview_way,
+            interview_resume.update_on_access,
+            interview_resume.update_phone,
+            interview_resume.update_user,
+            interview_resume.update_time,
+            interview_resume.audit_state,
+            interview_resume.audit_cause,
+            interview_resume.audit_user,
+            interview_resume.audit_time,
+            interview_resume.completion_status,
+            interview_resume.state,
+                interview_resume.state_cause,
+            interview_resume.state_time
+        FROM
+            interview_resume
+        WHERE
+            interview_resume.put_in_resume_id = #{put_in_resume_id}
+        ORDER BY
+            interview_resume.create_time DESC
+    </select>
+    <select id="selel" resultType="java.lang.Integer"></select>
+    <select id="selectInterviewResumePost" resultMap="InterviewResumePostDTO">
+        SELECT
+            interview_resume.interview_id,
+            interview_resume.put_in_resume_id,
+            interview_resume.interview_time,
+            interview_resume.interview_way,
+            interview_resume.`minute`,
+            interview_resume.platform,
+            interview_resume.remark,
+            interview_resume.remark_option,
+            interview_resume.place,
+            interview_resume.on_access,
+            interview_resume.stage,
+            interview_resume.interviewer,
+            interview_resume.take,
+            interview_resume.phone,
+            interview_resume.suggest_time,
+            interview_resume.no_take_cause,
+            interview_resume.accept,
+            interview_resume.create_user,
+            interview_resume.create_time,
+            interview_resume.update_interview_time,
+            interview_resume.update_interview_cause,
+            interview_resume.update_place,
+            interview_resume.update_remark,
+            interview_resume.update_interview_way,
+            interview_resume.update_on_access,
+            interview_resume.update_phone,
+            interview_resume.update_user,
+            interview_resume.update_time,
+            interview_resume.audit_state,
+            interview_resume.audit_cause,
+            interview_resume.audit_user,
+            interview_resume.audit_time,
+            interview_resume.state,
+            interview_resume.deleted,
+            interview_resume.completion_status,
+            interview_resume.state_cause,
+            interview_resume.state_time,
+            ei_company_post.post_id,
+            ei_company_post.post_label,
+            ei_company_post.company_id,
+            ei_company_post.begin_salary,
+            ei_company_post.end_salary,
+            ei_company_post.work_city,
+            ei_company_post.post_type,
+            ei_company_post.money_reward,
+            ei_company_post.hired_bounty,
+            t_company.company_name
+        FROM
+            interview_resume
+                INNER JOIN
+            put_in_resume
+            ON
+                interview_resume.put_in_resume_id = put_in_resume.put_in_resume_id
+                INNER JOIN
+            ei_company_post
+            ON
+                put_in_resume.put_in_post = ei_company_post.post_id
+                INNER JOIN
+            t_company
+            ON
+                ei_company_post.company_id = t_company.company_id
+        <where>
+            put_in_resume.put_in_user = #{userid}
+            <if test="take !=null and take !=0 ">
+               and interview_resume.take =#{take}
+            </if>
+        </where>
+        ORDER BY
+        interview_resume.update_time DESC
+    </select>
+    <resultMap id="InterviewResumePostDTO" type="com.wcwy.company.dto.InterviewResumePostDTO">
+        <id property="interviewId" column="interview_id" jdbcType="VARCHAR"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewWay" column="interview_way" jdbcType="VARCHAR"/>
+        <result property="platform" column="platform" jdbcType="INTEGER"/>
+        <result property="minute" column="minute" jdbcType="INTEGER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="remarkOption" column="remark_option" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="place" column="place" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="onAccess" column="on_access" jdbcType="VARCHAR"/>
+        <result property="interviewer" column="interviewer" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="take" column="take" jdbcType="INTEGER"/>
+        <result property="stage" column="stage" jdbcType="INTEGER"/>
+        <result property="suggestTime" column="suggest_time" jdbcType="TIMESTAMP"/>
+        <result property="noTakeCause" column="no_take_cause" jdbcType="VARCHAR"/>
+        <result property="accept" column="accept" jdbcType="INTEGER"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateInterviewTime" column="update_interview_time" jdbcType="TIMESTAMP"/>
+        <result property="updateInterviewCause" column="update_interview_cause" jdbcType="VARCHAR"/>
+        <result property="updatePlace" column="update_place" jdbcType="VARCHAR"/>
+        <result property="updateRemark" column="update_remark" jdbcType="VARCHAR"/>
+        <result property="updateInterviewWay" column="update_interview_way" jdbcType="VARCHAR"/>
+        <result property="updateOnAccess" column="update_on_access" jdbcType="VARCHAR"/>
+        <result property="updatePhone" column="update_phone" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="auditState" column="audit_state" jdbcType="INTEGER"/>
+        <result property="auditCause" column="audit_cause" jdbcType="VARCHAR"/>
+        <result property="auditUser" column="audit_user" jdbcType="VARCHAR"/>
+        <result property="auditTime" column="audit_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="completionStatus" column="completion_status" jdbcType="INTEGER"/>
+        <result property="stateCause" column="state_cause" jdbcType="INTEGER"/>
+        <result property="stateTime" column="state_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

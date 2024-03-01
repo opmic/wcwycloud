@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>wcwy</artifactId>
+        <groupId>com.wcwy</groupId>
+        <version>1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>wcwy-websocket</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.wcwy</groupId>
+            <artifactId>common-oatuh</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wcwy</groupId>
+            <artifactId>common-rocketmq</artifactId>
+            <version>1.0</version>
+        </dependency>
+       <!-- <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>-->
+    <!--    <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <!-- 2.x基于springfox2.x，3.x基于springfox3.x-->
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+<!--        <dependency>
+            <groupId>com.wcwy</groupId>
+            <artifactId>common-redis</artifactId>
+            <version>1.0</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.31</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dromara.dynamictp</groupId>
+            <artifactId>dynamic-tp-spring-boot-starter-apollo</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wcwy</groupId>
+            <artifactId>wcwy-company-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--t-io依赖-->
+        <dependency>
+            <groupId>org.t-io</groupId>
+            <artifactId>tio-websocket-spring-boot-starter</artifactId>
+            <version>3.6.0.v20200315-RELEASE</version>
+        </dependency>
+
+        <!--        <dependency>
+                    <groupId>org.t-io</groupId>
+                    <artifactId>tio-websocket-server</artifactId>
+                    <version>3.7.0.v20201010-RELEASE</version>
+                </dependency>-->
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+   <!--     <dependency>
+            <groupId>com.wcwy</groupId>
+            <artifactId>wcwy-post-api</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>-->
+
+    </dependencies>
+    <build>
+
+        <filters>
+            <filter>../src/main/filters/global-config-${profile.active}.properties</filter>
+        </filters>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.InformationMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.Information">
+            <id property="informationId" column="information_id" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="theme" column="theme" jdbcType="INTEGER"/>
+            <result property="poster" column="poster" jdbcType="VARCHAR"/>
+            <result property="topic" column="topic" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="delete" column="delete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        information_id,content,name,
+        theme,poster,topic,
+        create_time,delete
+    </sql>
+</mapper>

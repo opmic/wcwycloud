@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wcwy.common.config.ResouceServerConfig,\
+  com.wcwy.common.config.TokenConfig,\
+  com.wcwy.common.config.WebSecurityConfig,\
+  com.wcwy.common.oatuh.filter.TokenAuthenticationFilter

@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 47.106.215.60:8848  #Nacos服务注册中心地址
+        password: nacoswcwy
+        username: nacos
+      config:
+        server-addr: 47.106.215.60:8848   #Nacos作为配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        #namespace: dev #命名空间
+        #group: TEST_DROUP #用于同group分组

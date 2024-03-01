@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.RevenueSharingMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.RevenueSharing">
+            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="totalRevenue" column="total_revenue" jdbcType="DECIMAL"/>
+            <result property="withdrawDeposit" column="withdraw_deposit" jdbcType="DECIMAL"/>
+            <result property="remainingSum" column="remaining_sum" jdbcType="DECIMAL"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="forbid" column="forbid" jdbcType="INTEGER"/>
+            <result property="forbidCause" column="forbid_cause" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,total_revenue,withdraw_deposit,
+        remaining_sum,type,forbid,
+        forbid_cause
+    </sql>
+</mapper>

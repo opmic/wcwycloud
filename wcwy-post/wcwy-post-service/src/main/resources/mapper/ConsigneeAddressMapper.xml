@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.ConsigneeAddressMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.ConsigneeAddress">
+            <id property="consigneeAddressId" column="consignee_address_id" jdbcType="VARCHAR"/>
+            <result property="recipients" column="recipients" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="OTHER" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="postcode" column="postcode" jdbcType="VARCHAR"/>
+            <result property="tacitlyApprove" column="tacitly_approve" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        consignee_address_id,recipients,phone,
+        address,postcode,tacitly_approve,
+        user_id,deleted
+    </sql>
+</mapper>

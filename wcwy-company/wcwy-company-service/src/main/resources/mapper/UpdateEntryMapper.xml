@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.UpdateEntryMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.UpdateEntry">
+            <result property="updateEntryId" column="update_entry_id" jdbcType="VARCHAR"/>
+            <result property="updateEntryTime" column="update_entry_time" jdbcType="TIMESTAMP"/>
+            <result property="inviteEntryId" column="invite_entry_id" jdbcType="VARCHAR"/>
+            <result property="updateCause" column="update_cause" jdbcType="VARCHAR"/>
+            <result property="adminAudit" column="admin_audit" jdbcType="INTEGER"/>
+            <result property="adminTime" column="admin_time" jdbcType="TIMESTAMP"/>
+            <result property="adminAuditCause" column="admin_audit_cause" jdbcType="VARCHAR"/>
+            <result property="adminId" column="admin_id" jdbcType="VARCHAR"/>
+            <result property="putId" column="put_id" jdbcType="VARCHAR"/>
+            <result property="putAudit" column="put_audit" jdbcType="INTEGER"/>
+            <result property="putTime" column="put_time" jdbcType="TIMESTAMP"/>
+            <result property="putAuditCause" column="put_audit_cause" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        update_entry_id,update_entry_time,invite_entry_id,
+        update_cause,admin_audit,admin_time,
+        admin_audit_cause,admin_id,put_id,
+        put_audit,put_time,put_audit_cause,
+        create_time,create_id,deleted
+    </sql>
+    <select id="selectId" resultMap="UpdateEntryPOMap">
+        SELECT
+            update_entry.update_entry_id,
+            update_entry.update_entry_time,
+            update_entry.invite_entry_id,
+            update_entry.update_cause,
+            update_entry.admin_audit,
+            update_entry.admin_time,
+            update_entry.admin_audit_cause,
+            update_entry.admin_id,
+            update_entry.put_id,
+            update_entry.put_audit,
+            update_entry.put_time,
+            update_entry.put_audit_cause,
+            update_entry.create_time,
+            update_entry.create_id
+        FROM
+            update_entry
+        WHERE
+            update_entry.invite_entry_id =#{invite_entry_id}
+    </select>
+
+    <resultMap id="UpdateEntryPOMap" type="com.wcwy.company.po.UpdateEntryPO">
+        <result property="updateEntryId" column="update_entry_id" jdbcType="VARCHAR"/>
+        <result property="updateEntryTime" column="update_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="inviteEntryId" column="invite_entry_id1" jdbcType="VARCHAR"/>
+        <result property="updateCause" column="update_cause" jdbcType="VARCHAR"/>
+        <result property="adminAudit" column="admin_audit" jdbcType="INTEGER"/>
+        <result property="adminTime" column="admin_time" jdbcType="TIMESTAMP"/>
+        <result property="adminAuditCause" column="admin_audit_cause" jdbcType="VARCHAR"/>
+        <result property="adminId" column="admin_id" jdbcType="VARCHAR"/>
+        <result property="putId" column="put_id" jdbcType="VARCHAR"/>
+        <result property="putAudit" column="put_audit" jdbcType="INTEGER"/>
+        <result property="putTime" column="put_time" jdbcType="TIMESTAMP"/>
+        <result property="putAuditCause" column="put_audit_cause" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time2" jdbcType="TIMESTAMP"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

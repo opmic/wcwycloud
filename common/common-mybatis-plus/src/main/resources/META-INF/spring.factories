@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wcwy.common.mybatisplus.config.MybatisPlusConfig,\
+  com.wcwy.common.handler.MyMetaObjectHandler

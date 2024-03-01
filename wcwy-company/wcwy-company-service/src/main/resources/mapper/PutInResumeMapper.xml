@@ -1,0 +1,2445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.PutInResumeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.PutInResume">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInJobhunter" column="put_in_jobhunter" jdbcType="VARCHAR"/>
+        <result property="intention" column="intention" jdbcType="VARCHAR"/>
+        <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+        <result property="currentAnnualSalary" column="current_annual_salary" jdbcType="DECIMAL"/>
+        <result property="expectAnnualSalary" column="expect_annual_salary" jdbcType="VARCHAR"/>
+        <result property="applicationInterviewTime" column="application_interview_time" jdbcType="INTEGER"/>
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="putInUser" column="put_in_user" jdbcType="VARCHAR"/>
+        <result property="putInMessage" column="put_in_message" jdbcType="INTEGER"/>
+        <result property="tCompanyMessage" column="t_company_message" jdbcType="INTEGER"/>
+        <result property="easco" column="easco" jdbcType="CHAR"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="affirmInterviewTime" column="affirm_interview_time" jdbcType="TIMESTAMP"/>
+        <result property="affirmInterview" column="affirm_interview" jdbcType="INTEGER"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelIf" column="cancel_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="notEntry" column="not_entry" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="entryIf" column="entry_if" jdbcType="INTEGER"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonIf" column="full_moon_if" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeEntryTime" column="dispose_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeFullMoonTime" column="dispose_full_moon_time" jdbcType="TIMESTAMP"/>
+
+        <result property="closeAnAccountIf" column="close_an_account_if" jdbcType="INTEGER"/>
+        <result property="closeAnAccountBeginTime" column="close_an_account_begin_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountCause" column="close_an_account_cause" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateId" column="update_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deletedCompany" column="deleted_company" jdbcType="INTEGER"/>
+        <result property="deletedPutIn" column="deleted_put_in" jdbcType="INTEGER"/>
+        <result property="inviter" column="inviter" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        put_in_resume_id
+        ,put_in_post,put_in_comppany,dispose_entry_time,dispose_full_moon_time,
+         put_in_jobhunter,explains,put_in_user,put_in_message,t_company_message,easco,
+        resume_state,browse_if,browse_time,
+        download_if,download_time,exclude_if,affirm_interview,affirm_interview_time,
+        exclude_time,exclude_state,subscribe_if,materials,
+        accept_subscribe,invitation,accept_subscribe_state,
+        subscribe_time,interview_if,interview_time,cancel_if,cancel_time,cancel_cause,
+        weed_out_if,weed_out_time,weed_out_cause,
+        offer_if,offer_time,entry_if,not_entry,
+        entry_time,entry_cause,full_moon_if,dimission_time,full_moon_cause,
+        close_an_account_if,close_an_account_begin_time,
+        close_an_account_finish_time,close_an_account_cause,create_time,update_id,
+        update_time,deleted_company,deleted_put_in,inviter
+    </sql>
+    <update id="updateResumeState">
+        UPDATE put_in_resume
+        set put_in_resume.resume_state=#{resumeState}
+        WHERE put_in_resume.put_in_resume_id = #{putInResumeId}
+          and #{resumeState} > put_in_resume.resume_state
+
+    </update>
+    <select id="pagePutInResumeInterview" resultMap="PutInResumeInterviewPOJOMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.put_in_comppany,
+        put_in_resume.put_in_jobhunter,
+        put_in_resume.explains,
+        put_in_resume.put_in_user,
+        put_in_resume.put_in_message,
+        put_in_resume.t_company_message,
+        put_in_resume.easco,
+        put_in_resume.resume_state,
+        put_in_resume.browse_time,
+        put_in_resume.browse_if,
+        put_in_resume.download_if,
+        put_in_resume.download_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.accept_subscribe,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.cancel_if,
+        put_in_resume.cancel_time,
+        put_in_resume.cancel_cause,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.full_moon_if,
+        put_in_resume.full_moon_cause,
+        put_in_resume.not_full_moon,
+        put_in_resume.materials,
+        put_in_resume.dimission_time,
+        put_in_resume.close_an_account_if,
+        put_in_resume.close_an_account_begin_time,
+        put_in_resume.close_an_account_cause,
+        put_in_resume.close_an_account_finish_time,
+        put_in_resume.update_time,
+        put_in_resume.create_time,
+        t_jobhunter.user_id,
+        t_jobhunter.address,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.age,
+        t_jobhunter.education,
+        t_jobhunter.work_time,
+        t_jobhunter.login_time,
+        t_jobhunter_expect_position.position_name
+        FROM
+        put_in_resume
+        LEFT JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        LEFT JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        t_jobhunter_expect_position
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_expect_position.resume_id
+        <where>
+            <if test="putInResumeQuery.putInUser !='' and putInResumeQuery.putInUser !=null  and putInResumeQuery.identity == 2">
+
+                put_in_resume.put_in_user = #{putInResumeQuery.putInUser} AND put_in_resume.deleted_put_in = 0
+            </if>
+            <if test="putInResumeQuery.putInComppany !='' and putInResumeQuery.putInComppany!=null  and putInResumeQuery.identity==1">
+                and put_in_resume.put_in_comppany = #{putInResumeQuery.putInComppany} AND put_in_resume.deleted_company
+                = 0
+            </if>
+            <if test="putInResumeQuery.putInResumeId !=null and putInResumeQuery.putInResumeId !='' ">
+                and put_in_resume.put_in_resume_id = #{putInResumeQuery.putInResumeId}
+            </if>
+            <if test="putInResumeQuery.putInPost !=null and putInResumeQuery.putInPost !='' ">
+                and put_in_resume.put_in_post = #{putInResumeQuery.putInPost}
+            </if>
+            <if test="putInResumeQuery.putInJobhunter !=null and putInResumeQuery.putInJobhunter !='' ">
+                and put_in_resume.put_in_jobhunter = #{putInResumeQuery.putInJobhunter}
+            </if>
+            <if test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null ">
+                and put_in_resume.resume_state = #{putInResumeQuery.resumeState}
+            </if>
+            <if test="putInResumeQuery.easco !='' and putInResumeQuery.easco !=null ">
+                and put_in_resume.easco = #{putInResumeQuery.easco}
+            </if>
+            and ( 7>datediff(now(),put_in_resume.update_time) OR
+            put_in_resume.resume_state >= 7 )
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+    </select>
+    <select id="listInviteEntry" resultMap="PutInResumeDTOMap">
+
+        SELECT put_in_resume.put_in_resume_id,
+               put_in_resume.entry_time,
+               invite_entry.workday
+        FROM put_in_resume
+                 INNER JOIN
+             invite_entry
+             ON
+                 put_in_resume.put_in_resume_id = invite_entry.put_in_resume_id
+        WHERE put_in_resume.entry_if = 2
+          AND put_in_resume.resume_state = 8
+          AND put_in_resume.over_protection_if != 2
+    </select>
+    <select id="selectAccountResume" resultMap="PutInResumeInterviewPOJOMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.put_in_comppany,
+        put_in_resume.put_in_jobhunter,
+        put_in_resume.explains,
+        put_in_resume.put_in_user,
+        put_in_resume.easco,
+        put_in_resume.resume_state,
+        put_in_resume.browse_time,
+        put_in_resume.browse_if,
+        put_in_resume.download_if,
+        put_in_resume.download_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.accept_subscribe,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.full_moon_if,
+        put_in_resume.full_moon_cause,
+        put_in_resume.not_full_moon,
+        put_in_resume.materials,
+        put_in_resume.dimission_time,
+        put_in_resume.close_an_account_if,
+        put_in_resume.close_an_account_begin_time,
+        put_in_resume.close_an_account_cause,
+        put_in_resume.close_an_account_finish_time,
+        put_in_resume.update_time,
+        put_in_resume.create_time,
+        t_jobhunter.user_id,
+        t_jobhunter.address,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.age,
+        t_jobhunter.education,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        t_jobhunter.login_time,
+        t_jobhunter_expect_position.position_name,
+        t_jobhunter_resume.resume_id
+        FROM
+        put_in_resume
+        LEFT JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        LEFT JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        t_jobhunter_expect_position
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_expect_position.resume_id
+        <where>
+            <if test="putInResumeQuery.putInUser !='' and putInResumeQuery.putInUser !=null  and putInResumeQuery.identity == 2">
+
+                put_in_resume.put_in_user = #{putInResumeQuery.putInUser} AND put_in_resume.deleted_put_in = 0
+            </if>
+            <if test="putInResumeQuery.putInComppany !='' and putInResumeQuery.putInComppany!=null  and putInResumeQuery.identity==1">
+                and put_in_resume.put_in_comppany = #{putInResumeQuery.putInComppany} AND put_in_resume.deleted_company
+                = 0
+            </if>
+            <if test="putInResumeQuery.putInResumeId !=null and putInResumeQuery.putInResumeId !='' ">
+                and put_in_resume.put_in_resume_id = #{putInResumeQuery.putInResumeId}
+            </if>
+            <if test="putInResumeQuery.putInPost !=null and putInResumeQuery.putInPost !='' ">
+                and put_in_resume.put_in_post = #{putInResumeQuery.putInPost}
+            </if>
+            <if test="putInResumeQuery.putInJobhunter !=null and putInResumeQuery.putInJobhunter !='' ">
+                and put_in_resume.put_in_jobhunter = #{putInResumeQuery.putInJobhunter}
+            </if>
+            <!-- <if test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null ">
+                 and put_in_resume.resume_state = #{putInResumeQuery.resumeState}
+             </if>-->
+            <choose>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 1">
+                    and put_in_resume.browse_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 2">
+                    and put_in_resume.download_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 4">
+                    and put_in_resume.subscribe_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 5">
+                    and put_in_resume.interview_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 6">
+                    and put_in_resume.weed_out_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 7">
+                    and put_in_resume.offer_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 8">
+                    and put_in_resume.entry_if = 2
+                </when>
+                <when test="putInResumeQuery.resumeState !='' and putInResumeQuery.resumeState !=null  and putInResumeQuery.resumeState == 9">
+                    and put_in_resume.over_protection_if = 2
+                </when>
+            </choose>
+            <if test="putInResumeQuery.easco !='' and putInResumeQuery.easco !=null ">
+                and put_in_resume.easco = #{putInResumeQuery.easco}
+            </if>
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+
+
+    </select>
+    <select id="recommendedData" resultMap="RecommendedDataMap">
+        SELECT
+        COUNT(*) AS recommendCount,
+        COUNT(browse_if=2 OR null) AS browse,
+        COUNT(resume_state=4 OR null) AS subscribeCount,
+        COUNT(resume_state=5 OR null) AS interviewCount,
+        COUNT(resume_state=6 OR null) AS offerCount,
+        COUNT(resume_state=7 OR null) AS weedOutCount,
+        COUNT(resume_state=8 OR null) AS entryCount
+        FROM
+        put_in_resume
+        <where>
+            <if test=" userid !=null and userid !='' ">
+                put_in_resume.put_in_user = #{userid}
+            </if>
+            <if test="companyId !='' and companyId !=null ">
+                AND put_in_resume.put_in_comppany = #{companyId}
+            </if>
+            <if test="postId !='' and postId !=null ">
+                AND put_in_resume.put_in_post = #{postId}
+            </if>
+        </where>
+
+    </select>
+    <select id="receiveResume" resultType="java.lang.Integer">
+        SELECT count(DISTINCT put_in_resume.put_in_jobhunter)
+        FROM put_in_resume
+        WHERE put_in_resume.put_in_comppany = #{companyId}
+          and put_in_resume.create_time >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+    </select>
+
+    <resultMap id="RecommendedDataMap" type="com.wcwy.company.dto.RecommendedDataDTO">
+        <result property="recommendCount" column="recommendCount" jdbcType="INTEGER"/>
+        <result property="browse" column="browse" jdbcType="INTEGER"/>
+        <result property="subscribeCount" column="subscribeCount" jdbcType="INTEGER"/>
+        <result property="interviewCount" column="interviewCount" jdbcType="INTEGER"/>
+        <result property="offerCount" column="offerCount" jdbcType="INTEGER"/>
+        <result property="weedOutCount" column="weedOutCount" jdbcType="INTEGER"/>
+        <result property="entryCount" column="entryCount" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="PutInResumeDTOMap" type="com.wcwy.company.dto.PutInResumeDTO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="PutInResumeInterviewPOJOMap" type="com.wcwy.post.pojo.PutInResumeInterviewPOJO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInJobhunter" column="put_in_jobhunter" jdbcType="VARCHAR"/>
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="putInUser" column="put_in_user" jdbcType="VARCHAR"/>
+        <result property="putInMessage" column="put_in_message" jdbcType="INTEGER"/>
+        <result property="tCompanyMessage" column="t_company_message" jdbcType="INTEGER"/>
+        <result property="easco" column="easco" jdbcType="CHAR"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelIf" column="cancel_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="entryIf" column="entry_if" jdbcType="INTEGER"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonIf" column="full_moon_if" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountIf" column="close_an_account_if" jdbcType="INTEGER"/>
+        <result property="closeAnAccountBeginTime" column="close_an_account_begin_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountCause" column="close_an_account_cause" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <collection property="positionName" ofType="com.wcwy.company.po.TJobhunterExpectPositionPO"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.positionName"
+                    column="resume_id"></collection>
+        <collection property="record" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectId" column="resume_id">
+        </collection>
+        <collection property="workRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectId" column="resume_id">
+        </collection>
+    </resultMap>
+
+
+    <select id="sendAResumeInformation" resultMap="PutInResumeInterviewPOJOMap1">
+        SELECT
+        put_in_resume.resume_state,
+        put_in_resume.browse_if,
+        t_jobhunter.user_id,
+        t_jobhunter.address,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.age,
+        t_jobhunter.education,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        t_jobhunter.login_time,
+        t_jobhunter_resume.resume_id
+        FROM
+        put_in_resume
+        INNER JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        <where>
+
+            <if test="sendAResumeInformationQuery.company !='' and sendAResumeInformationQuery.company !=null  ">
+                put_in_resume.put_in_comppany = #{sendAResumeInformationQuery.company} AND put_in_resume.deleted_company
+                = 0
+            </if>
+            <if test="sendAResumeInformationQuery.putInPost !=null and sendAResumeInformationQuery.putInPost !='' ">
+                and put_in_resume.put_in_post = #{sendAResumeInformationQuery.putInPost}
+            </if>
+
+            <choose>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 1">
+                    and put_in_resume.browse_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 2">
+                    and put_in_resume.download_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 4">
+                    and put_in_resume.subscribe_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 5">
+                    and put_in_resume.interview_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 6">
+                    and put_in_resume.weed_out_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 7">
+                    and put_in_resume.offer_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 8">
+                    and put_in_resume.entry_if = 2
+                </when>
+                <when test="sendAResumeInformationQuery.resumeState !='' and sendAResumeInformationQuery.resumeState !=null  and sendAResumeInformationQuery.resumeState == 9">
+                    and put_in_resume.over_protection_if = 2
+                </when>
+            </choose>
+            <if test="sendAResumeInformationQuery.keyword !='' and sendAResumeInformationQuery.keyword !=null ">
+                and (t_jobhunter.user_name LIKE CONCAT('%',#{sendAResumeInformationQuery.keyword},'%') OR
+                t_jobhunter_expect_position.position_name LIKE CONCAT('%',#{sendAResumeInformationQuery.keyword},'%') or
+                t_jobhunter_expect_position.desired_industry LIKE
+                CONCAT('%',#{sendAResumeInformationQuery.keyword},'%'))
+            </if>
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+
+    </select>
+
+
+    <resultMap id="PutInResumeInterviewPOJOMap1" type="com.wcwy.post.pojo.PutInResumeInterviewPOJO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInJobhunter" column="put_in_jobhunter" jdbcType="VARCHAR"/>
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="putInUser" column="put_in_user" jdbcType="VARCHAR"/>
+        <result property="easco" column="easco" jdbcType="CHAR"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="entryIf" column="entry_if" jdbcType="INTEGER"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonIf" column="full_moon_if" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountIf" column="close_an_account_if" jdbcType="INTEGER"/>
+        <result property="closeAnAccountBeginTime" column="close_an_account_begin_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountCause" column="close_an_account_cause" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <collection property="positionName" ofType="com.wcwy.company.po.TJobhunterExpectPositionPO"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.positionName" column="resume_id">
+
+        </collection>
+        <collection property="record" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectId" column="resume_id">
+        </collection>
+        <collection property="workRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectId" column="resume_id">
+        </collection>
+    </resultMap>
+
+
+    <select id="selectCompanyResume" resultMap="SelectCompanyResumeDTOMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.put_in_comppany,
+        put_in_resume.put_in_jobhunter,
+        put_in_resume.explains,
+        put_in_resume.intention,
+        put_in_resume.arrival_time,
+        put_in_resume.current_annual_salary,
+        put_in_resume.expect_annual_salary,
+        put_in_resume.application_interview_time,
+        put_in_resume.put_in_user,
+        put_in_resume.put_in_message,
+        put_in_resume.t_company_message,
+        put_in_resume.easco,
+        put_in_resume.resume_state,
+        put_in_resume.browse_time,
+        put_in_resume.browse_if,
+        put_in_resume.download_if,
+        put_in_resume.download_time,
+        put_in_resume.affirm_interview,
+        put_in_resume.affirm_interview_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.accept_subscribe,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.cancel_if,
+        put_in_resume.cancel_time,
+        put_in_resume.cancel_cause,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.not_entry,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.full_moon_if,
+        put_in_resume.full_moon_cause,
+        put_in_resume.not_full_moon,
+        put_in_resume.materials,
+        put_in_resume.dimission_time,
+        put_in_resume.close_an_account_if,
+        put_in_resume.close_an_account_begin_time,
+        put_in_resume.close_an_account_cause,
+        put_in_resume.close_an_account_finish_time,
+        put_in_resume.dispose_entry_time,
+        put_in_resume.dispose_full_moon_time,
+        put_in_resume.update_time,
+        put_in_resume.create_time,
+        put_in_resume.dispose_full_moon_time,
+        put_in_resume.dispose_entry_time,
+        t_jobhunter.user_id,
+        t_jobhunter.address,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.age,
+        t_jobhunter.education,
+        t_jobhunter.work_time,
+        t_jobhunter.birthday,
+        t_jobhunter.login_time,
+        t_jobhunter_resume.resume_id,
+        company_user_role.create_time AS download_time1,
+        IF(company_user_role.company_user_role_id !='Null',2,1) AS download_if1,
+        ei_company_post.post_type,
+        ei_company_post.post_label
+        FROM
+        put_in_resume
+        LEFT JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        LEFT JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        company_user_role
+        ON
+        put_in_resume.put_in_jobhunter = company_user_role.user_id AND
+        company_user_role.company_id = put_in_resume.put_in_comppany
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            AND put_in_resume.put_in_comppany = #{userid} AND put_in_resume.deleted_put_in = 0
+            <if test="selectCompanyResumeQuery.postId !=null and selectCompanyResumeQuery.postId !='' ">
+                and put_in_resume.put_in_post = #{selectCompanyResumeQuery.postId}
+            </if>
+
+            <if test="selectCompanyResumeQuery.education !=null and selectCompanyResumeQuery.education.size()>0 ">
+                and t_jobhunter.education IN
+                <foreach collection="selectCompanyResumeQuery.education" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+
+            <if test="selectCompanyResumeQuery.birthday !=null  and selectCompanyResumeQuery.birthday !=''  and selectCompanyResumeQuery.birthday != 6">
+                and t_jobhunter.birthday BETWEEN #{selectCompanyResumeQuery.endTime } AND
+                #{selectCompanyResumeQuery.startTime }
+            </if>
+            <if test="selectCompanyResumeQuery.birthday !=null  and selectCompanyResumeQuery.birthday !='' and  selectCompanyResumeQuery.birthday == 6">
+                and t_jobhunter.birthday &lt;= #{selectCompanyResumeQuery.endTime}
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==1 ">
+                and put_in_resume.resume_state =1 and put_in_resume.browse_if=1
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==2 ">
+                and put_in_resume.resume_state =1 and put_in_resume.browse_if=2
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==3 ">
+                and put_in_resume.download_if = 2
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==4 ">
+                and put_in_resume.subscribe_if = 2
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==5 ">
+                and put_in_resume.interview_if = 2
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==6 ">
+                and put_in_resume.offer_if =2
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==7 ">
+                and put_in_resume.entry_if =2
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==8 ">
+                and put_in_resume.entry_if =1
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==9 ">
+                and put_in_resume.full_moon_if =1
+            </if>
+            <if test="selectCompanyResumeQuery.resumeState !='' and selectCompanyResumeQuery.resumeState !=null and selectCompanyResumeQuery.resumeState==10">
+                and (put_in_resume.resume_state = 7 or put_in_resume.resume_state=3)
+            </if>
+            <if test="selectCompanyResumeQuery.easco !='' and selectCompanyResumeQuery.easco !=null ">
+                and put_in_resume.easco = #{selectCompanyResumeQuery.easco}
+            </if>
+            <if test="selectCompanyResumeQuery.keyword !='' and selectCompanyResumeQuery.keyword !=null ">
+                AND ( t_jobhunter.user_name LIKE CONCAT('%',#{selectCompanyResumeQuery.keyword}, '%') or (
+                SELECT COUNT(*)
+                FROM
+                t_jobhunter_education_record
+                WHERE
+                t_jobhunter_education_record.resume_id=t_jobhunter_resume.resume_id and (
+                t_jobhunter_education_record.shcool_name LIKE CONCAT('%',#{selectCompanyResumeQuery.keyword}, '%') or
+                t_jobhunter_education_record.major LIKE CONCAT('%',#{selectCompanyResumeQuery.keyword}, '%'))
+                )>0)
+            </if>
+            /* and ( 30>datediff(now(),put_in_resume.update_time) OR
+            put_in_resume.resume_state >= 7 )*/
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+
+    </select>
+
+
+    <resultMap id="SelectCompanyResumeDTOMap" type="com.wcwy.company.dto.SelectCompanyResumeDTO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInJobhunter" column="put_in_jobhunter" jdbcType="VARCHAR"/>
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="notEntry" column="not_entry" jdbcType="INTEGER"/>
+        <result property="intention" column="intention" jdbcType="VARCHAR"/>
+        <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+        <result property="currentAnnualSalary" column="current_annual_salary" jdbcType="DECIMAL"/>
+        <result property="expectAnnualSalary" column="expect_annual_salary" jdbcType="VARCHAR"/>
+        <result property="applicationInterviewTime" column="application_interview_time" jdbcType="INTEGER"/>
+        <result property="putInUser" column="put_in_user" jdbcType="VARCHAR"/>
+        <result property="putInMessage" column="put_in_message" jdbcType="INTEGER"/>
+        <result property="tCompanyMessage" column="t_company_message" jdbcType="INTEGER"/>
+        <result property="easco" column="easco" jdbcType="CHAR"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelIf" column="cancel_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="affirmInterviewTime" column="affirm_interview_time" jdbcType="TIMESTAMP"/>
+        <result property="affirmInterview" column="affirm_interview" jdbcType="INTEGER"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="entryIf" column="entry_if" jdbcType="INTEGER"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonIf" column="full_moon_if" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountIf" column="close_an_account_if" jdbcType="INTEGER"/>
+        <result property="closeAnAccountBeginTime" column="close_an_account_begin_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountCause" column="close_an_account_cause" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeEntryTime" column="dispose_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeFullMoonTime" column="dispose_full_moon_time" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <result property="postType" column="post_type" jdbcType="VARCHAR"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <collection property="positionName" ofType="java.lang.String"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.positionName"
+                    column="resume_id"></collection>
+        <collection property="record" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectId" column="resume_id">
+        </collection>
+        <collection property="workRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectId" column="resume_id">
+        </collection>
+        <collection property="interviewResume" column="put_in_resume_id"
+                    select="com.wcwy.company.mapper.InterviewResumeMapper.putInResumeId"
+                    ofType="com.wcwy.company.entity.InterviewResume">
+        </collection>
+    </resultMap>
+
+
+    <select id="getPutInResumeEiCompanyPostDTO" resultMap="PutInResumeEiCompanyPostMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.put_in_comppany,
+        put_in_resume.put_in_jobhunter,
+        put_in_resume.explains,
+        put_in_resume.intention,
+        put_in_resume.arrival_time,
+        put_in_resume.current_annual_salary,
+        put_in_resume.expect_annual_salary,
+        put_in_resume.application_interview_time,
+        put_in_resume.put_in_user,
+        put_in_resume.put_in_message,
+        put_in_resume.t_company_message,
+        put_in_resume.easco,
+        put_in_resume.resume_state,
+        put_in_resume.browse_if,
+        put_in_resume.browse_time,
+        put_in_resume.download_if,
+        put_in_resume.download_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.cancel_if,
+        put_in_resume.cancel_time,
+        put_in_resume.cancel_cause,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.full_moon_if,
+        put_in_resume.full_moon_cause,
+        put_in_resume.not_full_moon,
+        put_in_resume.materials,
+        put_in_resume.dimission_time,
+        put_in_resume.close_an_account_if,
+        put_in_resume.close_an_account_begin_time,
+        put_in_resume.close_an_account_finish_time,
+        put_in_resume.dispose_entry_time,
+        put_in_resume.dispose_full_moon_time,
+        put_in_resume.close_an_account_cause,
+        put_in_resume.create_time,
+        put_in_resume.update_id,
+        ei_company_post.begin_salary,
+        ei_company_post.end_salary,
+        ei_company_post.post_label,
+        ei_company_post.work_city
+        FROM
+        ei_company_post
+        INNER JOIN
+        put_in_resume
+        ON
+        ei_company_post.post_id = put_in_resume.put_in_post
+
+        <where>
+            and put_in_resume.put_in_user = #{userId}
+            <if test="resumeState !=null and resumeState !='' and resumeState==1 ">
+                and put_in_resume.resume_state =1 and put_in_resume.browse_if=2
+            </if>
+            <if test="resumeState !=null and resumeState !=''  and resumeState==2 ">
+                and put_in_resume.resume_state =2
+            </if>
+            <if test="resumeState !=null and resumeState !=''  and resumeState==5 ">
+                and (put_in_resume.resume_state =3 or put_in_resume.resume_state=7 )
+            </if>
+            <if test="resumeState !=null and resumeState !=''  and resumeState==3 ">
+                and (put_in_resume.resume_state =4 or put_in_resume.resume_state=5 )
+            </if>
+            <if test="resumeState !=null and resumeState !=''  and resumeState==4 ">
+                and put_in_resume.resume_state =8
+            </if>
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+    </select>
+
+    <resultMap id="PutInResumeEiCompanyPostMap" type="com.wcwy.company.dto.PutInResumeEiCompanyPostDTO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInMessage" column="put_in_message" jdbcType="INTEGER"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelIf" column="cancel_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="disposeEntryTime" column="dispose_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeFullMoonTime" column="dispose_full_moon_time" jdbcType="TIMESTAMP"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <collection property="interview" column="put_in_resume_id"
+                    select="com.wcwy.company.mapper.InterviewResumeMapper.putInResumeId"
+                    ofType="com.wcwy.company.entity.InterviewResume">
+        </collection>
+
+
+    </resultMap>
+
+
+    <select id="getJobHunter" resultMap="CompanyTJobHunterResumeDTOMap" parameterType="java.lang.String">
+        SELECT put_in_resume.explains,
+               put_in_resume.put_in_post,
+               put_in_resume.easco,
+               t_jobhunter.user_id,
+               t_jobhunter.login_name,
+               t_jobhunter.`password`,
+               t_jobhunter.user_name,
+               t_jobhunter.avatar,
+               t_jobhunter.address,
+               t_jobhunter.sex,
+               t_jobhunter.politics_status,
+               t_jobhunter.user_type,
+               t_jobhunter.email,
+               t_jobhunter.education,
+               t_jobhunter.current_salary,
+               t_jobhunter.show_sex,
+               t_jobhunter.phone_number,
+               t_jobhunter.job_status,
+               t_jobhunter.phone,
+               t_jobhunter.birthday,
+               t_jobhunter.birthday,
+               t_jobhunter_resume.advantage,
+               t_jobhunter_resume.resume_id,
+               t_jobhunter.work_time
+        FROM put_in_resume
+                 INNER JOIN
+             t_jobhunter
+             ON
+                 put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+                 LEFT JOIN
+             t_jobhunter_resume
+             ON
+                 t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        WHERE put_in_resume.put_in_resume_id = #{putInResumeId}
+        ORDER BY put_in_resume.put_in_message DESC,
+                 put_in_resume.update_time DESC
+    </select>
+    <select id="interviewPaymentCount" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT COUNT(put_in_resume.put_in_resume_id)
+        FROM put_in_resume
+        WHERE put_in_resume.put_in_post = #{postId}
+          AND put_in_resume.resume_state IN (1, 2, 4)
+          AND (
+                put_in_resume.easco = 5
+                AND
+                put_in_resume.affirm_interview != 2
+            )
+    </select>
+    <select id="inappropriate" resultMap="BaseResultMap">
+        SELECT *
+        FROM put_in_resume
+        WHERE put_in_resume.resume_state &lt; 3
+          and datediff(now(), put_in_resume.update_time) > 30
+
+    </select>
+
+    <resultMap id="CompanyTJobHunterResumeDTOMap" type="com.wcwy.company.dto.CompanyTJobHunterResumeDTO">
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="easco" column="easco" jdbcType="CHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+        <result property="jobStatus" column="job_status" jdbcType="VARCHAR"/>
+        <result property="politicsStatus" column="politics_status" jdbcType="INTEGER"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="advantage" column="advantage" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="resumePath" column="resume_path" jdbcType="VARCHAR"/>
+        <collection property="position" ofType="com.wcwy.company.entity.TJobhunterExpectPosition"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.selectId"></collection>
+        <collection property="record" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectS"></collection>
+        <collection property="projectRecord" ofType="com.wcwy.company.entity.TJobhunterProjectRecord"
+                    select="com.wcwy.company.mapper.TJobhunterProjectRecordMapper.selectId"
+                    column="resume_id"></collection>
+        <collection property="educationRecord" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectS">
+        </collection>
+    </resultMap>
+
+
+    <select id="recommendAdministrator" resultMap="JobHunterPostPutInResumeDTOMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.put_in_message,
+        put_in_resume.resume_state,
+        put_in_resume.browse_if,
+        put_in_resume.browse_time,
+        put_in_resume.download_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.accept_subscribe,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.cancel_if,
+        put_in_resume.cancel_time,
+        put_in_resume.cancel_cause,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.create_time,
+        put_in_resume.not_entry,
+        put_in_resume.full_moon_if,
+        put_in_resume.full_moon_cause,
+        put_in_resume.not_full_moon,
+        put_in_resume.materials,
+        put_in_resume.dimission_time,
+        put_in_resume.close_an_account_if,
+        put_in_resume.close_an_account_begin_time,
+        put_in_resume.close_an_account_cause,
+        put_in_resume.close_an_account_finish_time,
+        put_in_resume.dispose_entry_time,
+        put_in_resume.dispose_full_moon_time,
+        t_jobhunter.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        ei_company_post.post_label,
+        ei_company_post.post_type,
+        ei_company_post.begin_salary,
+        ei_company_post.end_salary,
+        t_company.company_name
+        FROM
+        put_in_resume
+        INNER JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        INNER JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        INNER JOIN
+        t_company
+        ON
+        put_in_resume.put_in_comppany = t_company.company_id
+        <where>
+            put_in_resume.put_in_user = #{userId}
+            <if test="recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==0 ">
+                and  put_in_resume.browse_if=0
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==1 ">
+                and  put_in_resume.browse_if=2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==2 ">
+                and put_in_resume.download_if =2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==3 ">
+                and put_in_resume.subscribe_if =2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==4 ">
+                and put_in_resume.interview_if =2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==5 ">
+                and put_in_resume.offer_if=2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==6 ">
+                and put_in_resume.entry_if=2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==7">
+                and put_in_resume.entry_if=1
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==8">
+                and put_in_resume.full_moon_if=2
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==9">
+                and put_in_resume.full_moon_if=1
+            </if>
+            <if test="recommendAdministratorQuery.resumeState  !='' and recommendAdministratorQuery.resumeState  !=null and recommendAdministratorQuery.resumeState ==10">
+                and (put_in_resume.resume_state =3 or put_in_resume.resume_state=7)
+            </if>
+            <if test="recommendAdministratorQuery.postLabel !=null and recommendAdministratorQuery.postLabel !='' ">
+                AND ei_company_post.post_label LIKE CONCAT('%',#{recommendAdministratorQuery.postLabel}, '%')
+            </if>
+            <if test="recommendAdministratorQuery.companyName !=null and recommendAdministratorQuery.companyName !='' ">
+                AND t_company.company_name LIKE CONCAT('%',#{recommendAdministratorQuery.companyName}, '%')
+            </if>
+            <if test="recommendAdministratorQuery.keyword !=null and recommendAdministratorQuery.keyword !='' ">
+                AND ( t_jobhunter.user_name LIKE CONCAT('%',#{recommendAdministratorQuery.keyword}, '%') OR
+                t_company.company_name  LIKE CONCAT('%',#{recommendAdministratorQuery.keyword}, '%') )
+            </if>
+            <if test="recommendAdministratorQuery.type !=null ">
+                AND ei_company_post.post_type=#{recommendAdministratorQuery.type}
+            </if>
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+
+    </select>
+
+    <resultMap id="JobHunterPostPutInResumeDTOMap" type="com.wcwy.company.dto.JobHunterPostPutInResumeDTO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="intention" column="intention" jdbcType="VARCHAR"/>
+        <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+        <result property="currentAnnualSalary" column="current_annual_salary" jdbcType="DECIMAL"/>
+        <result property="expectAnnualSalary" column="expect_annual_salary" jdbcType="VARCHAR"/>
+        <result property="applicationInterviewTime" column="application_interview_time" jdbcType="INTEGER"/>
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="putInMessage" column="put_in_message" jdbcType="INTEGER"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelIf" column="cancel_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="entryIf" column="entry_if" jdbcType="INTEGER"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonIf" column="full_moon_if" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="notEntry" column="not_entry" jdbcType="INTEGER"/>
+        <result property="closeAnAccountIf" column="close_an_account_if" jdbcType="INTEGER"/>
+        <result property="closeAnAccountBeginTime" column="close_an_account_begin_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountCause" column="close_an_account_cause" jdbcType="VARCHAR"/>
+        <result property="disposeEntryTime" column="dispose_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeFullMoonTime" column="dispose_full_moon_time" jdbcType="TIMESTAMP"/>
+        <association property="stage" column="put_in_resume_id" javaType="integer" select="selectStage">
+
+        </association>
+    </resultMap>
+    <select id="selectStage" resultType="integer">
+        SELECT interview_resume.stage
+        FROM interview_resume
+        WHERE interview_resume.put_in_resume_id = #{put_in_resume_id}
+
+        ORDER BY interview_resume.create_time DESC LIMIT 1
+
+    </select>
+    <select id="putInResumeCompany" resultType="java.lang.String">
+        SELECT DISTINCT
+        t_company.company_name
+        FROM
+        put_in_resume
+        INNER JOIN
+        t_company
+        ON
+        put_in_resume.put_in_comppany = t_company.company_id
+        <where>
+            put_in_resume.put_in_user = #{userid}
+            <if test="keyword !=null and keyword !=''">
+                and t_company.company_name LIKE CONCAT('%',#{keyword}, '%')
+            </if>
+
+        </where>
+        LIMIT #{pageSize}
+    </select>
+    <select id="putInResumePostLabel" resultType="java.lang.String">
+        SELECT DISTINCT
+        ei_company_post.post_label
+        FROM
+        put_in_resume
+        INNER JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.put_in_user = #{userid}
+            <if test="keyword !=null and keyword !=''">
+                and ei_company_post.post_label LIKE CONCAT('%',#{keyword}, '%')
+            </if>
+
+        </where>
+        LIMIT #{pageSize}
+
+    </select>
+    <select id="putInResumeParticulars" resultMap="PutInResumeParticularsDTOMap">
+        SELECT put_in_resume.put_in_resume_id,
+               put_in_resume.put_in_post,
+               put_in_resume.put_in_comppany,
+               put_in_resume.put_in_jobhunter,
+               put_in_resume.explains,
+               put_in_resume.intention,
+               put_in_resume.not_entry,
+               put_in_resume.arrival_time,
+               put_in_resume.current_annual_salary,
+               put_in_resume.expect_annual_salary,
+               put_in_resume.application_interview_time,
+               put_in_resume.put_in_user,
+               put_in_resume.put_in_message,
+               put_in_resume.t_company_message,
+               put_in_resume.easco,
+               put_in_resume.resume_state,
+               put_in_resume.browse_if,
+               put_in_resume.browse_time,
+               put_in_resume.download_if,
+               put_in_resume.download_time,
+               put_in_resume.exclude_if,
+               put_in_resume.exclude_time,
+               put_in_resume.exclude_state,
+               put_in_resume.affirm_interview,
+               put_in_resume.affirm_interview_time,
+               put_in_resume.subscribe_if,
+               put_in_resume.accept_subscribe,
+               put_in_resume.invitation,
+               put_in_resume.accept_subscribe_state,
+               put_in_resume.subscribe_time,
+               put_in_resume.interview_if,
+               put_in_resume.interview_time,
+               put_in_resume.cancel_if,
+               put_in_resume.affirm_interview,
+               put_in_resume.cancel_time,
+               put_in_resume.cancel_cause,
+               put_in_resume.weed_out_if,
+               put_in_resume.weed_out_time,
+               put_in_resume.weed_out_cause,
+               put_in_resume.offer_if,
+               put_in_resume.offer_time,
+               put_in_resume.entry_if,
+               put_in_resume.entry_cause,
+               put_in_resume.entry_time,
+               put_in_resume.full_moon_if,
+               put_in_resume.full_moon_cause,
+               put_in_resume.not_full_moon,
+               put_in_resume.materials,
+               put_in_resume.dimission_time,
+               put_in_resume.close_an_account_if,
+               put_in_resume.close_an_account_begin_time,
+               put_in_resume.close_an_account_finish_time,
+               put_in_resume.close_an_account_cause,
+               put_in_resume.create_time,
+               put_in_resume.update_id,
+               put_in_resume.update_time,
+               ei_company_post.post_label,
+               ei_company_post.begin_salary,
+               ei_company_post.end_salary,
+               ei_company_post.post_type,
+               t_company.company_name,
+               interview_resume.stage
+
+        FROM put_in_resume
+                 INNER JOIN
+             ei_company_post
+             ON
+                 put_in_resume.put_in_post = ei_company_post.post_id
+                 INNER JOIN
+             t_company
+             ON
+                 ei_company_post.company_id = t_company.company_id
+                 LEFT JOIN
+             (SELECT interview_resume.stage,
+                     interview_resume.put_in_resume_id
+              FROM interview_resume
+              WHERE interview_resume.put_in_resume_id = #{putInResumeId}
+              ORDER BY interview_resume.create_time DESC LIMIT 1) AS interview_resume
+             ON interview_resume.put_in_resume_id = put_in_resume.put_in_resume_id
+
+        where put_in_resume.put_in_resume_id = #{putInResumeId}
+    </select>
+
+    <resultMap id="PutInResumeParticularsDTOMap" type="com.wcwy.company.dto.PutInResumeParticularsDTO">
+        <id property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInJobhunter" column="put_in_jobhunter" jdbcType="VARCHAR"/>
+        <result property="intention" column="intention" jdbcType="VARCHAR"/>
+        <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+        <result property="currentAnnualSalary" column="current_annual_salary" jdbcType="DECIMAL"/>
+        <result property="expectAnnualSalary" column="expect_annual_salary" jdbcType="VARCHAR"/>
+        <result property="applicationInterviewTime" column="application_interview_time" jdbcType="INTEGER"/>
+        <result property="explains" column="explains" jdbcType="VARCHAR"/>
+        <result property="resumeState" column="resume_state" jdbcType="INTEGER"/>
+        <result property="browseIf" column="browse_if" jdbcType="INTEGER"/>
+        <result property="browseTime" column="browse_time" jdbcType="TIMESTAMP"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeIf" column="exclude_if" jdbcType="INTEGER"/>
+        <result property="excludeTime" column="exclude_time" jdbcType="TIMESTAMP"/>
+        <result property="excludeState" column="exclude_state" jdbcType="VARCHAR"/>
+        <result property="subscribeIf" column="subscribe_if" jdbcType="INTEGER"/>
+        <result property="acceptSubscribe" column="accept_subscribe" jdbcType="INTEGER"/>
+        <result property="invitation" column="invitation" jdbcType="VARCHAR"/>
+        <result property="acceptSubscribeState" column="accept_subscribe_state" jdbcType="VARCHAR"/>
+        <result property="subscribeTime" column="subscribe_time" jdbcType="TIMESTAMP"/>
+        <result property="affirmInterviewTime" column="affirm_interview_time" jdbcType="TIMESTAMP"/>
+        <result property="affirmInterview" column="affirm_interview" jdbcType="INTEGER"/>
+        <result property="interviewIf" column="interview_if" jdbcType="INTEGER"/>
+        <result property="interviewTime" column="interview_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelIf" column="cancel_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="weedOutIf" column="weed_out_if" jdbcType="INTEGER"/>
+        <result property="weedOutTime" column="weed_out_time" jdbcType="TIMESTAMP"/>
+        <result property="weedOutCause" column="weed_out_cause" jdbcType="VARCHAR"/>
+        <result property="offerIf" column="offer_if" jdbcType="INTEGER"/>
+        <result property="offerTime" column="offer_time" jdbcType="TIMESTAMP"/>
+        <result property="entryIf" column="entry_if" jdbcType="INTEGER"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonIf" column="full_moon_if" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountIf" column="close_an_account_if" jdbcType="INTEGER"/>
+        <result property="closeAnAccountBeginTime" column="close_an_account_begin_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountFinishTime" column="close_an_account_finish_time" jdbcType="TIMESTAMP"/>
+        <result property="closeAnAccountCause" column="close_an_account_cause" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="postType" column="post_type" jdbcType="DECIMAL"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="notEntry" column="not_entry" jdbcType="INTEGER"/>
+        <result property="stage" column="stage" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="historySubmitAResume" resultType="com.wcwy.company.dto.HistorySubmitAResumeDTO">
+        SELECT put_in_resume.put_in_resume_id,
+               ei_company_post.post_label,
+               ei_company_post.begin_salary,
+               ei_company_post.end_salary,
+               ei_company_post.post_type,
+               t_company.company_name,
+               t_company.company_type,
+               put_in_resume.put_in_message,
+               put_in_resume.resume_state,
+               put_in_resume.browse_if,
+               put_in_resume.entry_if,
+               put_in_resume.close_an_account_if,
+               put_in_resume.create_time,
+               put_in_resume.not_entry
+        FROM put_in_resume
+                 INNER JOIN
+             t_company
+             ON
+                 put_in_resume.put_in_comppany = t_company.company_id
+                 INNER JOIN
+             ei_company_post
+             ON
+                 put_in_resume.put_in_post = ei_company_post.post_id
+        WHERE put_in_resume.put_in_user = #{userid}
+          AND put_in_resume.put_in_jobhunter = #{jobHunterId}
+        ORDER BY put_in_resume.update_time DESC
+
+    </select>
+    <select id="selectPutPost" resultMap="JobHunterPostPutInResumeDTOMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.resume_state,
+        put_in_resume.browse_if,
+        put_in_resume.browse_time,
+        put_in_resume.download_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.accept_subscribe,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.cancel_if,
+        put_in_resume.cancel_time,
+        put_in_resume.cancel_cause,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.create_time,
+        put_in_resume.not_entry,
+        t_jobhunter.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time
+        FROM
+        put_in_resume
+        INNER JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        <where>
+            put_in_resume.put_in_user = #{userId} AND
+            put_in_resume.put_in_post = #{postId}
+            <if test="keyword !=null and keyword !=''">
+                AND t_jobhunter.user_name LIKE CONCAT('%',#{keyword}, '%')
+            </if>
+            <if test="sate !=null and sate==1">
+                AND put_in_resume.browse_if !=2
+            </if>
+
+            <if test="sate !=null and sate==2">
+                AND put_in_resume.download_if=2
+            </if>
+
+            <if test="sate !=null and sate==3">
+                AND put_in_resume.subscribe_if=2
+            </if>
+            <if test="sate !=null and sate==4">
+                AND put_in_resume.offer_if=2
+            </if>
+            <if test="sate !=null and sate==5">
+                AND put_in_resume.entry_if=2
+            </if>
+            <if test="sate !=null and sate==6">
+                AND (put_in_resume.exclude_if=2 or put_in_resume.weed_out_if=2 )
+            </if>
+        </where>
+        ORDER BY
+        put_in_resume.create_time DESC
+
+    </select>
+    <select id="repetition" resultType="java.lang.String">
+        SELECT put_in_resume.put_in_post
+        FROM put_in_resume
+                 INNER JOIN
+             t_jobhunter
+             ON
+                 put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        WHERE put_in_resume.put_in_post = #{postId}
+          AND t_jobhunter.user_name = #{name}
+          AND t_jobhunter.phone = #{phone}
+
+
+    </select>
+    <select id="replacePostPutIn" resultMap="SelectCompanyResumeDTOMap">
+        SELECT
+        put_in_resume.put_in_resume_id,
+        put_in_resume.put_in_post,
+        put_in_resume.put_in_comppany,
+        put_in_resume.put_in_jobhunter,
+        put_in_resume.explains,
+        put_in_resume.intention,
+        put_in_resume.arrival_time,
+        put_in_resume.current_annual_salary,
+        put_in_resume.expect_annual_salary,
+        put_in_resume.application_interview_time,
+        put_in_resume.put_in_user,
+        put_in_resume.put_in_message,
+        put_in_resume.t_company_message,
+        put_in_resume.easco,
+        put_in_resume.resume_state,
+        put_in_resume.browse_time,
+        put_in_resume.browse_if,
+        put_in_resume.download_if,
+        put_in_resume.download_time,
+        put_in_resume.exclude_if,
+        put_in_resume.exclude_time,
+        put_in_resume.exclude_state,
+        put_in_resume.subscribe_if,
+        put_in_resume.accept_subscribe,
+        put_in_resume.invitation,
+        put_in_resume.accept_subscribe_state,
+        put_in_resume.subscribe_time,
+        put_in_resume.interview_if,
+        put_in_resume.interview_time,
+        put_in_resume.cancel_if,
+        put_in_resume.cancel_time,
+        put_in_resume.cancel_cause,
+        put_in_resume.weed_out_if,
+        put_in_resume.weed_out_time,
+        put_in_resume.weed_out_cause,
+        put_in_resume.offer_if,
+        put_in_resume.not_entry,
+        put_in_resume.offer_time,
+        put_in_resume.entry_if,
+        put_in_resume.entry_cause,
+        put_in_resume.entry_time,
+        put_in_resume.full_moon_if,
+        put_in_resume.full_moon_cause,
+        put_in_resume.not_full_moon,
+        put_in_resume.materials,
+        put_in_resume.dimission_time,
+        put_in_resume.close_an_account_if,
+        put_in_resume.close_an_account_begin_time,
+        put_in_resume.close_an_account_cause,
+        put_in_resume.close_an_account_finish_time,
+        put_in_resume.update_time,
+        put_in_resume.create_time,
+        t_jobhunter.user_id,
+        t_jobhunter.address,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.current_salary,
+        t_jobhunter.age,
+        t_jobhunter.education,
+        t_jobhunter.work_time,
+        t_jobhunter.birthday,
+        t_jobhunter.login_time,
+        t_jobhunter_resume.resume_id,
+        ei_company_post.post_type,
+        ei_company_post.post_label
+        FROM
+        put_in_resume
+        LEFT JOIN
+        t_jobhunter
+        ON
+        put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        LEFT JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            AND put_in_resume.put_in_comppany = #{userid} AND put_in_resume.deleted_put_in = 0 and
+            put_in_resume.put_in_post = #{postId}
+            <if test="resumeState !='' and resumeState !=null and resumeState==1 ">
+                and put_in_resume.resume_state =1 and put_in_resume.browse_if=1
+            </if>
+            <if test="resumeState !='' and resumeState !=null and resumeState==2 ">
+                and put_in_resume.browse_if=2
+            </if>
+            <if test="resumeState !='' and resumeState !=null and resumeState==3 ">
+                and put_in_resume.download_if = 2
+            </if>
+            <if test="keyword !='' and keyword !=null ">
+                AND ( t_jobhunter.user_name LIKE CONCAT('%',#{keyword}, '%') or (
+                SELECT COUNT(*)
+                FROM
+                t_jobhunter_education_record
+                WHERE
+                t_jobhunter_education_record.resume_id=t_jobhunter_resume.resume_id and (
+                t_jobhunter_education_record.shcool_name LIKE CONCAT('%',#{keyword}, '%') or
+                t_jobhunter_education_record.major LIKE CONCAT('%',#{keyword}, '%'))
+                )>0)
+            </if>
+        </where>
+        ORDER BY
+        put_in_resume.update_time DESC
+
+    </select>
+    <select id="browseDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(*) as  counts,
+            DATE_FORMAT(FLOOR(put_in_resume.browse_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+       <where>
+           put_in_resume.browse_if = 2 AND
+           put_in_resume.put_in_user =#{shareDataQuery.userId} AND
+           DATE(put_in_resume.browse_time) = DATE(#{shareDataQuery.day})
+           <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+            AND
+            ei_company_post.post_type =#{shareDataQuery.postType}
+        </if>
+           <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+               AND
+               ei_company_post.post_type in (4,5)
+           </if>
+       </where>
+        GROUP BY
+            time
+    </select>
+    <select id="slipDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) AS counts,
+            DATE_FORMAT(FLOOR(put_in_resume.create_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+       <where>
+         DATE(put_in_resume.create_time) = DATE(#{shareDataQuery.day}) AND  put_in_resume.put_in_user =#{shareDataQuery.userId}
+        <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+            AND
+            ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+            AND
+            ei_company_post.post_type =#{shareDataQuery.postType}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+            AND
+            ei_company_post.post_type in (4,5)
+        </if>
+       </where>
+
+        GROUP BY
+            time
+    </select>
+    <select id="interviewDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(*) as  counts,
+            DATE_FORMAT(FLOOR(interview_resume.interview_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            interview_resume
+            INNER JOIN
+            put_in_resume
+        ON
+            interview_resume.put_in_resume_id = put_in_resume.put_in_resume_id
+            LEFT JOIN
+            ei_company_post
+            ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            DATE(interview_resume.interview_time) = DATE(#{shareDataQuery.day}) AND
+            put_in_resume.put_in_user =  #{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+            time
+    </select>
+    <select id="browseWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(*) as  counts,
+        DATE_FORMAT(FLOOR(put_in_resume.browse_time),'%Y-%m-%d') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.browse_if = 2 AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}  AND
+            DATE(put_in_resume.browse_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate})
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+        GROUP BY
+        time
+    </select>
+    <select id="slipWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.create_time),'%Y-%m-%d') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+       DATE(put_in_resume.create_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND  put_in_resume.put_in_user =#{shareDataQuery.userId}
+        <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+            AND
+            ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+            AND
+            ei_company_post.post_type =#{shareDataQuery.postType}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+            AND
+            ei_company_post.post_type in (4,5)
+        </if>
+        </where>
+        GROUP BY
+        time
+    </select>
+    <select id="interviewWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(*) as  counts,
+        DATE_FORMAT(FLOOR(interview_resume.interview_time),'%Y-%m-%d') time
+        FROM
+        interview_resume
+        INNER JOIN
+        put_in_resume
+        ON
+        interview_resume.put_in_resume_id = put_in_resume.put_in_resume_id
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            DATE(interview_resume.interview_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =  #{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+        GROUP BY
+        time
+    </select>
+    <select id="downloadDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) AS counts,
+            DATE_FORMAT(FLOOR(put_in_resume.download_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+       <where>
+         put_in_resume.download_if = 2 AND
+            DATE(put_in_resume.download_time) = DATE(#{shareDataQuery.day}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+        <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+            AND
+            ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+            AND
+            ei_company_post.post_type =#{shareDataQuery.postType}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+            AND
+            ei_company_post.post_type in (4,5)
+        </if>
+       </where>
+        GROUP BY
+            time
+    </select>
+    <select id="offerDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) AS counts,
+            DATE_FORMAT(FLOOR(put_in_resume.offer_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+          put_in_resume.offer_if = 2 AND
+            DATE(put_in_resume.offer_time) = DATE(#{shareDataQuery.day}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+        <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+        AND
+        ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+    </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+            AND
+            ei_company_post.post_type =#{shareDataQuery.postType}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+            AND
+            ei_company_post.post_type in (4,5)
+        </if>
+        </where>
+        GROUP BY
+            time
+    </select>
+    <select id="fullMoonDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) AS counts,
+            DATE_FORMAT(FLOOR(put_in_resume.dispose_full_moon_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+      <where>
+            put_in_resume.full_moon_if = 2 AND
+            DATE(put_in_resume.dispose_full_moon_time) = DATE(#{shareDataQuery.day}) AND
+            put_in_resume.put_in_user = #{shareDataQuery.userId}
+        <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+            AND
+            ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+            AND
+            ei_company_post.post_type =#{shareDataQuery.postType}
+        </if>
+        <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+            AND
+            ei_company_post.post_type in (4,5)
+        </if>
+      </where>
+        GROUP BY
+            time
+    </select>
+    <select id="downloadWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.download_time),'%Y-%m-%d') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.download_if = 2 AND
+            DATE(put_in_resume.browse_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+    </select>
+    <select id="offerWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) AS counts,
+            DATE_FORMAT(FLOOR(put_in_resume.offer_time),'%Y-%m-%d') time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+      <where>
+          put_in_resume.offer_if = 2 AND
+          DATE(put_in_resume.offer_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+          put_in_resume.put_in_user =#{shareDataQuery.userId}
+          <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+              AND
+              ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+          </if>
+          <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+              AND
+              ei_company_post.post_type =#{shareDataQuery.postType}
+          </if>
+          <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+              AND
+              ei_company_post.post_type in (4,5)
+          </if>
+      </where>
+
+        GROUP BY
+            time
+    </select>
+    <select id="fullMoonWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) AS counts,
+            DATE_FORMAT(FLOOR(put_in_resume.dispose_full_moon_time),'%Y-%m-%d') time
+        FROM
+            put_in_resume
+            LEFT JOIN
+            ei_company_post
+        ON
+            put_in_resume.put_in_post = ei_company_post.post_id
+       <where>
+           put_in_resume.full_moon_if = 2 AND
+           DATE(put_in_resume.dispose_full_moon_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+           put_in_resume.put_in_user =#{shareDataQuery.userId}
+           <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+               AND
+               ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+           </if>
+           <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+               AND
+               ei_company_post.post_type =#{shareDataQuery.postType}
+           </if>
+           <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+               AND
+               ei_company_post.post_type in (4,5)
+           </if>
+       </where>
+
+        GROUP BY
+            time
+    </select>
+    <select id="entryDay" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.dispose_entry_time),'%Y-%m-%d %H:00:00') AS time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.entry_if = 2 AND
+            DATE(put_in_resume.dispose_entry_time) = DATE(#{shareDataQuery.day}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+    </select>
+    <select id="entryWeeks" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.dispose_entry_time),'%Y-%m-%d') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.entry_if = 2 AND
+            DATE(put_in_resume.dispose_entry_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+    </select>
+    <select id="browseMonth" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(*) as  counts,
+        DATE_FORMAT(FLOOR(put_in_resume.browse_time),'%Y-%m') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.browse_if = 2 AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}  AND
+            DATE(put_in_resume.browse_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate})
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+        GROUP BY
+        time
+    </select>
+    <select id="slipMonth" resultType="com.wcwy.company.po.PutPostShareDataPO"
+            >
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.create_time),'%Y-%m') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            DATE(put_in_resume.create_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND  put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+        GROUP BY
+        time
+    </select>
+    <select id="interviewMonth" resultType="com.wcwy.company.po.PutPostShareDataPO"
+            >
+        SELECT
+        COUNT(*) as  counts,
+        DATE_FORMAT(FLOOR(interview_resume.interview_time),'%Y-%m') time
+        FROM
+        interview_resume
+        INNER JOIN
+        put_in_resume
+        ON
+        interview_resume.put_in_resume_id = put_in_resume.put_in_resume_id
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            DATE(interview_resume.interview_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =  #{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+        GROUP BY
+        time
+    </select>
+    <select id="downloadMonth" resultType="com.wcwy.company.po.PutPostShareDataPO"
+            >
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.download_time),'%Y-%m') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.download_if = 2 AND
+            DATE(put_in_resume.browse_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+    </select>
+    <select id="entryMonth" resultType="com.wcwy.company.po.PutPostShareDataPO"
+           >
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.dispose_entry_time),'%Y-%m') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.entry_if = 2 AND
+            DATE(put_in_resume.dispose_entry_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+    </select>
+    <select id="offerMonth" resultType="com.wcwy.company.po.PutPostShareDataPO"
+            >
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.offer_time),'%Y-%m') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.offer_if = 2 AND
+            DATE(put_in_resume.offer_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+
+    </select>
+    <select id="fullMoonMonth" resultType="com.wcwy.company.po.PutPostShareDataPO">
+        SELECT
+        COUNT(put_in_resume.put_in_resume_id) AS counts,
+        DATE_FORMAT(FLOOR(put_in_resume.dispose_full_moon_time),'%Y-%m') time
+        FROM
+        put_in_resume
+        LEFT JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+        <where>
+            put_in_resume.full_moon_if = 2 AND
+            DATE(put_in_resume.dispose_full_moon_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate}) AND
+            put_in_resume.put_in_user =#{shareDataQuery.userId}
+            <if test="shareDataQuery.city !=null and  shareDataQuery.city !=''">
+                AND
+                ei_company_post.work_city ->"$.city"=#{shareDataQuery.city}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType !=4" >
+                AND
+                ei_company_post.post_type =#{shareDataQuery.postType}
+            </if>
+            <if test="shareDataQuery.postType !='' and shareDataQuery.postType ==4" >
+                AND
+                ei_company_post.post_type in (4,5)
+            </if>
+        </where>
+
+        GROUP BY
+        time
+    </select>
+    <select id="putCount" resultType="java.util.Map" parameterType="java.lang.String">
+        SELECT
+            COUNT(put_in_resume.put_in_resume_id) as sums,
+            ei_company_post.post_type
+        FROM
+            put_in_resume
+                INNER JOIN
+            ei_company_post
+            ON
+                put_in_resume.put_in_post = ei_company_post.post_id
+        WHERE
+            put_in_resume.put_in_user =#{id}
+        GROUP BY
+            ei_company_post.post_type
+    </select>
+    <select id="selectCounts" resultType="java.lang.Long">
+        SELECT
+        count(*) as counts
+        FROM
+        put_in_resume
+        INNER JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+
+        <where>
+            put_in_resume.put_in_user = #{id} AND
+            put_in_resume.create_time BETWEEN #{currentStartDate} AND #{currentEndTime}
+            <if test="type !=null and type !=4">
+                AND ei_company_post.post_type=#{type}
+            </if>
+            <if test="resumeState ==1">
+                and   put_in_resume.browse_if=2
+            </if>
+            <if test="resumeState ==2">
+                and   put_in_resume.download_if=2
+            </if>
+            <if test="resumeState ==3">
+                and   put_in_resume.interview_if=2
+            </if>
+            <if test="resumeState ==5">
+                and   put_in_resume.offer_if=2
+            </if>
+            <if test="resumeState ==6">
+                and   put_in_resume.entry_if=2
+            </if>
+
+            <if test="resumeState ==7">
+                and   put_in_resume.full_moon_if=2
+            </if>
+            <if test="type !=null and type ==4">
+                AND ei_company_post.post_type in (4,5)
+            </if>
+            <if test=" city !=null and city !=''">
+                AND ei_company_post.work_city ->'$.city'=#{city}
+            </if>
+        </where>
+    </select>
+    <select id="mapListCount" resultType="java.util.Map">
+        SELECT
+        count(*) as counts,
+        DATE_FORMAT(FLOOR(put_in_resume.create_time),'%Y-%m-%d') AS time
+        FROM
+        put_in_resume
+        INNER JOIN
+        ei_company_post
+        ON
+        put_in_resume.put_in_post = ei_company_post.post_id
+
+        <where>
+            put_in_resume.put_in_user = #{id} AND
+            put_in_resume.create_time BETWEEN #{currentStartDate} AND #{currentEndTime}
+            <if test="type !=null and type !=4">
+                AND ei_company_post.post_type=#{type}
+            </if>
+            <if test="resumeState ==1">
+                and   put_in_resume.browse_if=2
+            </if>
+            <if test="resumeState ==2">
+                and   put_in_resume.download_if=2
+            </if>
+            <if test="resumeState ==3">
+                and   put_in_resume.interview_if=2
+            </if>
+            <if test="resumeState ==4">
+                and   put_in_resume.offer_if=2
+            </if>
+            <if test="resumeState ==5">
+                and   put_in_resume.entry_if=2
+            </if>
+
+            <if test="resumeState ==6">
+                and   put_in_resume.full_moon_if=2
+            </if>
+            <if test="type !=null and type ==4">
+                AND ei_company_post.post_type in (4,5)
+            </if>
+            <if test=" city !=null and city !=''">
+                AND ei_company_post.work_city ->'$.city'=#{city}
+            </if>
+        </where>
+        GROUP BY
+        time
+        ORDER BY
+        time DESC
+    </select>
+
+
+</mapper>

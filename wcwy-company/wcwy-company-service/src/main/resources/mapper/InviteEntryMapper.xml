@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.InviteEntryMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.InviteEntry">
+        <id property="inviteEntryId" column="invite_entry_id" jdbcType="VARCHAR"/>
+        <result property="contract" column="contract" jdbcType="VARCHAR"/>
+        <result property="offerPath" column="offer_path" jdbcType="VARCHAR"/>
+        <result property="entryDate" column="entry_date" jdbcType="DATE"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIME"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="postName" column="post_name" jdbcType="VARCHAR"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="receivedBy" column="received_by" jdbcType="VARCHAR"/>
+        <result property="receivedByPhone" column="received_by_phone" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="salary" column="salary" jdbcType="DECIMAL"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="stateIf" column="state_if" jdbcType="INTEGER"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="moneyReward" column="money_reward" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="putInConsent" column="put_in_consent" jdbcType="INTEGER"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="updateConsentTime" column="update_consent_time" jdbcType="TIMESTAMP"/>
+        <result property="consentCause" column="consent_cause" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        Invite_entry_id
+        ,contract,offer_path,
+        entry_time,post_id,put_in_resume_id,
+        hired_bounty,received_by,received_by_phone,remark,salary,cancel,state_if,
+        percentage,cancel_cause,cancel_time,
+        workday,put_in_consent,post_type,createId,createTime,
+        update_consent_time,consent_cause,deleted
+    </sql>
+    <select id="select" resultMap="InviteEntryPutInResumeMap">
+        SELECT invite_entry.invite_entry_id,
+               invite_entry.hired_bounty,
+               invite_entry.salary,
+               invite_entry.percentage,
+               invite_entry.workday,
+               invite_entry.post_type,
+               put_in_resume.put_in_resume_id,
+               put_in_resume.put_in_post,
+               put_in_resume.put_in_comppany,
+               put_in_resume.put_in_jobhunter,
+               put_in_resume.put_in_user,
+               t_company.share_person,
+               invite_entry.entry_time,
+               invite_entry.money_reward,
+               invite_entry.percentage
+        FROM put_in_resume
+                 LEFT JOIN
+             t_company
+             ON
+                 put_in_resume.put_in_comppany = t_company.company_id
+                 RIGHT JOIN
+             invite_entry
+             ON
+                 put_in_resume.put_in_post = invite_entry.post_id
+        WHERE invite_entry.deleted = 0
+          AND invite_entry.state_if = 1
+          AND invite_entry.entry_time BETWEEN DATE_SUB(NOW(), INTERVAL 1 day) AND now() invite_entry.post_type IN (2,3)
+    </select>
+    <select id="selectListPutInResumeId" resultMap="InviteEntryPutInResumeMap">
+        SELECT invite_entry.invite_entry_id,
+               invite_entry.hired_bounty,
+               invite_entry.salary,
+               invite_entry.percentage,
+               invite_entry.workday,
+               invite_entry.post_type,
+               put_in_resume.put_in_resume_id,
+               put_in_resume.put_in_post,
+               put_in_resume.put_in_comppany,
+               put_in_resume.put_in_jobhunter,
+               put_in_resume.put_in_user,
+               t_company.share_person,
+               invite_entry.entry_time
+        FROM put_in_resume
+                 LEFT JOIN
+             t_company
+             ON
+                 put_in_resume.put_in_comppany = t_company.company_id
+                 RIGHT JOIN
+             invite_entry
+             ON
+                 put_in_resume.put_in_resume_id = invite_entry.put_in_resume_id
+        WHERE invite_entry.deleted = 0
+          AND invite_entry.invite_entry_id = #{putInResumeId}
+
+    </select>
+
+
+    <resultMap id="InviteEntryPutInResumeMap" type="com.wcwy.company.dto.InviteEntryPutInResume">
+        <id property="inviteEntryId" column="invite_entry_id" jdbcType="VARCHAR"/>
+        <result property="entryTime" column="entry_time" jdbcType="DATE"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="salary" column="salary" jdbcType="DECIMAL"/>
+        <!-- <result property="percentage" column="percentage" jdbcType="INTEGER"/>-->
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="putInPost" column="put_in_post" jdbcType="VARCHAR"/>
+        <result property="putInComppany" column="put_in_comppany" jdbcType="VARCHAR"/>
+        <result property="putInJobhunter" column="put_in_jobhunter" jdbcType="VARCHAR"/>
+        <result property="putInUser" column="put_in_user" jdbcType="VARCHAR"/>
+        <!--<result property="moneyReward" column="money_reward" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>-->
+        <result property="sharePerson" column="share_person" jdbcType="VARCHAR"/>
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="selectResumeId" resultMap="InviteEntryDTOMap">
+        SELECT invite_entry.invite_entry_id,
+               invite_entry.contract,
+               invite_entry.offer_path,
+               invite_entry.entry_time,
+               invite_entry.hired_bounty,
+               invite_entry.salary,
+               invite_entry.percentage,
+               invite_entry.workday,
+               t_jobhunter.user_name
+        FROM invite_entry
+                 RIGHT JOIN
+             put_in_resume
+             ON
+                 invite_entry.put_in_resume_id = put_in_resume.put_in_resume_id
+                 LEFT JOIN
+             t_jobhunter
+             ON
+                 put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        WHERE put_in_resume.put_in_resume_id = #{resumeId}
+    </select>
+    <resultMap id="InviteEntryDTOMap" type="com.wcwy.company.dto.InviteEntryDTO">
+        <id property="inviteEntryId" column="invite_entry_id" jdbcType="VARCHAR"/>
+        <result property="entryTime" column="entry_time" jdbcType="DATE"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="salary" column="salary" jdbcType="DECIMAL"/>
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <!-- <result property="jobHunterName" column="user_name" jdbcType="VARCHAR"/>-->
+    </resultMap>
+
+
+    <resultMap id="InviteEntryDTO" type="com.wcwy.company.dto.InviteEntryDTO">
+        <id property="inviteEntryId" column="invite_entry_id" jdbcType="VARCHAR"/>
+        <result property="contract" column="contract" jdbcType="VARCHAR"/>
+        <result property="offerPath" column="offer_path" jdbcType="VARCHAR"/>
+        <result property="entryTime" column="entry_time" jdbcType="DATE"/>
+        <result property="putInResumeId" column="put_in_resume_id1" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="salary" column="salary" jdbcType="DECIMAL"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="putInConsent" column="put_in_consent" jdbcType="INTEGER"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="updateConsentTime" column="update_consent_time" jdbcType="TIMESTAMP"/>
+        <result property="consentCause" column="consent_cause" jdbcType="VARCHAR"/>
+        <association property="updateEntryPO" javaType="com.wcwy.company.po.UpdateEntryPO" column="invite_entry_id"
+                     select="com.wcwy.company.mapper.UpdateEntryMapper.selectId">
+        </association>
+    </resultMap>
+
+    <select id="inviteEntryPutInResumeId" resultMap="InviteEntryDTO">
+        SELECT invite_entry.invite_entry_id,
+               invite_entry.contract,
+               invite_entry.offer_path,
+               invite_entry.entry_time,
+               invite_entry.post_id,
+               invite_entry.put_in_resume_id,
+               invite_entry.hired_bounty,
+               invite_entry.salary,
+               invite_entry.cancel,
+               invite_entry.percentage,
+               invite_entry.cancel_cause,
+               invite_entry.cancel_time,
+               invite_entry.workday,
+               invite_entry.put_in_consent,
+               invite_entry.update_consent_time,
+               invite_entry.post_type,
+               invite_entry.consent_cause
+        FROM invite_entry
+        WHERE invite_entry.put_in_resume_id = #{put_in_resume_id}
+
+    </select>
+    <select id="notEntry" resultMap="NotEntryDTOMAP">
+        SELECT
+            put_in_resume.put_in_resume_id,
+            put_in_resume.materials,
+            put_in_resume.dimission_time,
+            put_in_resume.full_moon_cause,
+            put_in_resume.entry_cause,
+            put_in_resume.dispose_entry_time,
+            put_in_resume.dispose_full_moon_time,
+            put_in_resume.not_entry,
+            put_in_resume.not_full_moon,
+            t_company.company_name,
+            ei_company_post.post_label,
+            ei_company_post.begin_salary,
+            ei_company_post.end_salary,
+            invite_entry.cancel_cause,
+            invite_entry.put_in_consent,
+            invite_entry.entry_time,
+            invite_entry.entry_date,
+            t_company.contact_phone,
+            t_company.contact_name,
+            t_jobhunter.user_name
+        FROM
+            invite_entry
+                INNER JOIN
+            put_in_resume
+            ON
+                invite_entry.put_in_resume_id = put_in_resume.put_in_resume_id
+                INNER JOIN
+            ei_company_post
+            ON
+                invite_entry.post_id = ei_company_post.post_id
+                INNER JOIN
+            t_company
+            ON
+                put_in_resume.put_in_comppany = t_company.company_id
+                INNER JOIN
+            t_jobhunter
+            ON
+                put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        WHERE
+            put_in_resume.put_in_resume_id =#{putInResumeId}
+    </select>
+
+    <resultMap id="NotEntryDTOMAP" type="com.wcwy.company.dto.NotEntryDTO">
+        <result property="cancelCause" column="cancel_cause" jdbcType="VARCHAR"/>
+        <result property="putInConsent" column="put_in_consent" jdbcType="INTEGER"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="entryTime" column="entry_time" jdbcType="TIMESTAMP"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="dimissionTime" column="dimission_time" jdbcType="TIMESTAMP"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="materials" column="materials" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="fullMoonCause" column="full_moon_cause" jdbcType="VARCHAR"/>
+        <result property="entryCause" column="entry_cause" jdbcType="VARCHAR"/>
+        <result property="disposeEntryTime" column="dispose_entry_time" jdbcType="TIMESTAMP"/>
+        <result property="disposeFullMoonTime" column="dispose_full_moon_time" jdbcType="TIMESTAMP"/>
+        <result property="notEntry" column="not_entry" jdbcType="INTEGER"/>
+        <result property="notFullMoon" column="not_full_moon" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="oneInterview" resultType="com.wcwy.company.dto.OneInterviewDTO">
+        SELECT
+            interview_resume.interview_time,
+            ei_company_post.post_label,
+            ei_company_post.begin_salary,
+            ei_company_post.end_salary,
+            t_jobhunter.user_name,
+            put_in_resume.affirm_interview
+        FROM
+            interview_resume
+                INNER JOIN
+            put_in_resume
+            ON
+                interview_resume.put_in_resume_id = put_in_resume.put_in_resume_id
+                INNER JOIN
+            ei_company_post
+            ON
+                put_in_resume.put_in_post = ei_company_post.post_id
+                INNER JOIN
+            t_jobhunter
+            ON
+                put_in_resume.put_in_jobhunter = t_jobhunter.user_id
+        WHERE
+            interview_resume.stage IN (2,5,6,7) AND
+            interview_resume.put_in_resume_id =#{putInResumeId}  AND
+            put_in_resume.put_in_user =#{userid}
+        ORDER BY
+            interview_resume.create_time DESC
+            LIMIT 1
+
+    </select>
+</mapper>

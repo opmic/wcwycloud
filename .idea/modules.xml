@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/common/common-base/common-base.iml" filepath="$PROJECT_DIR$/common/common-base/common-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-common/common-common.iml" filepath="$PROJECT_DIR$/common/common-common/common-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-mybatis-plus/common-mybatis-plus.iml" filepath="$PROJECT_DIR$/common/common-mybatis-plus/common-mybatis-plus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-oatuh/common-oatuh.iml" filepath="$PROJECT_DIR$/common/common-oatuh/common-oatuh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-rabbitmq/common-rabbitmq.iml" filepath="$PROJECT_DIR$/common/common-rabbitmq/common-rabbitmq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-redis/common-redis.iml" filepath="$PROJECT_DIR$/common/common-redis/common-redis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-rocketmq/common-rocketmq.iml" filepath="$PROJECT_DIR$/common/common-rocketmq/common-rocketmq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/common/common-web/common-web.iml" filepath="$PROJECT_DIR$/common/common-web/common-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oauth/oauth.iml" filepath="$PROJECT_DIR$/oauth/oauth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openfeign/openfeign.iml" filepath="$PROJECT_DIR$/openfeign/openfeign.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-company/wcwy-company-api/wcwy-company-api.iml" filepath="$PROJECT_DIR$/wcwy-company/wcwy-company-api/wcwy-company-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-company/wcwy-company-common/wcwy-company-common.iml" filepath="$PROJECT_DIR$/wcwy-company/wcwy-company-common/wcwy-company-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-company/wcwy-company-service/wcwy-company-service.iml" filepath="$PROJECT_DIR$/wcwy-company/wcwy-company-service/wcwy-company-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-post/wcwy-post-api/wcwy-post-api.iml" filepath="$PROJECT_DIR$/wcwy-post/wcwy-post-api/wcwy-post-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-post/wcwy-post-common/wcwy-post-common.iml" filepath="$PROJECT_DIR$/wcwy-post/wcwy-post-common/wcwy-post-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-post/wcwy-post-service/wcwy-post-service.iml" filepath="$PROJECT_DIR$/wcwy-post/wcwy-post-service/wcwy-post-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-system/wcwy-system.iml" filepath="$PROJECT_DIR$/wcwy-system/wcwy-system.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wcwy-websocket/wcwy-websocket.iml" filepath="$PROJECT_DIR$/wcwy-websocket/wcwy-websocket.iml" />
+    </modules>
+  </component>
+</project>

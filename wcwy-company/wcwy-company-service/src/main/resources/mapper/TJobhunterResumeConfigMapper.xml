@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobhunterResumeConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobhunterResumeConfig">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="visible" column="visible" jdbcType="INTEGER"/>
+            <result property="hunterVisible" column="hunter_visible" jdbcType="INTEGER"/>
+            <result property="hunterPositionVisible" column="hunter_position_visible" jdbcType="INTEGER"/>
+            <result property="nonlocalPositionVisible" column="nonlocal_position_visible" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,visible,
+        hunter_visible,hunter_position_visible,nonlocal_position_visible,
+        create_time,update_time
+    </sql>
+</mapper>

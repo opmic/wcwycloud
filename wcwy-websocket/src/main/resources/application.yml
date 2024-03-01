@@ -1,0 +1,70 @@
+ip: '@ip@'
+server:
+  port: 6001
+spring:
+  sql:
+    init:
+      schema-locations: classpath:db/schema-h2.sql
+      data-locations: classpath:db/data-h2.sql
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*.xml
+  type-aliases-package: com.wcwy.websocket.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    # 关闭二级缓存
+    cache-enabled: false
+    auto-mapping-behavior: full
+    # 关闭一级缓存 单服务架构中（有且仅有只有一个程序提供相同服务），一级缓存开启不会影响业务，只会提高性能。
+    # 微服务架构中需要关闭一级缓存，原因：Service1先查询数据，若之后Service2修改了数据，
+    # 之后Service1又再次以同样的查询条件查询数据，因走缓存会出现查处的数据不是最新数据
+    local-cache-scope: statement
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      logic-delete-field: flag # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+    banner: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+#激活sentinel对feign的支持
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+      useGzipDecoder: true
+  httpclient:
+    connection-timeout: 60000
+    connection-timer-repeat: 3000
+    enabled: true
+  hystrix:
+    enabled: false
+  sentinel:
+    enabled: true
+# 设置日志级别
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+ribbon:
+  eager-load: #开启饿加载
+    enabled: true
+    clients: wcwy-company
+  ConnectTimeout: 30000 # 设置连接超时时间 default 2000
+  ReadTimeout: 50000   # 设置读取超时时间  default 5000
+  OkToRetryOnAllOperations: true # 对所有操作请求都进行重试  default false
+  MaxAutoRetriesNextServer: 1    # 切换实例的重试次数  default 1
+  MaxAutoRetries: 10     # 对当前实例的重试次数 default 0
+
+

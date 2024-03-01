@@ -1,0 +1,1990 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.TCompanyPostMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.TCompanyPost">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="virtualName" column="virtual_name" jdbcType="VARCHAR"/>
+        <result property="conceal" column="conceal" jdbcType="INTEGER"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="customLogo" column="custom_logo" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="individualOrTeam" column="individual_or_team" jdbcType="INTEGER"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="departmentMessage" column="department_message" jdbcType="VARCHAR"/>
+        <result property="publishCause" column="publish_cause" jdbcType="VARCHAR"/>
+        <result property="managerialPosition" column="managerial_position" jdbcType="INTEGER"/>
+        <result property="postAttribute" column="post_attribute" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="position" column="position" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+        <result property="cityid" column="cityid" jdbcType="CHAR"/>
+        <result property="enterpriseProfile" column="enterprise_profile" jdbcType="VARCHAR"/>
+        <result property="reObject" column="re_object" jdbcType="INTEGER"/>
+        <result property="customReportObj" column="custom_report_obj" jdbcType="VARCHAR"/>
+        <result property="team" column="team" jdbcType="INTEGER"/>
+        <result property="customTeam" column="custom_team" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="vacationWelfare" column="vacation_welfare" jdbcType="VARCHAR"/>
+        <result property="postWealId" column="post_weal_id" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="urgency" column="urgency" jdbcType="INTEGER"/>
+        <result property="lightspot" column="lightspot" jdbcType="VARCHAR"/>
+        <result property="socialSecurityWelfare" column="social_security_welfare" jdbcType="VARCHAR"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="salaryRemark" column="salary_remark" jdbcType="VARCHAR"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="workExperienceId" column="work_experience_id" jdbcType="INTEGER"/>
+        <result property="customBeginExperience" column="custom_begin_experience" jdbcType="INTEGER"/>
+        <result property="customEndExperience" column="custom_end_experience" jdbcType="INTEGER"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="educationId" column="education_id" jdbcType="INTEGER"/>
+        <result property="isRecruit" column="is_recruit" jdbcType="TINYINT"/>
+        <result property="collegeType" column="college_type" jdbcType="INTEGER"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="industryContent" column="industry_content" jdbcType="VARCHAR"/>
+        <result property="languageType" column="language_type" jdbcType="VARCHAR"/>
+        <result property="auditionInfo" column="audition_info" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+        <result property="isDispatch" column="is_dispatch" jdbcType="TINYINT"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="jobCategory" column="job_category" jdbcType="VARCHAR"/>
+        <result property="postCode" column="post_code" jdbcType="VARCHAR"/>
+        <result property="refreshTime" column="refresh_time" jdbcType="TIMESTAMP"/>
+        <result property="audit" column="audit" jdbcType="INTEGER"/>
+        <result property="causeOfFailure" column="cause_of_failure" jdbcType="VARCHAR"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="share" column="share" jdbcType="INTEGER"/>
+        <result property="updateId" column="update_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="day" column="day" jdbcType="INTEGER"/>
+        <result property="top" column="top" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        post_id
+        ,company_id,company_name,
+        virtual_name,conceal,logo,
+        firm_size,individual_or_team,company_type_id,post_count,
+        department,department_message,publish_cause,
+        managerial_position,post_attribute,industry,
+        position,work_city,provinceid,
+        cityid,enterprise_profile,re_object,
+        custom_report_obj,team,custom_team,
+        description,vacation_welfare,post_weal_id,
+        urgency,lightspot,social_security_welfare,
+        begin_salary,end_salary,salary_remark,
+        work_experience,work_experience_id,custom_begin_experience,custom_end_experience,
+        education_type,education_id,is_recruit,college_type,
+        post_label,industry_content,language_type,
+        audition_info,address,workday,
+        hired_bounty,percentage,is_dispatch,
+        status,expiration_date,post_type,
+        job_category,post_code,refresh_time,
+        audit,cause_of_failure,create_id,
+        create_time,share,update_id,
+        update_time,deleted
+    </sql>
+
+    <!--测试代码 select  * FROM t_company_post WHERE t_company_post.post_id='PS2209150901957-14' and post_label LIKE '%测试'
+and JSON_CONTAINS(industry,JSON_OBJECT('labelName', "测试")) and position -> '$[0]'='测试'
+and JSON_CONTAINS(post_weal_id,JSON_OBJECT('weal', "测试"))
+and begin_salary <=100 and end_salary >=100
+and work_experience ='测试'
+and  education_type='测存储试'
+and address -> '$.city'='测试'
+and t_company_post.`status`=2
+and post_type=1
+and audit=0-->
+    <select id="seletListPage" resultMap="BaseResultMap">
+        select * FROM t_company_post
+        <where>
+            <if test="tCompanyPostQuery.postId !=null and tCompanyPostQuery.postId !=''">
+                t_company_post.post_id=#{tCompanyPostQuery.postId}
+            </if>
+            <if test="tCompanyPostQuery.companyId !=null and tCompanyPostQuery.companyId !='' ">
+                and company_id=#{tCompanyPostQuery.companyId}
+            </if>
+            <if test="tCompanyPostQuery.postLabel !=null and tCompanyPostQuery.postLabel !=''">
+                and post_label LIKE CONCAT('%',#{tCompanyPostQuery.postLabel}, '%')
+            </if>
+            <!--  <if test="tCompanyPostQuery.labelName !=null and tCompanyPostQuery.labelName !=''">
+                  and JSON_CONTAINS(industry,JSON_OBJECT('labelName', #{tCompanyPostQuery.labelName}))
+              </if>-->
+            <if test="tCompanyPostQuery.position !=null and tCompanyPostQuery.position.size>0">
+                <foreach collection="tCompanyPostQuery.position" item="itemPosition">
+                    <bind name="indexPositionDind" value="'%'+itemPosition+'%'"/>
+                    and position LIKE #{indexPositionDind}
+                </foreach>
+            </if>
+            <if test="tCompanyPostQuery.postWealId !=null and tCompanyPostQuery.postWealId.size>0">
+                <foreach collection="tCompanyPostQuery.postWealId" index="indexPostWealId" item="itemPostWealId">
+                    <bind name="itemPostWealIdBind" value="'%'+itemPostWealId+'%'"/>
+                    and industry LIKE #{itemPostWealIdBind}
+                </foreach>
+            </if>
+            <if test="tCompanyPostQuery.beginSalary !=null  ">
+                <![CDATA[
+               and begin_salary<= #{tCompanyPostQuery.beginSalary}
+                ]]>
+            </if>
+            <if test="tCompanyPostQuery.endSalary !=null">
+                and end_salary >=#{tCompanyPostQuery.endSalary}
+            </if>
+            <if test=" tCompanyPostQuery.workExperience !=null and tCompanyPostQuery.workExperience !=''">
+                and work_experience =#{tCompanyPostQuery.workExperience}
+            </if>
+            <if test="tCompanyPostQuery.educationType !=null and tCompanyPostQuery.educationType !=''">
+                and education_type=#{tCompanyPostQuery.educationType}
+            </if>
+
+            <if test="tCompanyPostQuery.city !=null and tCompanyPostQuery.city !=''">
+                and work_city -> '$.city'=#{tCompanyPostQuery.city}
+            </if>
+            <if test="tCompanyPostQuery.status !=null ">
+                and t_company_post.`status`=#{tCompanyPostQuery.status}
+            </if>
+            <if test="tCompanyPostQuery.postType !=null">
+                and post_type=#{tCompanyPostQuery.postType}
+            </if>
+            <if test="tCompanyPostQuery.audit !=null">
+                and audit=#{tCompanyPostQuery.audit}
+            </if>
+            and deleted=0
+        </where>
+
+        ORDER BY t_company_post.update_time desc
+    </select>
+
+    <resultMap id="PostShareMap" type="com.wcwy.post.dto.PostShare">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="virtualName" column="virtual_name" jdbcType="VARCHAR"/>
+        <result property="enterpriseProfile" column="enterprise_profile" jdbcType="VARCHAR"/>
+        <result property="conceal" column="conceal" jdbcType="INTEGER"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="customLogo" column="custom_logo" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="individualOrTeam" column="individual_or_team" jdbcType="INTEGER"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="postAttribute" column="post_attribute" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="position" column="position" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+        <result property="cityid" column="cityid" jdbcType="CHAR"/>
+        <result property="postArea" column="post_area" jdbcType="CHAR"/>
+        <result property="reObject" column="re_object" jdbcType="INTEGER"/>
+        <result property="customReportObj" column="custom_report_obj" jdbcType="VARCHAR"/>
+        <result property="team" column="team" jdbcType="INTEGER"/>
+        <result property="customTeam" column="custom_team" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="postWealId" column="post_weal_id" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="salaryRemark" column="salary_remark" jdbcType="VARCHAR"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="customBeginExperience" column="custom_begin_experience" jdbcType="INTEGER"/>
+        <result property="customEndExperience" column="custom_end_experience" jdbcType="INTEGER"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="isRecruit" column="is_recruit" jdbcType="TINYINT"/>
+        <result property="collegeType" column="college_type" jdbcType="INTEGER"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="industryContent" column="industry_content" jdbcType="VARCHAR"/>
+        <result property="languageType" column="language_type" jdbcType="VARCHAR"/>
+        <result property="auditionInfo" column="audition_info" jdbcType="VARCHAR"/>
+        <result property="urgency" column="urgency" jdbcType="INTEGER"/>
+        <result property="lightspot" column="lightspot" jdbcType="VARCHAR"/>
+        <result property="vacationWelfare" column="vacation_welfare" jdbcType="VARCHAR"/>
+        <result property="socialSecurityWelfare" column="social_security_welfare" jdbcType="VARCHAR"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="departmentMessage" column="department_message" jdbcType="VARCHAR"/>
+        <result property="publishCause" column="publish_cause" jdbcType="VARCHAR"/>
+        <result property="managerialPosition" column="managerial_position" jdbcType="INTEGER"/>
+        <!-- <result property="address" column="address" jdbcType="VARCHAR"
+                 typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>-->
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="isDispatch" column="is_dispatch" jdbcType="TINYINT"/>
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="jobCategory" column="job_category" jdbcType="VARCHAR"/>
+        <result property="postCode" column="post_code" jdbcType="VARCHAR"/>
+        <result property="refreshTime" column="refresh_time" jdbcType="TIMESTAMP"/>
+        <result property="dayTime" column="day_time" jdbcType="TIMESTAMP"/>
+        <result property="audit" column="audit" jdbcType="INTEGER"/>
+        <result property="day" column="day" jdbcType="INTEGER"/>
+        <result property="top" column="top" jdbcType="INTEGER"/>
+        <result property="causeOfFailure" column="cause_of_failure" jdbcType="VARCHAR"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="share" column="share" jdbcType="INTEGER"/>
+        <result property="updateId" column="update_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="shareId" column="share_id" jdbcType="VARCHAR"/>
+        <result property="companyPostId" column="company_post_id" jdbcType="VARCHAR"/>
+        <result property="flow" column="flow" jdbcType="BIGINT"/>
+        <result property="shareSize" column="share_size" jdbcType="BIGINT"/>
+        <result property="downloadSize" column="download_size" jdbcType="BIGINT"/>
+        <result property="browseSize" column="browse_size" jdbcType="BIGINT"/>
+        <result property="interviewSize" column="interview_size" jdbcType="BIGINT"/>
+        <result property="entrySize" column="entry_size" jdbcType="BIGINT"/>
+        <result property="weedOut" column="weed_out" jdbcType="BIGINT"/>
+        <result property="subscribe" column="subscribe" jdbcType="BIGINT"/>
+        <result property="offerSize" column="offer_size" jdbcType="BIGINT"/>
+        <result property="overInsured" column="over_insured" jdbcType="BIGINT"/>
+        <result property="closeAnAccount" column="close_an_account" jdbcType="DECIMAL"/>
+        <!--   <collection property="headhunterPositionRecord" column="post_id" javaType="java.util.ArrayList"
+                       ofType="com.wcwy.post.entity.HeadhunterPositionRecord"
+                       select="com.wcwy.post.mapper.HeadhunterPositionRecordMapper.selectById">
+                    <id property="headhunterPositionRecordId" column="headhunter_position_record_id" jdbcType="INTEGER"/>
+                    <result property="month" column="month" jdbcType="INTEGER"/>
+                    <result property="money" column="money" jdbcType="DECIMAL"/>
+                    <result property="postId" column="post_id1" jdbcType="VARCHAR"/>
+           </collection>-->
+        <!--  <association property="tPostShare" javaType="com.wcwy.post.entity.TPostShare" column="post_id"
+                       select="selectTPostShare"></association>-->
+    </resultMap>
+    <!--  <select id="selectHeadhunterPositionRecord">
+          headhunter_position_record.headhunter_position_record_id,
+          headhunter_position_record.`month`,
+          headhunter_position_record.money,
+          headhunter_position_record.post_id as post_id1,
+      </select>-->
+    <select id="selectListPagePostShare" resultMap="PostShareMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id,
+        t_company_post.company_name,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,
+        t_company_post.custom_logo,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.post_count,
+        t_company_post.post_attribute,
+        t_company_post.industry,
+        t_company_post.position,
+        t_company_post.work_city,
+        t_company_post.provinceid,
+        t_company_post.cityid,
+        t_company_post.enterprise_profile,
+        t_company_post.re_object,
+        t_company_post.custom_report_obj,
+        t_company_post.team,
+        t_company_post.custom_team,
+        t_company_post.description,
+        t_company_post.post_weal_id,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.salary_remark,
+        t_company_post.work_experience,
+        t_company_post.custom_begin_experience,
+        t_company_post.custom_end_experience,
+        t_company_post.education_type,
+        t_company_post.is_recruit,
+        t_company_post.college_type,
+        t_company_post.post_label,
+        t_company_post.industry_content,
+        t_company_post.language_type,
+        t_company_post.audition_info,
+        t_company_post.address,
+        t_company_post.department,
+        t_company_post.department_message,
+        t_company_post.publish_cause,
+        t_company_post.managerial_position,
+        t_company_post.workday,
+        t_company_post.hired_bounty,
+        t_company_post.percentage,
+        t_company_post.is_dispatch,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.job_category,
+        t_company_post.post_code,
+        t_company_post.refresh_time,
+        t_company_post.audit,
+        t_company_post.cause_of_failure,
+        t_company_post.create_id,
+        t_company_post.create_time,
+        t_company_post.`share`,
+        t_company_post.update_id,
+        t_company_post.update_time,
+        t_post_share.share_id,
+        t_post_share.company_post_id,
+        t_post_share.flow,
+        t_post_share.share_size,
+        t_post_share.download_size,
+        t_post_share.browse_size,
+        t_post_share.interview_size,
+        t_post_share.entry_size,
+        t_post_share.subscribe,
+        t_post_share.weed_out,
+        t_post_share.offer_size,
+        t_post_share.over_insured,
+        t_post_share.close_an_account,
+        t_company_post.urgency,
+        t_company_post.vacation_welfare,
+        t_company_post.lightspot,
+        t_company_post.social_security_welfare
+        FROM
+        t_company_post
+        LEFT JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        <where>
+            <if test="tCompanyPostQuery.postId !=null and tCompanyPostQuery.postId !=''">
+                t_company_post.post_id=#{tCompanyPostQuery.postId}
+            </if>
+            <if test="tCompanyPostQuery.companyId !=null and tCompanyPostQuery.companyId !='' ">
+                and company_id=#{tCompanyPostQuery.companyId}
+            </if>
+            <if test="tCompanyPostQuery.postLabel !=null and tCompanyPostQuery.postLabel !=''">
+                and post_label LIKE CONCAT(#{tCompanyPostQuery.postLabel}, '%')
+            </if>
+            <!-- <if test="tCompanyPostQuery.labelName !=null and tCompanyPostQuery.labelName !=''">
+                 and JSON_CONTAINS(industry,JSON_OBJECT('labelName', #{tCompanyPostQuery.labelName}))
+             </if>-->
+            <if test="tCompanyPostQuery.position !=null and tCompanyPostQuery.position.size>0">
+                <foreach collection="tCompanyPostQuery.position" item="itemPosition">
+                    <bind name="indexPositionDind" value="'%'+itemPosition+'%'"/>
+                    and position LIKE #{indexPositionDind}
+                </foreach>
+            </if>
+            <!--<if test="tCompanyPostQuery.postWealId !=null and tCompanyPostQuery.postWealId.size>0">
+                <foreach collection="tCompanyPostQuery.postWealId" index="indexPostWealId" item="itemPostWealId">
+                    <bind name="itemPostWealIdBind" value="'%'+itemPostWealId+'%'"/>
+                    and industry LIKE #{itemPostWealIdBind}
+                </foreach>
+            </if>-->
+            <if test="tCompanyPostQuery.beginSalary !=null  ">
+                <![CDATA[
+               and begin_salary<= #{tCompanyPostQuery.beginSalary}
+                ]]>
+            </if>
+            <!-- <if test="tCompanyPostQuery.endSalary !=null">
+                 and end_salary >=#{tCompanyPostQuery.endSalary}
+             </if>-->
+            <if test=" tCompanyPostQuery.workExperience !=null and tCompanyPostQuery.workExperience !=''">
+                and work_experience =#{tCompanyPostQuery.workExperience}
+            </if>
+            <if test="tCompanyPostQuery.educationType !=null and tCompanyPostQuery.educationType !=''">
+                and education_type=#{tCompanyPostQuery.educationType}
+            </if>
+
+            <if test="tCompanyPostQuery.city !=null and tCompanyPostQuery.city !=''and tCompanyPostQuery.city.size>0">
+                and work_city -> '$.city'=#{tCompanyPostQuery.city}
+            </if>
+            <if test="tCompanyPostQuery.status !=null ">
+                and t_company_post.`status`=#{tCompanyPostQuery.status}
+            </if>
+            <if test="tCompanyPostQuery.postType !=null">
+                and post_type=#{tCompanyPostQuery.postType}
+            </if>
+            <if test="tCompanyPostQuery.audit !=null">
+                and audit=#{tCompanyPostQuery.audit}
+            </if>
+            and deleted=0
+        </where>
+
+        ORDER BY t_company_post.update_time desc
+    </select>
+
+    <select id="selectTPostShare" resultType="com.wcwy.post.entity.TPostShare">
+        SELECT t_post_share.share_id,
+               t_post_share.company_post_id,
+               t_post_share.share_size,
+               t_post_share.download_size,
+               t_post_share.browse_size,
+               t_post_share.interview_size,
+               t_post_share.entry_size,
+               t_post_share.subscribe,
+               t_post_share.weed_out,
+               t_post_share.offer_size,
+               t_post_share.over_insured,
+               t_post_share.close_an_account
+        FROM t_post_share
+        WHERE t_post_share.company_post_id = #{post_id}
+    </select>
+    <select id="getPage" resultType="com.wcwy.post.dto.CompanyPostDTO">
+
+
+    </select>
+    <select id="listPost" resultMap="CompanyPostMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id as company_ids ,
+        t_company_post.company_name,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,
+        t_company_post.custom_logo,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.post_count,
+        t_company_post.address,
+        t_company_post.post_attribute,
+        t_company_post.industry,
+        t_company_post.position,
+        t_company_post.provinceid,
+        t_company_post.work_city,
+        t_company_post.cityid,
+        t_company_post.enterprise_profile,
+        t_company_post.re_object,
+        t_company_post.custom_report_obj,
+        t_company_post.team,
+        t_company_post.custom_team,
+        t_company_post.description,
+        t_company_post.post_weal_id,
+        t_company_post.salary_remark,
+        t_company_post.end_salary,
+        t_company_post.begin_salary,
+        t_company_post.work_experience,
+        t_company_post.custom_begin_experience,
+        t_company_post.custom_end_experience,
+        t_company_post.education_type,
+        t_company_post.is_recruit,
+        t_company_post.college_type,
+        t_company_post.post_label,
+        t_company_post.industry_content,
+        t_company_post.language_type,
+        t_company_post.department,
+        t_company_post.department_message,
+        t_company_post.publish_cause,
+        t_company_post.managerial_position,
+        t_company_post.lightspot,
+        t_company_post.social_security_welfare,
+        t_company_post.urgency,
+        t_company_post.vacation_welfare,
+        t_company_post.audition_info,
+        t_company_post.workday,
+        t_company_post.hired_bounty,
+        t_company_post.percentage,
+        t_company_post.is_dispatch,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.job_category,
+        t_company_post.post_code,
+        t_company_post.refresh_time,
+        t_company_post.audit,
+        t_company_post.cause_of_failure,
+        t_company_post.create_id,
+        t_company_post.create_time,
+        t_company_post.`share`,
+        headhunter_position_record.money,
+        headhunter_position_record.`month`,
+        headhunter_position_record.post_id as post_id1,
+        headhunter_position_record.headhunter_position_record_id,
+        (SELECT COUNT(*) FROM t_company_post WHERE t_company_post.company_id =company_ids ) as quantity
+        FROM
+        t_company_post AS t_company_post
+        LEFT JOIN
+        headhunter_position_record
+        ON
+        t_company_post.post_id = headhunter_position_record.post_id
+        <where>
+            t_company_post.deleted=0 and t_company_post.audit=2 and t_company_post.status=1
+            <if test="tCompanyNewstQuery.jobCategory !=null and tCompanyNewstQuery.jobCategory !='' ">
+                and t_company_post.job_category = #{tCompanyNewstQuery.jobCategory}
+            </if>
+            <if test="tCompanyNewstQuery.postType !=null and tCompanyNewstQuery.postType !=4">
+                AND t_company_post.post_type = #{tCompanyNewstQuery.postType}
+            </if>
+            <if test="tCompanyNewstQuery.postType !=null and tCompanyNewstQuery.postType ==4">
+                AND t_company_post.post_type != 0
+            </if>
+            <if test="tCompanyNewstQuery.city !=null and tCompanyNewstQuery.city.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.city" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    t_company_post.work_city ->'$.city' = #{itemPostWealId}
+                </foreach>
+            </if>
+            <if test="tCompanyNewstQuery.position !=null and tCompanyNewstQuery.position.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.position" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+
+            <if test="tCompanyNewstQuery.educationType !=null and tCompanyNewstQuery.educationType !=''  ">
+                AND t_company_post.education_type = #{tCompanyNewstQuery.educationType}
+            </if>
+            <if test="tCompanyNewstQuery.salary !=null and tCompanyNewstQuery.salary !=''">
+                AND t_company_post.begin_salary >= #{tCompanyNewstQuery.beginSalary} AND t_company_post.end_salary &lt;=
+                #{tCompanyNewstQuery.endSalary}
+            </if>
+            <if test="tCompanyNewstQuery.workExperience !=null and tCompanyNewstQuery.workExperience !=''  ">
+                AND t_company_post.work_experience = #{tCompanyNewstQuery.workExperience}
+            </if>
+            <if test="tCompanyNewstQuery.educationType !=null and tCompanyNewstQuery.educationType !=''  ">
+                AND t_company_post.education_type = #{tCompanyNewstQuery.educationType}
+            </if>
+            <if test="tCompanyNewstQuery.jobCategory !=null and tCompanyNewstQuery.jobCategory !=''  ">
+                AND t_company_post.job_category = #{tCompanyNewstQuery.jobCategory}
+            </if>
+            <if test="tCompanyNewstQuery.postWealId !=null and tCompanyNewstQuery.postWealId.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.postWealId" index="indexPostWealId" item="itemPostWealId"
+                         open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.post_weal_id,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+            <if test="tCompanyNewstQuery.industry !=null and tCompanyNewstQuery.industry.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.industry" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    JSON_CONTAINS(t_company_post.industry,JSON_OBJECT('labelName', #{itemPostWealId}))
+                </foreach>
+            </if>
+            <if test="tCompanyNewstQuery.companyName !=null  and  tCompanyNewstQuery.companyName !=''">
+                <bind name="companyNameBind" value="'%'+tCompanyNewstQuery.companyName+'%'"/>
+                AND (
+                t_company_post.company_name LIKE #{companyNameBind} OR
+                t_company_post.post_label LIKE #{companyNameBind}
+                )
+            </if>
+            <if test="tCompanyNewstQuery.postId !=null and tCompanyNewstQuery.postId !=''">
+                AND t_company_post.post_id = #{tCompanyNewstQuery.postId}
+            </if>
+            <if test="tCompanyNewstQuery.companyId !=null and tCompanyNewstQuery.companyId !='' ">
+                AND t_company_post.company_id = #{tCompanyNewstQuery.companyId}
+            </if>
+
+        </where>
+
+
+        ORDER BY
+        t_company_post.conceal ASC,
+        t_company_post.update_time DESC
+    </select>
+    <select id="recommendlistPost" resultMap="CompanyPostMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id as company_ids ,
+        t_company_post.company_name,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,
+        t_company_post.custom_logo,
+        t_company_post.address,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.post_count,
+        t_company_post.post_attribute,
+        t_company_post.industry,
+        t_company_post.position,
+        t_company_post.provinceid,
+        t_company_post.work_city,
+        t_company_post.cityid,
+        t_company_post.enterprise_profile,
+        t_company_post.re_object,
+        t_company_post.custom_report_obj,
+        t_company_post.team,
+        t_company_post.custom_team,
+        t_company_post.description,
+        t_company_post.post_weal_id,
+        t_company_post.salary_remark,
+        t_company_post.end_salary,
+        t_company_post.begin_salary,
+        t_company_post.work_experience,
+        t_company_post.custom_begin_experience,
+        t_company_post.custom_end_experience,
+        t_company_post.education_type,
+        t_company_post.is_recruit,
+        t_company_post.college_type,
+        t_company_post.post_label,
+        t_company_post.industry_content,
+        t_company_post.language_type,
+        t_company_post.department,
+        t_company_post.department_message,
+        t_company_post.publish_cause,
+        t_company_post.managerial_position,
+        t_company_post.lightspot,
+        t_company_post.social_security_welfare,
+        t_company_post.urgency,
+        t_company_post.vacation_welfare,
+        t_company_post.audition_info,
+        t_company_post.workday,
+        t_company_post.hired_bounty,
+        t_company_post.percentage,
+        t_company_post.is_dispatch,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.job_category,
+        t_company_post.post_code,
+        t_company_post.refresh_time,
+        t_company_post.audit,
+        t_company_post.cause_of_failure,
+        t_company_post.create_id,
+        t_company_post.create_time,
+        t_company_post.`share`,
+        (SELECT COUNT(*) FROM t_company_post WHERE t_company_post.company_id =company_ids ) as quantity
+        FROM
+        t_company_post
+        <where>
+            t_company_post.deleted=0 and t_company_post.audit=2 and t_company_post.status=1 and t_company_post.post_type
+            !=0
+            <if test="tCompanyNewstQuery.jobCategory !=null and tCompanyNewstQuery.jobCategory !='' ">
+                and t_company_post.job_category = #{tCompanyNewstQuery.jobCategory}
+            </if>
+            <if test="tCompanyNewstQuery.postType !=null">
+                AND t_company_post.post_type = #{tCompanyNewstQuery.postType}
+            </if>
+            <if test="tCompanyNewstQuery.city !=null and tCompanyNewstQuery.city.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.city" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    t_company_post.work_city ->'$.city' = #{itemPostWealId}
+                </foreach>
+            </if>
+            <if test="tCompanyNewstQuery.position !=null and tCompanyNewstQuery.position.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.position" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+
+            <if test="tCompanyNewstQuery.educationType !=null and tCompanyNewstQuery.educationType !=''  ">
+                AND t_company_post.education_type = #{tCompanyNewstQuery.educationType}
+            </if>
+            <if test="tCompanyNewstQuery.salary !=null and tCompanyNewstQuery.salary !=''">
+                AND t_company_post.begin_salary >= #{tCompanyNewstQuery.beginSalary} AND t_company_post.end_salary &lt;=
+                #{tCompanyNewstQuery.endSalary}
+            </if>
+            <if test="tCompanyNewstQuery.workExperience !=null and tCompanyNewstQuery.workExperience !=''  ">
+                AND t_company_post.work_experience = #{tCompanyNewstQuery.workExperience}
+            </if>
+            <if test="tCompanyNewstQuery.educationType !=null and tCompanyNewstQuery.educationType !=''  ">
+                AND t_company_post.education_type = #{tCompanyNewstQuery.educationType}
+            </if>
+            <if test="tCompanyNewstQuery.jobCategory !=null and tCompanyNewstQuery.jobCategory !=''  ">
+                AND t_company_post.job_category = #{tCompanyNewstQuery.jobCategory}
+            </if>
+            <if test="tCompanyNewstQuery.postWealId !=null and tCompanyNewstQuery.postWealId.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.postWealId" index="indexPostWealId" item="itemPostWealId"
+                         open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.post_weal_id,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+            <if test="tCompanyNewstQuery.industry !=null and tCompanyNewstQuery.industry.size>0">
+                AND
+                <foreach collection="tCompanyNewstQuery.industry" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    JSON_CONTAINS(t_company_post.industry,JSON_OBJECT('labelName', #{itemPostWealId}))
+                </foreach>
+            </if>
+            <if test="tCompanyNewstQuery.companyName !=null  and  tCompanyNewstQuery.companyName !=''">
+                <bind name="companyNameBind" value="'%'+tCompanyNewstQuery.companyName+'%'"/>
+                AND (
+                t_company_post.company_name LIKE #{companyNameBind} OR
+                t_company_post.post_label LIKE #{companyNameBind}
+                )
+            </if>
+            <if test="tCompanyNewstQuery.postId !=null and tCompanyNewstQuery.postId !=''">
+                AND t_company_post.post_id = #{tCompanyNewstQuery.postId}
+            </if>
+            <if test="tCompanyNewstQuery.companyId !=null and tCompanyNewstQuery.companyId !='' ">
+                AND t_company_post.company_id = #{tCompanyNewstQuery.companyId}
+            </if>
+            <if test="tCompanyNewstQuery.postLabel !=null and tCompanyNewstQuery.postLabel !='' ">
+                AND t_company_post.post_label LIKE CONCAT('%',#{tCompanyNewstQuery.postLabel}, '%')
+            </if>
+        </where>
+        ORDER BY
+        t_company_post.conceal ASC,
+        t_company_post.update_time desc
+
+    </select>
+    <select id="selectSonPostShare" resultMap="PostShareMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id,
+        t_company_post.company_name,
+        t_company_post.day_time,
+        /* t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,*/
+        /* t_company_post.custom_logo,*/
+        t_company_post.firm_size,
+        /* t_company_post.company_type_id,*/
+        t_company_post.post_count,
+        /* t_company_post.post_attribute,
+        t_company_post.industry,
+        t_company_post.position,*/
+        t_company_post.work_city,
+        /* t_company_post.provinceid,
+        t_company_post.cityid,
+        t_company_post.enterprise_profile,
+        t_company_post.re_object,
+        t_company_post.custom_report_obj,
+        t_company_post.team,
+        t_company_post.custom_team,
+        t_company_post.description,
+        t_company_post.post_weal_id,*/
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        /* t_company_post.salary_remark,*/
+        t_company_post.work_experience,
+        /* t_company_post.custom_begin_experience,
+        t_company_post.custom_end_experience,*/
+        t_company_post.education_type,
+        /* t_company_post.is_recruit,*/
+        /* t_company_post.college_type,*/
+        t_company_post.post_label,
+        /* t_company_post.industry_content,
+        t_company_post.language_type,
+        t_company_post.audition_info,
+        t_company_post.department,
+        t_company_post.department_message,
+        t_company_post.publish_cause,
+        t_company_post.managerial_position,
+        t_company_post.lightspot,
+        t_company_post.social_security_welfare,
+        t_company_post.urgency,
+        t_company_post.vacation_welfare,
+        t_company_post.address,
+        t_company_post.workday,
+        t_company_post.hired_bounty,
+        t_company_post.percentage,
+        t_company_post.is_dispatch,*/
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        /* t_company_post.job_category,
+        t_company_post.post_code,
+        t_company_post.refresh_time,
+        t_company_post.lightspot,
+        t_company_post.social_security_welfare,
+        t_company_post.urgency,
+        t_company_post.vacation_welfare,
+        t_company_post.audit,
+        t_company_post.cause_of_failure,
+        t_company_post.create_id,
+        t_company_post.create_time,
+        t_company_post.`share`,
+        t_company_post.update_id,
+        t_company_post.update_time,*/
+        t_post_share.share_id,
+        t_post_share.company_post_id,
+        t_post_share.flow,
+        t_post_share.share_size,
+        t_post_share.download_size,
+        t_post_share.browse_size,
+        t_post_share.interview_size,
+        t_post_share.entry_size,
+        t_post_share.subscribe,
+        t_post_share.weed_out,
+        t_post_share.offer_size,
+        t_post_share.over_insured,
+        t_post_share.close_an_account
+        FROM
+        t_company_post
+        LEFT JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        <where>
+            deleted=0 and t_company_post.company_id =#{companyId}
+            <choose>
+                <when test="identification==4">
+                    AND t_company_post.post_type NOT IN (0)
+                </when>
+                <when test="identification!=4">
+                    AND t_company_post.post_type =#{identification}
+                </when>
+
+            </choose>
+
+            <if test="postName !=null and postName !=''">
+                <bind name="bindPostName" value="'%'+postName+'%'"/>
+                and (t_company_post.post_label LIKE #{bindPostName} OR t_company_post.work_city LIKE #{bindPostName})
+            </if>
+        </where>
+
+        ORDER BY t_company_post.update_time desc
+    </select>
+    <select id="hotJob" resultMap="BaseResultMap">
+        SELECT t_post_share.attention,
+               t_company_post.post_id,
+               t_company_post.company_id,
+               t_company_post.company_name,
+               t_company_post.virtual_name,
+               t_company_post.conceal,
+               t_company_post.logo,
+               t_company_post.custom_logo,
+               t_company_post.firm_size,
+               t_company_post.company_type_id,
+               t_company_post.post_count,
+               t_company_post.department,
+               t_company_post.department_message,
+               t_company_post.publish_cause,
+               t_company_post.managerial_position,
+               t_company_post.post_attribute,
+               t_company_post.industry,
+               t_company_post.position,
+               t_company_post.work_city,
+               t_company_post.provinceid,
+               t_company_post.cityid,
+               t_company_post.enterprise_profile,
+               t_company_post.re_object,
+               t_company_post.custom_report_obj,
+               t_company_post.team,
+               t_company_post.custom_team,
+               t_company_post.description,
+               t_company_post.vacation_welfare,
+               t_company_post.post_weal_id,
+               t_company_post.urgency,
+               t_company_post.lightspot,
+               t_company_post.social_security_welfare,
+               t_company_post.begin_salary,
+               t_company_post.end_salary,
+               t_company_post.salary_remark,
+               t_company_post.work_experience,
+               t_company_post.custom_begin_experience,
+               t_company_post.custom_end_experience,
+               t_company_post.education_type,
+               t_company_post.is_recruit,
+               t_company_post.college_type,
+               t_company_post.post_label,
+               t_company_post.industry_content,
+               t_company_post.language_type,
+               t_company_post.audition_info,
+               t_company_post.address,
+               t_company_post.workday,
+               t_company_post.hired_bounty,
+               t_company_post.percentage,
+               t_company_post.is_dispatch,
+               t_company_post.`status`,
+               t_company_post.expiration_date,
+               t_company_post.post_type,
+               t_company_post.job_category,
+               t_company_post.post_code,
+               t_company_post.refresh_time,
+               t_company_post.audit,
+               t_company_post.cause_of_failure,
+               t_company_post.create_id,
+               t_company_post.create_time,
+               t_company_post.`share`,
+               t_company_post.update_id,
+               t_company_post.update_time
+        FROM t_post_share
+                 INNER JOIN
+             t_company_post
+             ON
+                 t_post_share.company_post_id = t_company_post.post_id
+        WHERE t_company_post.conceal = 0
+          AND t_company_post.`status` = 1
+        ORDER BY t_post_share.flow DESC
+
+    </select>
+
+
+    <select id="tCompanyHotPostDTOS" resultMap="TCompanyHotPostDTOMap">
+        SELECT t_company_hot.id,
+               t_company_hot.hot,
+               t_company_hot.company_name,
+               t_company_hot.logo,
+               t_company_hot.custom_logo,
+               t_company_hot.company_id,
+               t_company_hot.company_type_id,
+               t_company_hot.industry,
+               t_company_hot.firm_size
+        FROM t_company_hot
+        WHERE t_company_hot.deleted = 0
+        ORDER BY t_company_hot.hot DESC
+    </select>
+
+    <resultMap id="TCompanyHotPostDTOMap" type="com.wcwy.post.dto.TCompanyHotPostDTO">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="hot" column="hot" jdbcType="BIGINT"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="customLogo" column="custom_logo" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <collection property="tCompanyPosts" column="company_id" ofType="com.wcwy.post.entity.TCompanyPost"
+                    javaType="java.util.ArrayList" select="selectLimit"></collection>
+    </resultMap>
+
+    <select id="selectLimit" resultMap="BaseResultMap">
+
+        select *, @m1:=@m1+1 r
+        from t_company_post, (select @m1 := 0) a
+        where company_id=#{company_id} and `status`=1
+        order by end_salary desc LIMIT 3
+
+    </select>
+    <select id="hot" resultType="java.lang.String">
+
+        /*  SELECT distinct c.po
+          FROM (SELECT t_company_post.position -> "$[0]" AS po
+                FROM t_company_post
+                         INNER JOIN
+                     t_post_share ON t_company_post.post_id = t_post_share.company_post_id
+                WHERE t_company_post.position -> "$[0]" is not null
+                  and t_company_post.position -> "$[0]" != "null" AND t_company_post.position !="null" AND t_company_post.`status`=1
+                GROUP BY t_company_post.position
+                ORDER BY MAX(t_post_share.flow) DESC) as c
+          WHERE c.po is not null LIMIT 8*/
+        SELECT DISTINCT
+        c.po
+        FROM
+        (
+        SELECT
+        t_company_post.position -> "$[2]" AS po
+        FROM
+        t_company_post
+        INNER JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        WHERE
+        t_company_post.position -> "$[0]" IS NOT NULL AND
+        t_company_post.position -> "$[0]" != "null" AND
+        t_company_post.position NOT LIKE "%其他%" AND
+        t_company_post.`status` = 1
+        GROUP BY
+        t_company_post.position
+        ORDER BY
+        COUNT(po) DESC
+        ) AS c
+        WHERE
+        c.po IS NOT NULL
+        LIMIT 8
+    </select>
+    <select id="latestPost" resultMap="LatestPostPOMap">
+        SELECT t_company_post.post_id,
+               t_company_post.company_id,
+               t_company_post.work_city,
+               t_company_post.work_experience,
+               t_company_post.education_type,
+               t_company_post.post_label,
+               t_company_post.end_salary,
+               t_company_post.begin_salary,
+               t_company_post.day_time
+        FROM t_company_post
+        WHERE t_company_post.company_id = #{companyId}
+          AND t_company_post.`status` = 1
+        ORDER BY t_company_post.update_time DESC
+    </select>
+    <select id="jobType" resultType="java.lang.String">
+        SELECT distinct t_company_post.position -> "$[0]"
+        FROM t_company_post
+        WHERE t_company_post.company_id = #{companyId}
+          AND t_company_post.`status` = 1
+          AND t_company_post.deleted = 0
+    </select>
+    <select id="openForPositions" resultMap="PostCollectDTOMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id,
+        t_company_post.company_type,
+        t_company_post.logo,
+        t_company_post.custom_logo,
+        t_company_post.work_city,
+        t_company_post.post_weal_id,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.post_type,
+        t_company_post.create_time
+        FROM
+        t_company_post
+        <where>
+            t_company_post.`status` = 1 AND t_company_post.deleted = 0
+            <if test="positionQuery.companyId !=null and positionQuery.companyId !='' ">
+                AND t_company_post.company_id =#{positionQuery.companyId}
+            </if>
+            <if test="positionQuery.keyword !=null and positionQuery.keyword !='' ">
+                AND t_company_post.post_label LIKE CONCAT('%',#{positionQuery.keyword}, '%')
+            </if>
+            <if test="positionQuery.workExperience !=null  and positionQuery.workExperience.size()>0  ">
+                AND
+                <foreach collection="positionQuery.workExperience" open="(" close=")" item="id" separator="or">
+
+                    t_company_post.work_experience_id =#{id}
+
+                </foreach>
+            </if>
+            <if test="positionQuery.educationType !=null  and positionQuery.educationType.size()>0 ">
+                AND
+                <foreach collection="positionQuery.educationType" open="(" close=")" item="id" separator="or">
+                    t_company_post.education_id =#{id}
+                </foreach>
+            </if>
+            <if test="positionQuery.city !=null  and positionQuery.city.size()>0 ">
+                AND
+                <foreach collection="positionQuery.city" item="id" separator="or">
+                    t_company_post.work_city ->'$.city' =#{id}
+                </foreach>
+            </if>
+            <if test="positionQuery.beginSalary !=null  and positionQuery.beginSalary >0  and positionQuery.annualSalary !=null and positionQuery.annualSalary !=1 and positionQuery.annualSalary !=6">
+                AND (t_company_post.begin_salary BETWEEN #{positionQuery.beginSalary} AND #{positionQuery.endSalary} OR
+                t_company_post.end_salary BETWEEN #{positionQuery.beginSalary} AND #{positionQuery.endSalary})
+            </if>
+            <if test="positionQuery.beginSalary !=null  and positionQuery.beginSalary >0  and positionQuery.annualSalary !=null and positionQuery.annualSalary ==1">
+                AND t_company_post.begin_salary &lt;= #{positionQuery.beginSalary}
+            </if>
+            <if test="positionQuery.beginSalary !=null   and positionQuery.annualSalary !=null and positionQuery.annualSalary ==6">
+                AND (t_company_post.begin_salary > #{positionQuery.endSalary} OR t_company_post.end_salary >
+                #{positionQuery.endSalary})
+            </if>
+
+            <if test="positionQuery.position !=null and positionQuery.position.size>0">
+                AND
+                <foreach collection="positionQuery.position" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+        </where>
+
+
+    </select>
+    <select id="selectPosition" resultMap="PostShareMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id,
+        t_company_post.post_count,
+        t_company_post.company_name,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.work_city,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.company_type,
+        t_company_post.audit,
+        t_company_post.`share`,
+        t_company_post.day,
+        t_company_post.`top`,
+        t_post_share.company_post_id,
+        t_post_share.flow,
+        t_post_share.share_size,
+        t_post_share.download_size,
+        t_post_share.browse_size,
+        t_post_share.interview_size,
+        t_post_share.entry_size,
+        t_post_share.subscribe,
+        t_post_share.weed_out,
+        t_post_share.offer_size,
+        t_post_share.over_insured,
+        t_post_share.close_an_account
+        FROM
+        t_company_post
+        LEFT JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        <where>
+            <if test="positionQuery.companyId !=null and positionQuery.companyId !='' ">
+                and company_id=#{positionQuery.companyId}
+            </if>
+            <if test="positionQuery.status !=null ">
+                and t_company_post.`status`=#{positionQuery.status}
+            </if>
+            <if test="positionQuery.postType !=null and positionQuery.postType !=4 ">
+                and post_type=#{positionQuery.postType}
+            </if>
+            <if test="positionQuery.postType !=null and positionQuery.postType ==4">
+                and (post_type=4 or post_type=5)
+            </if>
+            <if test="positionQuery.audit !=null">
+                and audit=#{positionQuery.audit}
+            </if>
+
+            <if test="positionQuery.companyName !=null and positionQuery.companyName !=''">
+                and ( post_label LIKE CONCAT('%',#{positionQuery.companyName}, '%') or work_city ->
+                '$.city'=#{positionQuery.companyName} )
+            </if>
+            and deleted=0
+        </where>
+        ORDER BY t_company_post.top DESC,t_company_post.update_time DESC
+
+    </select>
+    <select id="jobSearch" resultMap="CompanyPostMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id AS company_ids,
+        t_company_post.company_name,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.firm_size,
+        t_company_post.logo,
+        t_company_post.post_type,
+        t_company_post.company_type_id,
+        t_company_post.company_type,
+        t_company_post.work_city,
+        t_company_post.post_weal_id,
+        t_company_post.end_salary,
+        t_company_post.begin_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.`status`,
+        t_company_post.day_time
+        FROM
+        t_company_post AS t_company_post
+        <where>
+            t_company_post.deleted=0 and t_company_post.audit=2 and t_company_post.status=1
+            <if test="jobSearchQuery.companyName !=null  and  jobSearchQuery.companyName !=''">
+                <bind name="companyNameBind" value="'%'+jobSearchQuery.companyName+'%'"/>
+                AND (
+                t_company_post.company_name LIKE #{companyNameBind} OR
+                t_company_post.post_label LIKE #{companyNameBind}
+                )
+            </if>
+            <if test="jobSearchQuery.position !=null and jobSearchQuery.position.size>0">
+                AND
+                <foreach collection="jobSearchQuery.position" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+
+            <if test="jobSearchQuery.postWealId !=null and jobSearchQuery.postWealId.size>0">
+                AND
+                <foreach collection="jobSearchQuery.postWealId" index="indexPostWealId" item="itemPostWealId"
+                         open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.post_weal_id,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+            <if test="jobSearchQuery.firmSize !=null and jobSearchQuery.firmSize.size>0">
+                AND
+                <foreach collection="jobSearchQuery.firmSize" index="firmSizeId" item="firmSize" open="(" close=")"
+                         separator="or">
+                    t_company_post.firm_size= #{firmSize}
+                </foreach>
+            </if>
+            <if test="jobSearchQuery.beginSalary !=null  and jobSearchQuery.beginSalary >0  and jobSearchQuery.annualSalary !=null and jobSearchQuery.annualSalary !=1 and jobSearchQuery.annualSalary !=6">
+                AND (t_company_post.begin_salary BETWEEN #{jobSearchQuery.beginSalary} AND #{jobSearchQuery.endSalary}
+                OR t_company_post.end_salary BETWEEN #{jobSearchQuery.beginSalary} AND #{jobSearchQuery.endSalary})
+            </if>
+            <if test="jobSearchQuery.beginSalary !=null  and jobSearchQuery.beginSalary >0  and jobSearchQuery.annualSalary !=null and jobSearchQuery.annualSalary ==1">
+                AND t_company_post.begin_salary &lt;= #{jobSearchQuery.beginSalary}
+            </if>
+            <if test="jobSearchQuery.beginSalary !=null   and jobSearchQuery.annualSalary !=null and jobSearchQuery.annualSalary ==6">
+                AND (t_company_post.begin_salary > #{jobSearchQuery.endSalary} OR t_company_post.end_salary >
+                #{jobSearchQuery.endSalary})
+            </if>
+
+            <if test="jobSearchQuery.city !=null and jobSearchQuery.city.size>0">
+                AND
+                <foreach collection="jobSearchQuery.city" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    t_company_post.work_city ->'$.city' = #{itemPostWealId}
+                </foreach>
+            </if>
+            <if test="jobSearchQuery.workExperience !=null  and jobSearchQuery.workExperience.size()>0 ">
+                AND
+                <foreach collection="jobSearchQuery.workExperience" open="(" close=")" item="id" separator="or">
+
+                    t_company_post.work_experience_id =#{id}
+                </foreach>
+            </if>
+            <if test="jobSearchQuery.educationType !=null  and jobSearchQuery.educationType.size()>0 ">
+                AND
+                <foreach collection="jobSearchQuery.educationType" open="(" close=")" item="id" separator="or">
+                    t_company_post.education_id =#{id}
+                </foreach>
+            </if>
+            <if test="jobSearchQuery.jobCategory !=null and jobSearchQuery.jobCategory !='' ">
+                and t_company_post.job_category = #{jobSearchQuery.jobCategory}
+            </if>
+
+            <if test="jobSearchQuery.postType !=null and jobSearchQuery.postType !=4">
+                AND t_company_post.post_type = #{jobSearchQuery.postType}
+            </if>
+            <if test="jobSearchQuery.industry !=null and jobSearchQuery.industry !=''">
+                AND JSON_SEARCH(t_company_post.industry,"ALL" ,#{jobSearchQuery.industry}) is not null
+            </if>
+        </where>
+        ORDER BY
+        t_company_post.update_time DESC
+
+    </select>
+
+
+    <resultMap id="PostCollectDTOMap" type="com.wcwy.post.dto.PostCollectDTO">
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="customLogo" column="custom_logo" jdbcType="VARCHAR"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="postWealId" column="post_weal_id" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="LatestPostPOMap" type="com.wcwy.post.po.LatestPostPO">
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="dayTime" column="day_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="CompanyPostMap" type="com.wcwy.post.dto.CompanyPostDTO">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_ids" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="virtualName" column="virtual_name" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="enterpriseProfile" column="enterprise_profile" jdbcType="VARCHAR"/>
+        <result property="conceal" column="conceal" jdbcType="INTEGER"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="customLogo" column="custom_logo" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="postAttribute" column="post_attribute" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="position" column="position" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <!--<result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+        <result property="cityid" column="cityid" jdbcType="CHAR"/>
+        <result property="postArea" column="post_area" jdbcType="CHAR"/>
+        <result property="reObject" column="re_object" jdbcType="INTEGER"/>
+        <result property="customReportObj" column="custom_report_obj" jdbcType="VARCHAR"/>
+        <result property="team" column="team" jdbcType="INTEGER"/>
+        <result property="customTeam" column="custom_team" jdbcType="VARCHAR"/>-->
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="postWealId" column="post_weal_id" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <!-- <result property="salaryRemark" column="salary_remark" jdbcType="VARCHAR"/>-->
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <!-- <result property="customBeginExperience" column="custom_begin_experience" jdbcType="INTEGER"/>
+         <result property="customEndExperience" column="custom_end_experience" jdbcType="INTEGER"/>-->
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="isRecruit" column="is_recruit" jdbcType="TINYINT"/>
+        <!--<result property="collegeType" column="college_type" jdbcType="INTEGER"/>-->
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="industryContent" column="industry_content" jdbcType="VARCHAR"/>
+        <!--<result property="languageType" column="language_type" jdbcType="VARCHAR"/>-->
+        <!--<result property="auditionInfo" column="audition_info" jdbcType="VARCHAR"/>-->
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <!-- <result property="isDispatch" column="is_dispatch" jdbcType="TINYINT"/>-->
+        <result property="percentage" column="percentage" jdbcType="INTEGER"/>
+        <!--  <result property="status" column="status" jdbcType="INTEGER"/>-->
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <!-- <result property="jobCategory" column="job_category" jdbcType="VARCHAR"/>
+         <result property="postCode" column="post_code" jdbcType="VARCHAR"/>
+         <result property="refreshTime" column="refresh_time" jdbcType="TIMESTAMP"/>
+         <result property="audit" column="audit" jdbcType="INTEGER"/>
+         <result property="causeOfFailure" column="cause_of_failure" jdbcType="VARCHAR"/>
+         <result property="createId" column="create_id" jdbcType="VARCHAR"/>-->
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="share" column="share" jdbcType="INTEGER"/>
+        <!-- <result property="updateId" column="update_id" jdbcType="VARCHAR"/>-->
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="dayTime" column="day_time" jdbcType="TIMESTAMP"/>
+        <result property="quantity" column="quantity" jdbcType="INTEGER"/>
+        <!--        <collection property="headhunterPositionRecord" ofType="com.wcwy.post.entity.HeadhunterPositionRecord"
+                            column="post_id" select="com.wcwy.post.mapper.HeadhunterPositionRecordMapper.selectById">
+                    &lt;!&ndash;<id property="headhunterPositionRecordId" column="headhunter_position_record_id" jdbcType="INTEGER"/>
+                    <result property="month" column="month" jdbcType="INTEGER"/>
+                    <result property="money" column="money" jdbcType="DECIMAL"/>
+                    <result property="postId" column="post_id1" jdbcType="VARCHAR"/>&ndash;&gt;
+                </collection>-->
+    </resultMap>
+
+    <select id="list1" resultMap="TCompanyPostRecordMap">
+        SELECT t_company_post.post_id,
+               t_company_post.company_id,
+               t_company_post.post_type,
+               t_company_post.work_city,
+               t_company_post.end_salary,
+               t_company_post.begin_salary,
+               t_company_post.education_type,
+               t_company_post.post_label,
+            t_company_post.company_name
+        FROM t_company_post
+    </select>
+
+
+    <resultMap id="TCompanyPostRecordMap" type="com.wcwy.post.pojo.TCompanyPostRecord">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <collection property="headhunterPositionRecord" ofType="com.wcwy.post.entity.HeadhunterPositionRecord"
+                    column="post_id" select="com.wcwy.post.mapper.HeadhunterPositionRecordMapper.selectById">
+        </collection>
+    </resultMap>
+
+
+    <select id="JobTitle" resultType="java.lang.String">
+
+    </select>
+    <select id="postLabel" resultType="com.wcwy.post.po.PostLabel">
+        SELECT
+        t_company_post.post_label,
+        t_company_post.post_id
+        FROM
+        t_company_post
+        <where>
+            t_company_post.company_id =#{userid}
+            <if test="keyword !=null and keyword != ''">
+                and t_company_post.post_label LIKE concat('%',#{keyword},'%')
+            </if>
+        </where>
+        LIMIT 3
+    </select>
+    <select id="firm" resultType="java.lang.String">
+        SELECT DISTINCT t_company_post.company_name
+        FROM t_company_post
+        WHERE t_company_post.`status` = 1
+          and t_company_post.company_name LIKE concat('%', #{keyword}, '%') LIMIT 10
+    </select>
+    <select id="post" resultType="java.lang.String">
+        SELECT DISTINCT t_company_post.post_label
+        FROM t_company_post
+        WHERE t_company_post.`status` = 1
+          and t_company_post.post_label LIKE concat('%', #{keyword}, '%')
+            LIMIT #{i}
+
+    </select>
+    <select id="postRecord" resultMap="TCompanyPostRecordMap"
+            parameterType="java.lang.String">
+        SELECT t_company_post.post_id,
+               t_company_post.company_id,
+               t_company_post.post_type,
+               t_company_post.work_city,
+               t_company_post.end_salary,
+               t_company_post.begin_salary,
+               t_company_post.education_type,
+               t_company_post.post_label
+        FROM t_company_post
+        WHERE t_company_post.post_id = #{postId}
+    </select>
+    <select id="recommendSelect" resultMap="OrderReceivingDTOMap">
+        SELECT
+        t_company_post.company_id,
+        t_company_post.company_name,
+        t_company_post.company_type,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,
+        t_company_post.education_id,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.post_count,
+        t_company_post.work_city,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.day_time,
+        t_company_post.post_id,
+        order_receiving.order_receiving_id,
+        order_receiving.recommerd,
+        order_receiving.create_time,
+        order_receiving.collect,
+        order_receiving.cancel,
+        order_receiving.collect_time,
+        t_post_share.share_size,
+        t_post_share.browse_size,
+        t_post_share.download_size,
+        t_post_share.entry_size,
+        t_post_share.offer_size,
+        t_post_share.interview_size,
+        t_post_share.over_insured,
+        c.posts
+        FROM
+        t_company_post
+        LEFT JOIN
+        order_receiving
+        ON
+        t_company_post.post_id = order_receiving.post_id and order_receiving.recommerd=#{userid}
+        INNER JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        INNER JOIN
+        (SELECT
+        COUNT(t_company_post.post_id) AS posts,
+        t_company_post.company_id
+        FROM
+        t_company_post
+        WHERE
+        t_company_post.post_type != 0 AND
+        t_company_post.`status` = 1 AND
+        t_company_post.audit = 2
+        GROUP BY
+        t_company_post.company_id) as c
+        ON c.company_id=t_company_post.company_id
+        <where>
+            t_company_post.post_type != 0 AND
+            t_company_post.`status` = 1 AND
+            t_company_post.audit = 2
+            <if test="orderReceivingQuery.city !=null and orderReceivingQuery.city.size>0">
+                AND
+                <foreach collection="orderReceivingQuery.city" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    t_company_post.work_city ->'$.city' = #{itemPostWealId}
+                </foreach>
+            </if>
+            <if test="orderReceivingQuery.position !=null and orderReceivingQuery.position.size>0">
+                AND
+                <foreach collection="orderReceivingQuery.position" index="indexPostWealId" item="itemPostWealId"
+                         open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+            <if test="orderReceivingQuery.keyword !=null  and  orderReceivingQuery.keyword !='' ">
+                AND (
+                t_company_post.company_name LIKE concat('%',#{orderReceivingQuery.keyword},'%') OR
+                t_company_post.post_label LIKE concat('%',#{orderReceivingQuery.keyword},'%')
+                )
+            </if>
+            <if test="orderReceivingQuery.companyId !=null  and  orderReceivingQuery.companyId !='' ">
+                AND t_company_post.company_id=#{orderReceivingQuery.companyId}
+            </if>
+        </where>
+        ORDER BY
+        t_company_post.update_time DESC
+
+    </select>
+
+    <resultMap id="OrderReceivingDTOMap" type="com.wcwy.post.dto.OrderReceivingDTO">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="virtualName" column="virtual_name" jdbcType="VARCHAR"/>
+        <result property="conceal" column="conceal" jdbcType="INTEGER"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="educationId" column="education_id" jdbcType="INTEGER"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="orderReceivingId" column="order_receiving_id" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="recommerd" column="recommerd" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="collect" column="collect" jdbcType="INTEGER"/>
+        <result property="collectTime" column="collect_time" jdbcType="TIMESTAMP"/>
+        <result property="cancel" column="cancel" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="shareSize" column="share_size" jdbcType="BIGINT"/>
+        <result property="browseSize" column="browse_size" jdbcType="BIGINT"/>
+        <result property="entrySize" column="entry_size" jdbcType="BIGINT"/>
+        <result property="downloadSize" column="download_size" jdbcType="BIGINT"/>
+        <result property="interviewSize" column="interview_size" jdbcType="BIGINT"/>
+        <result property="offerSize" column="offer_size" jdbcType="BIGINT"/>
+        <result property="overInsured" column="over_insured" jdbcType="BIGINT"/>
+        <result property="posts" column="posts" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <select id="recommendSelectB" resultMap="OrderReceivingDTOMap">
+        SELECT
+        t_company_post.company_id,
+        t_company_post.company_name,
+        t_company_post.company_type,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.post_count,
+        t_company_post.education_id,
+        t_company_post.work_city,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.day_time,
+        t_company_post.post_id,
+        order_receiving.order_receiving_id,
+        order_receiving.recommerd,
+        order_receiving.create_time,
+        order_receiving.collect,
+        order_receiving.cancel,
+        order_receiving.collect_time,
+        t_post_share.share_size,
+        t_post_share.browse_size,
+        t_post_share.download_size,
+        t_post_share.entry_size,
+        t_post_share.offer_size,
+        t_post_share.interview_size,
+        t_post_share.over_insured,
+        c.posts
+        FROM
+        t_company_post
+        INNER JOIN
+        order_receiving
+        ON
+        t_company_post.post_id = order_receiving.post_id AND
+        order_receiving.recommerd =#{userid}
+        INNER JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        INNER JOIN
+        (
+        SELECT
+        COUNT(t_company_post.post_id) AS posts,
+        t_company_post.company_id
+        FROM
+        t_company_post
+        WHERE
+        t_company_post.post_type != 0 AND
+        t_company_post.audit = 2
+        GROUP BY
+        t_company_post.company_id
+        ) AS c
+        ON
+        c.company_id = t_company_post.company_id
+        <where>
+            t_company_post.post_type != 0 AND
+            t_company_post.audit = 2 AND
+            order_receiving.cancel = 1 AND
+            order_receiving.recommerd = #{userid}
+            <if test="orderReceivingQuery.city !=null and orderReceivingQuery.city.size>0">
+                AND
+                <foreach collection="orderReceivingQuery.city" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    t_company_post.work_city ->'$.city' = #{itemPostWealId}
+                </foreach>
+            </if>
+            <if test="orderReceivingQuery.position !=null and orderReceivingQuery.position.size>0">
+                AND
+                <foreach collection="orderReceivingQuery.position" index="indexPostWealId" item="itemPostWealId"
+                         open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+            <if test="orderReceivingQuery.keyword !=null  and  orderReceivingQuery.keyword !='' ">
+                AND (
+                t_company_post.company_name LIKE concat('%',#{orderReceivingQuery.keyword},'%') OR
+                t_company_post.post_label LIKE concat('%',#{orderReceivingQuery.keyword},'%')
+                )
+            </if>
+            <if test="orderReceivingQuery.companyId !=null  and  orderReceivingQuery.companyId !='' ">
+                AND t_company_post.company_id=#{orderReceivingQuery.companyId}
+            </if>
+            <if test="orderReceivingQuery.beginSalary !=null  and orderReceivingQuery.beginSalary >0  and orderReceivingQuery.annualSalary !=null and orderReceivingQuery.annualSalary !=1 and orderReceivingQuery.annualSalary !=6">
+                AND (t_company_post.begin_salary BETWEEN #{orderReceivingQuery.beginSalary} AND #{orderReceivingQuery.endSalary}
+                OR t_company_post.end_salary BETWEEN #{orderReceivingQuery.beginSalary} AND #{orderReceivingQuery.endSalary})
+            </if>
+            <if test="orderReceivingQuery.beginSalary !=null  and orderReceivingQuery.beginSalary >0  and orderReceivingQuery.annualSalary !=null and orderReceivingQuery.annualSalary ==1">
+                AND t_company_post.begin_salary &lt;= #{orderReceivingQuery.beginSalary}
+            </if>
+            <if test="orderReceivingQuery.beginSalary !=null   and orderReceivingQuery.annualSalary !=null and orderReceivingQuery.annualSalary ==6">
+                AND (t_company_post.begin_salary > #{orderReceivingQuery.endSalary} OR t_company_post.end_salary >
+                #{orderReceivingQuery.endSalary})
+            </if>
+            <if test="orderReceivingQuery.status !=null">
+                AND t_company_post.status=#{orderReceivingQuery.status}
+            </if>
+        </where>
+        ORDER BY
+        order_receiving.update_time DESC
+    </select>
+
+    <select id="recommendSelectC" resultMap="OrderReceivingDTOMap">
+        SELECT
+        t_company_post.company_id,
+        t_company_post.company_name,
+        t_company_post.company_type,
+        t_company_post.virtual_name,
+        t_company_post.conceal,
+        t_company_post.logo,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.post_count,
+        t_company_post.work_city,
+        t_company_post.begin_salary,
+        t_company_post.education_id,
+        t_company_post.end_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.day_time,
+        t_company_post.post_id,
+        order_receiving.order_receiving_id,
+        order_receiving.recommerd,
+        order_receiving.create_time,
+        order_receiving.collect,
+        order_receiving.cancel,
+        order_receiving.collect_time,
+        t_post_share.share_size,
+        t_post_share.browse_size,
+        t_post_share.download_size,
+        t_post_share.entry_size,
+        t_post_share.offer_size,
+        t_post_share.interview_size,
+        t_post_share.over_insured,
+        c.posts
+        FROM
+        t_company_post
+        INNER JOIN
+        order_receiving
+        ON
+        t_company_post.post_id = order_receiving.post_id AND
+        order_receiving.recommerd =#{userid}
+        INNER JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        INNER JOIN
+        (
+        SELECT
+        COUNT(t_company_post.post_id) AS posts,
+        t_company_post.company_id
+        FROM
+        t_company_post
+        WHERE
+        t_company_post.post_type != 0 AND
+        t_company_post.audit = 2
+        GROUP BY
+        t_company_post.company_id
+        ) AS c
+        ON
+        c.company_id = t_company_post.company_id
+        <where>
+            t_company_post.post_type != 0 AND
+            t_company_post.audit = 2 AND
+            order_receiving.collect = 1 AND
+            order_receiving.cancel = 2 AND
+            order_receiving.recommerd = #{userid}
+            <if test="orderReceivingQuery.city !=null and orderReceivingQuery.city.size>0">
+                AND
+                <foreach collection="orderReceivingQuery.city" index="indexPostWealId" item="itemPostWealId" open="("
+                         close=")" separator="or">
+                    t_company_post.work_city ->'$.city' = #{itemPostWealId}
+                </foreach>
+            </if>
+            <if test="orderReceivingQuery.position !=null and orderReceivingQuery.position.size>0">
+                AND
+                <foreach collection="orderReceivingQuery.position" index="indexPostWealId" item="itemPostWealId"
+                         open="("
+                         close=")" separator="or">
+                    JSON_SEARCH(t_company_post.position,'one',#{itemPostWealId}) is not null
+                </foreach>
+            </if>
+            <if test="orderReceivingQuery.keyword !=null  and  orderReceivingQuery.keyword !='' ">
+                AND (
+                t_company_post.company_name LIKE concat('%',#{orderReceivingQuery.keyword},'%') OR
+                t_company_post.post_label LIKE concat('%',#{orderReceivingQuery.keyword},'%')
+                )
+            </if>
+            <if test="orderReceivingQuery.companyId !=null  and  orderReceivingQuery.companyId !='' ">
+                AND t_company_post.company_id=#{orderReceivingQuery.companyId}
+            </if>
+        </where>
+        ORDER BY
+        order_receiving.collect_time DESC
+    </select>
+
+    <select id="companyName" resultType="java.util.Map">
+        SELECT
+        t_company_post.company_name,
+        t_company_post.post_id,
+        t_company_post.company_type
+        FROM
+        t_company_post
+        <where>
+            t_company_post.post_id in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+    </select>
+    <select id="selectRecommend" resultMap="PostShareMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.company_id,
+        t_company_post.post_count,
+        t_company_post.individual_or_team,
+        t_company_post.company_name,
+        t_company_post.firm_size,
+        t_company_post.company_type_id,
+        t_company_post.work_city,
+        t_company_post.logo,
+        t_company_post.begin_salary,
+        t_company_post.end_salary,
+        t_company_post.work_experience,
+        t_company_post.education_type,
+        t_company_post.post_label,
+        t_company_post.`status`,
+        t_company_post.expiration_date,
+        t_company_post.post_type,
+        t_company_post.company_type,
+        t_company_post.audit,
+        t_company_post.`share`,
+        t_company_post.day,
+        t_company_post.`top`,
+        t_post_share.company_post_id,
+        t_post_share.flow,
+        t_post_share.share_size,
+        t_post_share.download_size,
+        t_post_share.browse_size,
+        t_post_share.interview_size,
+        t_post_share.entry_size,
+        t_post_share.subscribe,
+        t_post_share.weed_out,
+        t_post_share.offer_size,
+        t_post_share.over_insured,
+        t_post_share.close_an_account
+        FROM
+        t_company_post
+        LEFT JOIN
+        t_post_share
+        ON
+        t_company_post.post_id = t_post_share.company_post_id
+        <where>
+            company_id=#{userid} and post_type=0 and t_company_post.individual_or_team=#{individualOrTeam}
+            <if test="state !=null  and state==1">
+                and t_company_post.`status`=1
+            </if>
+            <if test="state !=null  and state==2">
+                and t_company_post.`status`=0
+            </if>
+            <if test="state !=null  and state==3">
+                and t_company_post.`audit`=1
+            </if>
+            <if test="state !=null  and state==4">
+                and t_company_post.`audit`=2
+            </if>
+            <if test="keyword !=null and keyword !=''">
+                and post_label LIKE CONCAT(#{keyword}, '%') or work_city ->
+                '$.city'=#{keyword}
+            </if>
+            and deleted=0
+        </where>
+        ORDER BY t_company_post.top DESC,t_company_post.update_time DESC
+    </select>
+    <select id="selectCompanyId" resultType="com.wcwy.post.dto.SchoolyardDTO">
+        SELECT
+        distinct t_company_post.company_id as companyId
+        FROM
+        t_company_post
+        <where>
+            t_company_post.`status` = 1 AND
+            t_company_post.company_type != 2 AND
+            (
+            t_company_post.post_label LIKE '%应届生%' OR
+            t_company_post.post_label LIKE '%实习生%' OR
+            t_company_post.work_experience_id = 0 OR
+            t_company_post.work_experience_id = 2 OR
+            t_company_post.job_category = '校园'
+            )AND
+            JSON_LENGTH(t_company_post.post_weal_id) >0
+            <if test="keyword !=null and keyword!='' ">
+                AND
+                (
+                t_company_post.company_name LIKE CONCAT('%',#{keyword}, '%') OR
+                t_company_post.post_label LIKE CONCAT('%',#{keyword}, '%')
+                )
+            </if>
+
+        </where>
+        GROUP BY
+        t_company_post.company_id
+        ORDER BY
+        t_company_post.create_time DESC
+    </select>
+    <select id="selectPostName" resultMap="BaseResultMap">
+        SELECT
+        t_company_post.post_id,
+        t_company_post.post_label,
+        t_company_post.post_weal_id,
+        t_company_post.company_id
+        FROM
+        t_company_post
+        <where>
+            t_company_post.`status` = 1 AND
+            t_company_post.company_type != 2 AND
+            (
+            t_company_post.post_label LIKE '%应届生%' OR
+            t_company_post.post_label LIKE '%实习生%' OR
+            t_company_post.work_experience_id = 0 OR
+            t_company_post.work_experience_id = 2 OR
+            t_company_post.job_category = '校园'
+            )AND
+            JSON_LENGTH(t_company_post.post_weal_id) >0
+            <if test="list !=null and list.size>0">
+                AND t_company_post.company_id in
+                <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="keywordSchoolyard" resultType="java.lang.String">
+        SELECT
+        t_company_post.post_label,
+        t_company_post.post_weal_id,
+        t_company_post.company_id
+        FROM
+        t_company_post
+        <where>
+            t_company_post.`status` = 1 AND
+            t_company_post.company_type != 2 AND
+            (
+            t_company_post.post_label LIKE '%应届生%' OR
+            t_company_post.post_label LIKE '%实习生%' OR
+            t_company_post.work_experience_id = 0 OR
+            t_company_post.work_experience_id = 2 OR
+            t_company_post.job_category = '校园'
+            )
+
+        </where>
+    </select>
+    <select id="countCompany" resultType="java.lang.String">
+        SELECT
+        distinct t_company_post.company_id as companyId
+        FROM
+        t_company_post
+        <where>
+            t_company_post.`status` = 1 AND
+            t_company_post.company_type != 2 AND
+            (
+            t_company_post.post_label LIKE '%应届生%' OR
+            t_company_post.post_label LIKE '%实习生%' OR
+            t_company_post.work_experience_id = 0 OR
+            t_company_post.work_experience_id = 2 OR
+            t_company_post.job_category = '校园'
+            )
+        </where>
+        GROUP BY
+        t_company_post.company_id
+    </select>
+    <select id="tCompanyPostMapper" resultType="java.lang.Integer">
+        SELECT
+        post_type
+        FROM
+        t_company_post
+        <where>
+            t_company_post.company_id =#{userid}
+            <if test="state !=null and state==0">
+             and   t_company_post.status=1
+            </if>
+            <if test="state !=null and state==1">
+                and  t_company_post.status=0 and t_company_post.audit=2
+            </if>
+            <if test="state !=null and state==2">
+                and   t_company_post.audit=0
+            </if>
+            <if test="state !=null and state==3">
+                and  t_company_post.audit=1
+            </if>
+        </where>
+
+
+        GROUP BY
+        t_company_post.post_type
+    </select>
+    <select id="workPlace" resultType="java.lang.String">
+        SELECT
+            DISTINCT t_company_post.work_city -> '$.city'
+        FROM
+            t_company_post
+        WHERE
+            t_company_post.company_id =#{id}
+    </select>
+
+
+</mapper>

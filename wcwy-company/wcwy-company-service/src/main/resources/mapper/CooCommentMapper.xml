@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.CooCommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.CooComment">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="cooTribeId" column="coo_tribe_id" jdbcType="BIGINT"/>
+            <result property="answer" column="answer" jdbcType="VARCHAR"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,coo_tribe_id,answer,
+        province,create_time,create_user
+    </sql>
+    <select id="getPage" resultMap="CooCommentDTOMAP">
+        SELECT
+            coo_comment.id,
+            coo_comment.coo_tribe_id,
+            coo_comment.answer,
+            coo_comment.province,
+            coo_comment.create_time,
+            coo_comment.create_user,
+            t_recommend.username,
+            t_recommend.sex,
+            t_recommend.head_path
+        FROM
+            coo_comment
+                INNER JOIN
+            t_recommend
+            ON
+                coo_comment.create_user = t_recommend.id
+        WHERE
+            coo_comment.coo_tribe_id =#{pageQuery.id}
+        ORDER BY
+            coo_comment.create_time DESC
+
+
+
+    </select>
+
+    <resultMap id="CooCommentDTOMAP" type="com.wcwy.company.dto.CooCommentDTO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="cooTribeId" column="coo_tribe_id" jdbcType="BIGINT"/>
+        <result property="answer" column="answer" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

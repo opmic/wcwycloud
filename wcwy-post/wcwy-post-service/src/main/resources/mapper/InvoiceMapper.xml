@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.InvoiceMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.Invoice">
+            <id property="invoiceId" column="invoice_id" jdbcType="VARCHAR"/>
+            <result property="riseType" column="rise_type" jdbcType="INTEGER"/>
+            <result property="invoiceType" column="Invoice_type" jdbcType="INTEGER"/>
+            <result property="invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
+            <result property="identifyNumber" column="identify_number" jdbcType="VARCHAR"/>
+            <result property="bankOfDeposit" column="bank_of_deposit" jdbcType="VARCHAR"/>
+            <result property="accountNumber" column="account_number" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="bindingUser" column="binding_user" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="tacitlyApprove" column="tacitly_approve" jdbcType="INTEGER"/>
+            <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        invoice_id,rise_type,Invoice_type,
+        invoice_title,identify_number,bank_of_deposit,
+        account_number,address,phone,
+        binding_user,create_time,tacitly_approve,
+        create_user,update_time,update_user,
+        deleted
+    </sql>
+</mapper>

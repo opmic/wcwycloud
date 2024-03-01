@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.ApplyForInvoiceMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.ApplyForInvoice">
+        <id property="applyForInvoiceId" column="apply_for_invoice_id" jdbcType="VARCHAR"/>
+        <result property="riseType" column="rise_type" jdbcType="INTEGER"/>
+        <result property="invoiceType" column="invoice_type" jdbcType="INTEGER"/>
+        <result property="invoiceTitle" column="invoice_title" jdbcType="VARCHAR"/>
+        <result property="identifyNumber" column="identify_number" jdbcType="VARCHAR"/>
+        <result property="bankOfDeposit" column="bank_of_deposit" jdbcType="VARCHAR"/>
+        <result property="accountNumber" column="account_number" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="consigneeAddressId" column="consignee_address_id" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="bindingOrder" column="binding_order" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="processState" column="process_state" jdbcType="INTEGER"/>
+        <result property="processCause" column="process_cause" jdbcType="VARCHAR"/>
+        <result property="invoiceAddress" column="invoice_address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="number" column="number" jdbcType="VARCHAR"/>
+        <result property="expressAttachment" column="express_attachment" jdbcType="VARCHAR"/>
+        <result property="courierNumber" column="courier_number" jdbcType="VARCHAR"/>
+        <result property="taxRate" column="tax_rate" jdbcType="INTEGER"/>
+        <result property="processTime" column="process_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="processUser" column="process_user" jdbcType="VARCHAR"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        apply_for_invoice_id
+        ,rise_type,invoice_type,
+        invoice_title,identify_number,bank_of_deposit,
+        account_number,address,type,
+        consignee_address_id,phone,binding_order,
+        process_state,process_cause,invoice_address,
+        number,tax_rate,process_time,express_attachment,courierNumber,
+        remark,process_user,money,
+        create_time,create_user,update_time,
+        update_user,deleted
+    </sql>
+    <select id="sumInvoicedMoney" resultType="java.util.Map">
+        SELECT
+            sum(money) AS money,
+            COUNT(apply_for_invoice.apply_for_invoice_id) AS  applyForInvoices
+        FROM
+            apply_for_invoice
+        WHERE
+            apply_for_invoice.process_state = 1  AND
+            apply_for_invoice.create_user =#{userid}
+
+    </select>
+
+</mapper>

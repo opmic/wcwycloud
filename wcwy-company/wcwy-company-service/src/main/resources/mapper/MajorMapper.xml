@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.MajorMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.Major">
+            <result property="majoCode" column="majo_code" jdbcType="VARCHAR"/>
+            <result property="majorName" column="major_name" jdbcType="VARCHAR"/>
+            <result property="majorState" column="major_state" jdbcType="INTEGER"/>
+            <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        majo_code,major_name,major_state,
+        parent_id
+    </sql>
+    <select id="selectLists" resultMap="selectListsMap">
+        select * from major where  parent_id=0
+    </select>
+    <resultMap id="selectListsMap" type="com.wcwy.company.dto.MajorParentDTO">
+        <result property="majoCode" column="majo_code" jdbcType="VARCHAR"/>
+        <result property="majorName" column="major_name" jdbcType="VARCHAR"/>
+        <result property="majorState" column="major_state" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <collection property="majorList" ofType="com.wcwy.company.dto.MajorDTO" select="selectParentId" column="majo_code"></collection>
+    </resultMap>
+    <select id="selectParentId" resultMap="selectMajorDTOMap">
+        select * from major where  parent_id=#{majo_code}
+    </select>
+    <resultMap id="selectMajorDTOMap" type="com.wcwy.company.dto.MajorDTO">
+        <result property="majoCode" column="majo_code" jdbcType="VARCHAR"/>
+        <result property="majorName" column="major_name" jdbcType="VARCHAR"/>
+        <result property="majorState" column="major_state" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <collection property="majorList" ofType="com.wcwy.company.entity.Major" select="selectMajorId" column="majo_code"></collection>
+    </resultMap>
+    <select id="selectMajorId" resultType="com.wcwy.company.entity.Major">
+        select * from major where  parent_id=#{majo_code}
+    </select>
+</mapper>

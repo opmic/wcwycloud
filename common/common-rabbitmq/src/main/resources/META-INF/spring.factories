@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wcwy.common.config.ConfirmConfig,\
+  com.wcwy.common.config.PostRecord,\
+  com.wcwy.common.config.ApplyForInvoice

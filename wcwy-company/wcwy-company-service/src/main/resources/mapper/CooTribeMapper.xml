@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.CooTribeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.CooTribe">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="father" column="father" jdbcType="BIGINT"/>
+            <result property="copyWriter" column="copy_writer" jdbcType="VARCHAR"/>
+            <result property="cover" column="cover" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="onLine" column="on_line" jdbcType="INTEGER"/>
+            <result property="audit" column="audit" jdbcType="INTEGER"/>
+            <result property="causeOfFailure" column="cause_of_failure" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="browse" column="browse" jdbcType="BIGINT"/>
+            <result property="zan" column="zan" jdbcType="BIGINT"/>
+            <result property="comment" column="comment" jdbcType="BIGINT"/>
+            <result property="share" column="share" jdbcType="BIGINT"/>
+            <result property="collect" column="collect" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,province,
+        type,father,copy_writer,
+        cover,create_time,on_line,
+        audit,cause_of_failure,user_id,
+        browse,zan,comment,
+        share,collect
+    </sql>
+    <select id="pageAnswer" resultMap="CooTribeDTOMAP">
+        SELECT
+            coo_tribe.id,
+            coo_tribe.title,
+            coo_tribe.province,
+            coo_tribe.type,
+            coo_tribe.father,
+            coo_tribe.copy_writer,
+            coo_tribe.cover,
+            coo_tribe.create_time,
+            coo_tribe.on_line,
+            coo_tribe.audit,
+            coo_tribe.cause_of_failure,
+            coo_tribe.user_id,
+            coo_tribe.browse,
+            coo_tribe.zan,
+            coo_tribe.`pseudonym`,
+            coo_tribe.`comment`,
+            coo_tribe.`share`,
+            coo_tribe.collect,
+            t_recommend.username,
+            t_recommend.head_path,
+            t_recommend.sex
+        FROM
+            coo_tribe
+                INNER JOIN
+            t_recommend
+            ON
+                coo_tribe.user_id = t_recommend.id
+        WHERE
+            coo_tribe.father =#{id} and 	coo_tribe.on_line = 0
+        ORDER BY
+            coo_tribe.create_time DESC
+    </select>
+    <select id="selectType" resultType="com.wcwy.company.entity.CooTribe">
+        SELECT
+            coo_tribe.id,
+            coo_tribe.title,
+            coo_tribe.province,
+            coo_tribe.type,
+            coo_tribe.father,
+            coo_tribe.copy_writer,
+            coo_tribe.cover,
+            coo_tribe.create_time,
+            coo_tribe.on_line,
+            coo_tribe.audit,
+            coo_tribe.cause_of_failure,
+            coo_tribe.user_id,
+            coo_tribe.browse,
+            coo_tribe.pseudonym,
+            coo_tribe.zan,
+            coo_tribe.`comment`,
+            coo_tribe.`share`,
+            coo_tribe.collect
+        FROM
+            coo_tribe
+                INNER JOIN
+            (SELECT
+                 coo_tribe.id
+             FROM
+                 coo_tribe
+             WHERE
+                 coo_tribe.user_id =#{userid}  AND
+                 coo_tribe.type = 3) as a
+            ON 	a.id=coo_tribe.id
+
+       <where >
+           coo_tribe.on_line = 0
+        <if test="cooTribeQuery.title !=null and cooTribeQuery.title !='' ">
+            and coo_tribe.title  LIKE concat('%',#{cooTribeQuery.title},'%')
+        </if>
+           <if test="cooTribeQuery.startTime !=null and cooTribeQuery.endTime ==null">
+               and 	coo_tribe.create_time > #{cooTribeQuery.startTime}
+           </if>
+           <if test="cooTribeQuery.startTime ==null and cooTribeQuery.endTime !=null">
+               and 	coo_tribe.create_time &lt; #{cooTribeQuery.endTime}
+           </if>
+           <if test="cooTribeQuery.startTime !=null and cooTribeQuery.endTime !=null">
+               and 	coo_tribe.create_time BETWEEN #{cooTribeQuery.startTime} and #{cooTribeQuery.endTime}
+           </if>
+       </where>
+
+        ORDER BY
+            coo_tribe.create_time DESC
+    </select>
+    <select id="getPageDTO" resultMap="CooTribeDTOMAP">
+        SELECT
+            coo_tribe.id,
+            coo_tribe.title,
+            coo_tribe.province,
+            coo_tribe.type,
+            coo_tribe.father,
+            coo_tribe.copy_writer,
+            coo_tribe.cover,
+            coo_tribe.create_time,
+            coo_tribe.on_line,
+            coo_tribe.audit,
+            coo_tribe.cause_of_failure,
+            coo_tribe.user_id,
+            coo_tribe.browse,
+            coo_tribe.zan,
+            coo_tribe.pseudonym,
+            coo_tribe.`comment`,
+            coo_tribe.`share`,
+            coo_tribe.collect,
+            t_recommend.username,
+            t_recommend.head_path,
+            t_recommend.sex
+        FROM
+            coo_tribe
+                INNER JOIN
+            t_recommend
+            ON
+                coo_tribe.user_id = t_recommend.id
+
+        <where >
+            coo_tribe.on_line = 0 and coo_tribe.type != 3
+            <if test="cooTribeQuery.title !=null and cooTribeQuery.title !='' ">
+                and coo_tribe.title  LIKE concat('%',#{cooTribeQuery.title},'%')
+            </if>
+            <if test="cooTribeQuery.type !=null">
+               and coo_tribe.type=#{cooTribeQuery.type}
+            </if>
+        </where>
+        ORDER BY
+            coo_tribe.create_time DESC
+    </select>
+    <select id="getAnswer" resultMap="CooTribeDTOMAP">
+        SELECT
+            coo_tribe.copy_writer,
+            t_recommend.username,
+            t_recommend.head_path,
+            t_recommend.sex
+        FROM
+            coo_tribe
+                INNER JOIN
+            t_recommend
+            ON
+                coo_tribe.user_id = t_recommend.id
+        <where>
+            coo_tribe.on_line = 0
+           <if test="id !=null">
+               AND  coo_tribe.father =#{id}
+           </if>
+        <if test="userId !='' and userId !=null">
+            AND  coo_tribe.user_id =#{userId}
+        </if>
+        </where>
+        ORDER BY
+            coo_tribe.create_time DESC
+            LIMIT 1
+
+    </select>
+    <select id="inquirePage" resultMap="CooTribeDTOMAP">
+        SELECT
+        coo_tribe.id,
+        coo_tribe.title,
+        coo_tribe.province,
+        coo_tribe.type,
+        coo_tribe.father,
+        coo_tribe.copy_writer,
+        coo_tribe.cover,
+        coo_tribe.create_time,
+        coo_tribe.on_line,
+        coo_tribe.audit,
+        coo_tribe.cause_of_failure,
+        coo_tribe.user_id,
+        coo_tribe.browse,
+        coo_tribe.pseudonym,
+        coo_tribe.zan,
+        coo_tribe.`comment`,
+        coo_tribe.`share`,
+        coo_tribe.collect,
+        t_recommend.username,
+        t_recommend.head_path,
+        t_recommend.sex
+        FROM
+        coo_tribe
+        INNER JOIN
+        t_recommend
+        ON
+        coo_tribe.user_id = t_recommend.id
+
+        <where >
+            coo_tribe.user_id=#{cooTribeQuery.loginUserId}
+            <if test="cooTribeQuery.title !=null and cooTribeQuery.title !='' ">
+                and coo_tribe.title  LIKE concat('%',#{cooTribeQuery.title},'%')
+            </if>
+            <if test="cooTribeQuery.type !=null">
+                and coo_tribe.type=#{cooTribeQuery.type}
+            </if>
+            <if test="cooTribeQuery.startTime !=null and cooTribeQuery.endTime ==null">
+                and 	coo_tribe.create_time > #{cooTribeQuery.startTime}
+            </if>
+            <if test="cooTribeQuery.startTime ==null and cooTribeQuery.endTime !=null">
+                and 	coo_tribe.create_time &lt; #{cooTribeQuery.endTime}
+            </if>
+            <if test="cooTribeQuery.startTime !=null and cooTribeQuery.endTime !=null">
+                and 	coo_tribe.create_time BETWEEN #{cooTribeQuery.startTime} and #{cooTribeQuery.endTime}
+            </if>
+        </where>
+        ORDER BY
+        coo_tribe.create_time DESC
+
+    </select>
+    <select id="selectId" resultMap="CooTribeDTOMAP">
+        SELECT
+        coo_tribe.id,
+        coo_tribe.title,
+        coo_tribe.province,
+        coo_tribe.type,
+        coo_tribe.father,
+        coo_tribe.copy_writer,
+        coo_tribe.cover,
+        coo_tribe.create_time,
+        coo_tribe.on_line,
+        coo_tribe.audit,
+        coo_tribe.cause_of_failure,
+        coo_tribe.user_id,
+        coo_tribe.browse,
+        coo_tribe.zan,
+        coo_tribe.`comment`,
+        coo_tribe.`share`,
+        coo_tribe.`pseudonym`,
+        coo_tribe.collect,
+        t_recommend.username,
+        t_recommend.head_path,
+        t_recommend.sex
+        FROM
+        coo_tribe
+        INNER JOIN
+        t_recommend
+        ON
+        coo_tribe.user_id = t_recommend.id
+       where  coo_tribe.id=#{id}
+    </select>
+
+
+    <resultMap id="CooTribeDTOMAP" type="com.wcwy.company.dto.CooTribeDTO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="father" column="father" jdbcType="BIGINT"/>
+        <result property="copyWriter" column="copy_writer" jdbcType="VARCHAR"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="causeOfFailure" column="cause_of_failure" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="browse" column="browse" jdbcType="BIGINT"/>
+        <result property="zan" column="zan" jdbcType="BIGINT"/>
+        <result property="comment" column="comment" jdbcType="BIGINT"/>
+        <result property="share" column="share" jdbcType="BIGINT"/>
+        <result property="collect" column="collect" jdbcType="BIGINT"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="pseudonym" column="pseudonym" jdbcType="VARCHAR"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+    </resultMap>
+</mapper>

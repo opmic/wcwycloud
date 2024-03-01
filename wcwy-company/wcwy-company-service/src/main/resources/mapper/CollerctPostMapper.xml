@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.CollerctPostMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.CollerctPost">
+        <id property="collerctPostId" column="collerct_post_id" jdbcType="VARCHAR"/>
+        <result property="post" column="post" jdbcType="VARCHAR"/>
+        <result property="identity" column="identity" jdbcType="INTEGER"/>
+        <result property="collerctUserId" column="collerct_user_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        collerct_post_id
+        ,post,identity,
+        collerct_user_id,create_time,deleted
+    </sql>
+    <select id="selectCollect" resultMap="CollectPostCompanyDTOMap">
+        SELECT
+        collerct_post.collerct_post_id,
+        collerct_post.post,
+        collerct_post.create_time,
+        ei_company_post.post_label,
+        ei_company_post.begin_salary,
+        ei_company_post.end_salary,
+        ei_company_post.work_city,
+        ei_company_post.post_type,
+        ei_company_post.company_id,
+        ei_company_post.company_name
+        FROM
+        collerct_post
+        INNER JOIN
+        ei_company_post
+        ON
+        collerct_post.post = ei_company_post.post_id
+        <where>
+
+            collerct_post.collerct_user_id =#{collectPostQuery.userId} and collerct_post.deleted=0
+
+            <if test="collectPostQuery.keyword !=null and collectPostQuery.keyword !=''">
+                AND (
+                ei_company_post.post_label LIKE concat('%',#{collectPostQuery.keyword},'%') OR
+                ei_company_post.company_name LIKE concat('%',#{collectPostQuery.keyword},'%')
+                )
+            </if>
+
+            <if test="collectPostQuery.startDate !=null and  collectPostQuery.endDate !=null ">
+                AND collerct_post.create_time BETWEEN #{collectPostQuery.startDate} AND #{collectPostQuery.endDate}
+            </if>
+            <if test="collectPostQuery.startDate !=null and collectPostQuery.endDate ==null ">
+                AND collerct_post.create_time > #{collectPostQuery.startDate}
+            </if>
+            <if test="collectPostQuery.startDate ==null and collectPostQuery.endDate !=null ">
+                AND collerct_post.create_time &lt; #{collectPostQuery.endDate}
+            </if>
+        </where>
+        ORDER BY
+        collerct_post.create_time DESC
+    </select>
+
+    <resultMap id="CollectPostCompanyDTOMap" type="com.wcwy.company.dto.CollectPostCompanyDTO">
+        <id property="collerctPostId" column="collerct_post_id" jdbcType="VARCHAR"/>
+        <result property="postId" column="post" jdbcType="VARCHAR"/>
+
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+</mapper>

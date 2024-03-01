@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TCompanyFirmSizeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TCompanyFirmSize">
+            <id property="firmId" column="firm_id" jdbcType="INTEGER"/>
+            <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        firm_id,firm_size
+    </sql>
+</mapper>

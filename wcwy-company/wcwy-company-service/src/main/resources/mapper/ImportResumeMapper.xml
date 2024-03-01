@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.ImportResumeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.ImportResume">
+            <id property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+            <result property="headPortrait" column="head_portrait" jdbcType="VARCHAR"/>
+            <result property="jobHunterName" column="job_hunter_name" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="INTEGER"/>
+            <result property="jobHunterType" column="job_hunter_type" jdbcType="INTEGER"/>
+            <result property="advantage" column="advantage" jdbcType="OTHER"/>
+            <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+            <result property="showCurrentSalary" column="show_current_salary" jdbcType="INTEGER"/>
+            <result property="address" column="address" jdbcType="OTHER"/>
+            <result property="birthday" column="birthday" jdbcType="DATE"/>
+            <result property="politicsStatus" column="politics_status" jdbcType="INTEGER"/>
+            <result property="workTime" column="work_time" jdbcType="DATE"/>
+            <result property="jobStatus" column="job_status" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="recommend" column="recommend" jdbcType="VARCHAR"/>
+            <result property="wechatNumber" column="wechat_number" jdbcType="VARCHAR"/>
+            <result property="resumeExamineStatus" column="resume_examine_status" jdbcType="INTEGER"/>
+            <result property="resumeExamineResult" column="resume_examine_result" jdbcType="VARCHAR"/>
+            <result property="resume" column="resume" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        resume_id,head_portrait,job_hunter_name,
+        sex,job_hunter_type,advantage,
+        current_salary,show_current_salary,address,
+        birthday,politics_status,work_time,
+        job_status,phone,email,
+        recommend,wechat_number,resume_examine_status,
+        resume_examine_result,resume,create_time,
+        update_time,deleted
+    </sql>
+</mapper>

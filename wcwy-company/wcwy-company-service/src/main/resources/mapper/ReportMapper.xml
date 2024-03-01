@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.ReportMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.Report">
+        <id property="reportId" column="report_id" jdbcType="BIGINT"/>
+        <result property="cause" column="cause" jdbcType="VARCHAR"/>
+        <result property="evidence" column="evidence" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="postName" column="post_name" jdbcType="VARCHAR"/>
+        <result property="replenish" column="replenish" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="jobHunterId" column="job_hunter_id" jdbcType="VARCHAR"/>
+        <result property="jobHunterName" column="job_hunter_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="identity" column="identity" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="reportName" column="report_name" jdbcType="VARCHAR"/>
+        <result property="feedback" column="feedback" jdbcType="VARCHAR"/>
+        <result property="reportUserId" column="report_user_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        report_id
+        ,cause,evidence,
+        phone,company_name,post_name,replenish,
+        post_id,create_time,state,feedback,
+        job_hunter_id,job_hunter_name,type,
+        identity,update_time,report_name,
+        report_user_id
+    </sql>
+</mapper>

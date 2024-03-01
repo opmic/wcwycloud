@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobhunterResumeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobhunterResume">
+        <id property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+        <result property="jobhunterId" column="t_jobhunter_id" jdbcType="VARCHAR"/>
+        <result property="resumeName" column="resume_name" jdbcType="VARCHAR"/>
+        <result property="advantage" column="advantage" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="resumeExamineStatus" column="resume_examine_status" jdbcType="INTEGER"/>
+        <result property="resumeExamineResult" column="resume_examine_result" jdbcType="VARCHAR"/>
+        <result property="resume" column="resume" jdbcType="INTEGER"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        resume_id
+        ,t_jobhunter_id,resume_name,resume_examine_result,
+        advantage,resume_examine_status,resume,deleted,
+        create_time,update_time
+    </sql>
+
+
+    <select id="detailedTJobhunterResumeDTO" resultMap="detailedTJobhunterResumeDTOMap">
+        SELECT t_jobhunter_resume.resume_id         as resume_idcc,
+               t_jobhunter_resume.resume_name,
+               t_jobhunter_resume.advantage,
+               t_jobhunter_resume.resume_examine_status,
+               t_jobhunter_resume.resume_examine_result,
+               t_jobhunter_expect_position.postion_id,
+               t_jobhunter_expect_position.position_name,
+               t_jobhunter_expect_position.work_city,
+               t_jobhunter_expect_position.current_salary,
+               t_jobhunter_expect_position.expect_salary,
+               t_jobhunter_expect_position.end_expect_salary,
+               t_jobhunter_expect_position.desired_industry,
+               t_jobhunter_expect_position.arrival_time,
+               t_jobhunter_work_record.work_id,
+               t_jobhunter_work_record.company_name as company_name1,
+               t_jobhunter_work_record.industry,
+               t_jobhunter_work_record.department,
+               t_jobhunter_work_record.position_name as position_name1,
+            t_jobhunter_work_record.start_time as start_time1,
+            t_jobhunter_work_record.end_time as end_time1,
+            t_jobhunter_work_record.content,
+            	t_jobhunter_work_record.position,
+            	t_jobhunter_work_record.job_description,
+            t_jobhunter_work_record.visible,
+            t_jobhunter_project_record.project_id,
+            t_jobhunter_project_record.project_name,
+            t_jobhunter_project_record.company_name as company_name2,
+            t_jobhunter_project_record.project_role,
+            t_jobhunter_project_record.project_url,
+            t_jobhunter_project_record.start_time as start_time2,
+            t_jobhunter_project_record.end_time as end_time2,
+            t_jobhunter_project_record.responsibility,
+            t_jobhunter_project_record.performance,
+            t_jobhunter_project_record.description as description1,
+            t_jobhunter_education_record.edu_id,
+            t_jobhunter_education_record.shcool_name,
+            t_jobhunter_education_record.edul_type,
+            t_jobhunter_education_record.education,
+            t_jobhunter_education_record.major,
+            t_jobhunter_education_record.start_time as start_time3,
+            t_jobhunter_education_record.end_time as end_time3,
+            t_jobhunter_education_record.description as description2
+        FROM
+            t_jobhunter_resume
+            LEFT JOIN
+            t_jobhunter_expect_position
+        ON
+            t_jobhunter_resume.resume_id = t_jobhunter_expect_position.resume_id
+            LEFT JOIN
+            t_jobhunter_work_record
+            ON
+            t_jobhunter_resume.resume_id = t_jobhunter_work_record.resume_id
+            LEFT JOIN
+            t_jobhunter_project_record
+            ON
+            t_jobhunter_resume.resume_id = t_jobhunter_project_record.resume_id
+            LEFT JOIN
+            t_jobhunter_education_record
+            ON
+            t_jobhunter_resume.resume_id = t_jobhunter_education_record.resume_id
+        WHERE
+            t_jobhunter_resume.t_jobhunter_id = #{jobhunterId}
+    </select>
+    <select id="sendAResume" resultMap="JobHunterResumeDTOMap">
+        SELECT
+        t_jobhunter.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.address,
+        t_jobhunter.avatar,
+        t_jobhunter.show_sex,
+        t_jobhunter.phone_number,
+        t_jobhunter.politics_status,
+        t_jobhunter.sex,
+        t_jobhunter.job_status,
+        t_jobhunter.user_type,
+        t_jobhunter.education,
+        t_jobhunter.show_current_salary,
+        t_jobhunter.current_salary,
+        t_jobhunter.expect_salary,
+        t_jobhunter.age,
+        t_jobhunter.phone,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        t_jobhunter.wechat_number,
+        t_jobhunter.email,
+        t_jobhunter.industry_code,
+        t_jobhunter.`status`,
+        t_jobhunter.skill,
+        t_jobhunter.resume_path,
+        t_jobhunter.examine_status,
+        t_jobhunter.refresh_time,
+        t_jobhunter.chat_id,
+        t_jobhunter.resume_examine_status,
+        t_jobhunter.resume_examine_result,
+        t_jobhunter.share_person,
+        t_jobhunter.login_time,
+        t_jobhunter_resume.resume_id,
+        t_jobhunter_resume.advantage
+        FROM
+        t_jobhunter
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        INNER JOIN
+        t_jobhunter_work_record
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_work_record.resume_id
+
+        <where>
+            t_jobhunter.share_person =#{sendAResumeQuery.userId} and t_jobhunter_resume.resume_examine_status =1
+            <if test="sendAResumeQuery.list.size() > 0">
+                and t_jobhunter_resume.t_jobhunter_id NOT IN
+                <foreach collection="sendAResumeQuery.list" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="sendAResumeQuery.search !=null  and sendAResumeQuery.search !='' ">
+                <bind name="search" value="'%'+sendAResumeQuery.search+'%'"/>
+                AND (
+                t_jobhunter.user_name LIKE #{search} OR
+                t_jobhunter_work_record.company_name LIKE #{search} OR
+                t_jobhunter_work_record.position_name LIKE #{search}
+                )
+            </if>
+        </where>
+
+    </select>
+    <select id="inviter" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        t_jobhunter_resume
+        INNER JOIN
+        t_jobhunter
+        ON
+        t_jobhunter_resume.t_jobhunter_id = t_jobhunter.user_id
+        <where>
+            t_jobhunter.share_person = #{userid} AND
+            t_jobhunter_resume.resume_id = #{resumeId}
+        </where>
+
+
+    </select>
+
+
+    <resultMap id="detailedTJobhunterResumeDTOMap" type="com.wcwy.company.dto.DetailedTJobhunterResumeDTO">
+        <id property="resumeId" column="resume_idcc" jdbcType="VARCHAR"/>
+        <result property="resumeName" column="resume_name" jdbcType="VARCHAR"/>
+        <result property="advantage" column="advantage" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="resumeExamineStatus" column="resume_examine_status" jdbcType="INTEGER"/>
+        <result property="resumeExamineResult" column="resume_examine_result" jdbcType="VARCHAR"/>
+        <collection property="tJobhunterExpectPosition" ofType="com.wcwy.company.entity.TJobhunterExpectPosition">
+            <id property="postionId" column="postion_id" jdbcType="VARCHAR"/>
+            <result property="positionName" column="position_name" jdbcType="VARCHAR"
+                    typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="desiredIndustry" column="desired_industry" jdbcType="VARCHAR"
+                    typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                    typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+            <result property="expectSalary" column="expect_salary" jdbcType="DECIMAL"/>
+            <result property="endExpectSalary" column="end_expect_salary" jdbcType="DECIMAL"/>
+            <result property="arrivalTime" column="arrival_time" jdbcType="INTEGER"/>
+        </collection>
+        <collection property="tJobhunterWorkRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord">
+            <id property="workId" column="work_id" jdbcType="VARCHAR"/>
+            <result property="companyName" column="company_name1" jdbcType="VARCHAR"/>
+            <result property="industry" column="industry" jdbcType="VARCHAR"
+                    typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="department" column="department" jdbcType="VARCHAR"/>
+            <result property="positionName" column="position_name1" jdbcType="VARCHAR"/>
+            <result property="jobDescription" column="job_description" jdbcType="VARCHAR"/>
+            <result property="position" column="position" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time1" jdbcType="VARCHAR"/>
+            <result property="endTime" column="end_time1" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="visible" column="visible" jdbcType="INTEGER"/>
+        </collection>
+        <collection property="tJobhunterProjectRecord" ofType="com.wcwy.company.entity.TJobhunterProjectRecord">
+            <id property="projectId" column="project_id" jdbcType="VARCHAR"/>
+            <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+            <result property="projectRole" column="project_role" jdbcType="VARCHAR"/>
+            <result property="companyName" column="company_name2" jdbcType="VARCHAR"/>
+            <result property="projectUrl" column="project_url" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time2" jdbcType="VARCHAR"/>
+            <result property="endTime" column="end_time2" jdbcType="VARCHAR"/>
+            <result property="responsibility" column="responsibility" jdbcType="VARCHAR"/>
+            <result property="performance" column="performance" jdbcType="VARCHAR"/>
+            <result property="description" column="description1" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="tJobhunterEducationRecord" ofType="com.wcwy.company.entity.TJobhunterEducationRecord">
+            <id property="eduId" column="edu_id" jdbcType="VARCHAR"/>
+            <result property="shcoolName" column="shcool_name" jdbcType="VARCHAR"/>
+            <result property="edulType" column="edul_type" jdbcType="INTEGER"/>
+            <result property="education" column="education" jdbcType="VARCHAR"/>
+            <result property="major" column="major" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time3" jdbcType="VARCHAR"/>
+            <result property="endTime" column="end_time3" jdbcType="VARCHAR"/>
+            <result property="description" column="description2" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="JobHunterResumeDTOMap" type="com.wcwy.company.dto.TJobHunterResumeDTO">
+        <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+        <result property="advantage" column="advantage" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="politicsStatus" column="politics_status" jdbcType="INTEGER"/>
+        <result property="jobStatus" column="job_status" jdbcType="VARCHAR"/>
+        <result property="userType" column="user_type" jdbcType="VARCHAR"/>
+        <result property="showCurrentSalary" column="show_current_salary" jdbcType="INTEGER"/>
+        <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="wechatNumber" column="wechat_number" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="resumePath" column="resume_path" jdbcType="VARCHAR"/>
+        <result property="examineStatus" column="examine_status" jdbcType="INTEGER"/>
+        <result property="sharePerson" column="share_person" jdbcType="VARCHAR"/>
+        <collection property="tJobhunterExpectPosition" ofType="com.wcwy.company.entity.TJobhunterExpectPosition"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.selectId"></collection>
+        <collection property="tJobhunterWorkRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectId"></collection>
+        <collection property="tJobhunterProjectRecord" ofType="com.wcwy.company.entity.TJobhunterProjectRecord"
+                    select="com.wcwy.company.mapper.TJobhunterProjectRecordMapper.selectId"
+                    column="resume_id"></collection>
+        <collection property="tJobhunterEducationRecord" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectId">
+        </collection>
+    </resultMap>
+
+
+
+    <select id="companyInviteJobHunter" resultMap="ReferrerRecordJobHunterDTOMap">
+        SELECT
+        t_jobhunter.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.address,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.education,
+        t_jobhunter.phone,
+        t_jobhunter.current_salary,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        t_jobhunter.login_time,
+        t_jobhunter_resume.resume_id,
+        t_jobhunter_resume.advantage,
+        t_jobhunter.create_time,
+        DATE_FORMAT(t_jobhunter.birthday, '%Y') AS `year`
+        FROM
+        t_jobhunter
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        t_jobhunter_expect_position
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_expect_position.resume_id
+        LEFT JOIN
+        t_jobhunter_work_record
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_work_record.resume_id
+        <where>
+                t_jobhunter.share_person =#{companyInviteJobHunterQuery.userId}
+        <if test="companyInviteJobHunterQuery.sex !=null">
+          and  t_jobhunter.sex =#{companyInviteJobHunterQuery.sex}
+        </if>
+        <if test="companyInviteJobHunterQuery.startTime !=null and companyInviteJobHunterQuery.endTime !=null">
+            and DATE_FORMAT(t_jobhunter.birthday, '%Y-%m-%d') BETWEEN #{companyInviteJobHunterQuery.endTime} and #{companyInviteJobHunterQuery.startTime}
+        </if>
+        <if  test="companyInviteJobHunterQuery.educationBackground !=null">
+            and   t_jobhunter.education =#{companyInviteJobHunterQuery.educationBackground}
+        </if>
+        <if test="companyInviteJobHunterQuery.currentCity !=null and companyInviteJobHunterQuery.currentCity !=''">
+            and t_jobhunter.address ->'$.city'=#{companyInviteJobHunterQuery.currentCity}
+        </if>
+        <if test="companyInviteJobHunterQuery.beginCurrentAnnualSalary !=null and companyInviteJobHunterQuery.endCurrentAnnualSalary !=null">
+            and 	t_jobhunter.current_salary BETWEEN #{companyInviteJobHunterQuery.beginCurrentAnnualSalary} AND #{companyInviteJobHunterQuery.endCurrentAnnualSalary}
+        </if>
+
+            <if test="companyInviteJobHunterQuery.beginExpectedAnnualSalary !=null and companyInviteJobHunterQuery.endExpectedAnnualSalary !=null">
+                and 	t_jobhunter_expect_position.expect_salary BETWEEN #{companyInviteJobHunterQuery.beginExpectedAnnualSalary} AND #{companyInviteJobHunterQuery.endExpectedAnnualSalary}
+            </if>
+        <if test="companyInviteJobHunterQuery.desiredCity !=null and companyInviteJobHunterQuery.desiredCity !=''">
+            <bind name="search" value="'%'+companyInviteJobHunterQuery.desiredCity+'%'"/>
+            AND 	t_jobhunter_expect_position.work_city LIKE #{search}
+        </if>
+
+            <if test="companyInviteJobHunterQuery.apBeginDate !=null and companyInviteJobHunterQuery.apEndDate ==null">
+                AND 	 DATE_FORMAT(t_jobhunter.login_time,'%Y-%m-%d') = CURDATE()
+            </if>
+            <if test="companyInviteJobHunterQuery.apBeginDate !=null and companyInviteJobHunterQuery.apEndDate !=null">
+                AND 	t_jobhunter.login_time BETWEEN #{companyInviteJobHunterQuery.apBeginDate} and #{companyInviteJobHunterQuery.apEndDate}
+            </if>
+            <if test="companyInviteJobHunterQuery.keyword !=null and companyInviteJobHunterQuery.keyword !=''">
+                <bind name="keyword1" value="'%'+companyInviteJobHunterQuery.keyword+'%'"/>
+                AND  (	t_jobhunter.user_name LIKE #{keyword1} or
+                t_jobhunter_work_record.company_name LIKE #{keyword1}  or
+                t_jobhunter_work_record.position_name LIKE #{keyword1} )
+            </if>
+
+        </where>
+        GROUP BY
+        t_jobhunter.user_id
+        ORDER BY
+        t_jobhunter_resume.create_time DESC
+    </select>
+
+    <resultMap id="ReferrerRecordJobHunterDTOMap" type="com.wcwy.company.dto.ReferrerRecordJobHunterDTO">
+        <result property="tJobHunterId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="report" column="report" jdbcType="OTHER"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="advantage" column="advantage" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <collection property="position" ofType="com.wcwy.company.entity.TJobhunterExpectPosition"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.selectId"></collection>
+        <collection property="workRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectS"></collection>
+        <collection property="record" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectS">
+        </collection>
+    </resultMap>
+</mapper>

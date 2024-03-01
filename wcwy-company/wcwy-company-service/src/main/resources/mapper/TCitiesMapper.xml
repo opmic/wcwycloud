@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TCitiesMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TCities">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="cityid" column="cityid" jdbcType="CHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="provinceid" column="provinceid" jdbcType="CHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,cityid,city,
+        provinceid
+    </sql>
+</mapper>

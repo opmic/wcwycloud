@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.system.mapper.LeadingEndMistakeMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.system.entity.LeadingEndMistake">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="mistake" column="mistake" jdbcType="OTHER" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="route" column="route" jdbcType="VARCHAR"/>
+            <result property="routeName" column="route_name" jdbcType="VARCHAR"/>
+            <result property="visitPath" column="visit_path" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,mistake,route,
+        route_name,visit_path,create_time
+    </sql>
+</mapper>

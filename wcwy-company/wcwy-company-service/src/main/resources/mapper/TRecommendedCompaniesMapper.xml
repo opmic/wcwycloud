@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TRecommendedCompaniesMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TRecommendedCompanies">
+            <id property="recommendedCompaniesId" column="recommended_companies_id" jdbcType="VARCHAR"/>
+            <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+            <result property="password" column="password" jdbcType="VARCHAR"/>
+            <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+            <result property="shortName" column="short_name" jdbcType="VARCHAR"/>
+            <result property="companyType" column="company_type" jdbcType="INTEGER"/>
+            <result property="businessLicense" column="business_license" jdbcType="VARCHAR"/>
+            <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+            <result property="logoPath" column="logo_path" jdbcType="VARCHAR"/>
+        <result property="beginDate" column="begin_date" jdbcType="DATE"/>
+            <result property="contractDate" column="contract_date" jdbcType="DATE"/>
+            <result property="signContract" column="sign_contract" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="provincesCities" column="provinces_cities" jdbcType="OTHER"  typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="contactName" column="contact_name" jdbcType="VARCHAR"/>
+            <result property="jobTitle" column="job_title" jdbcType="VARCHAR"/>
+            <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+            <result property="email" column="email" jdbcType="VARCHAR"/>
+            <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+            <result property="industry" column="industry" jdbcType="OTHER"  typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+            <result property="subsidiary" column="subsidiary" jdbcType="TINYINT"/>
+            <result property="relationImg" column="relation_img" jdbcType="VARCHAR"/>
+            <result property="workImg" column="work_img" jdbcType="VARCHAR"/>
+            <result property="currencyCount" column="currency_count" jdbcType="DECIMAL"/>
+            <result property="examineStatus" column="examine_status" jdbcType="INTEGER"/>
+            <result property="status" column="status" jdbcType="CHAR"/>
+            <result property="serachResumeStatus" column="serach_resume_status" jdbcType="INTEGER"/>
+            <result property="viewResumeStatus" column="view_resume_status" jdbcType="INTEGER"/>
+            <result property="examineResult" column="examine_result" jdbcType="VARCHAR"/>
+            <result property="nature" column="nature" jdbcType="INTEGER"/>
+            <result property="chatId" column="chat_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="wechatNumber" column="wechat_number" jdbcType="VARCHAR"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="openid" column="openid" jdbcType="VARCHAR"/>
+            <result property="sharePerson" column="share_person" jdbcType="VARCHAR"/>
+            <result property="gradeIntegral" column="grade_integral" jdbcType="BIGINT"/>
+            <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+            <result property="logoutTime" column="logout_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        recommended_companies_id,login_name,password,
+        phone_number,avatar,company_name,
+        short_name,company_type,business_license,
+        company_type_id,logo_path,contract_date,begin_date,
+        sign_contract,description,remark,
+        address,provinces_cities,contact_name,
+        job_title,contact_phone,email,
+        firm_size,industry,parent_id,
+        subsidiary,relation_img,work_img,
+        currency_count,examine_status,status,
+        serach_resume_status,view_resume_status,examine_result,
+        nature,chat_id,create_time,
+        wechat_number,update_time,openid,
+        share_person,grade_integral,login_time,
+        logout_time,deleted
+    </sql>
+</mapper>

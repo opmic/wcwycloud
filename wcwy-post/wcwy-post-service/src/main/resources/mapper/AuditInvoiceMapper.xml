@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.AuditInvoiceMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.AuditInvoice">
+            <id property="invoiceId" column="invoice_id" jdbcType="BIGINT"/>
+            <result property="auditSate" column="audit_sate" jdbcType="INTEGER"/>
+            <result property="reason" column="reason" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="carteTime" column="carte_time" jdbcType="TIMESTAMP"/>
+            <result property="applyForInvoice" column="apply_for_invoice" jdbcType="VARCHAR"/>
+            <result property="auditUser" column="audit_user" jdbcType="VARCHAR"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        invoice_id,audit_sate,reason,
+        phone,carte_time,apply_for_invoice,
+        audit_user,deleted
+    </sql>
+</mapper>

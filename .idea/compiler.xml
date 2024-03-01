@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="BUILD_PROCESS_HEAP_SIZE" value="46048" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="openfeign" />
+        <module name="wcwy-company-api" />
+        <module name="wcwy-websocket" />
+        <module name="common-mybatis-plus" />
+        <module name="wcwy-company-common" />
+        <module name="common-rabbitmq" />
+        <module name="wcwy-system" />
+        <module name="wcwy-company-service" />
+        <module name="common-redis" />
+        <module name="common-base" />
+        <module name="common-common" />
+        <module name="wcwy-post-service" />
+        <module name="wcwy-post-common" />
+        <module name="common-rocketmq" />
+        <module name="wcwy-post-api" />
+        <module name="common-web" />
+        <module name="common-oatuh" />
+        <module name="oauth" />
+        <module name="gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="framework" target="1.8" />
+      <module name="untitled" target="1.8" />
+      <module name="wcwycloud" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

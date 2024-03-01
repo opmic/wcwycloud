@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.HeadhunterPositionRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.HeadhunterPositionRecord">
+            <id property="headhunterPositionRecordId" column="headhunter_position_record_id" jdbcType="INTEGER"/>
+            <result property="month" column="month" jdbcType="INTEGER"/>
+            <result property="money" column="money" jdbcType="DECIMAL"/>
+            <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        headhunter_position_record_id,month,money,
+        post_id
+    </sql>
+    <select id="selectById" resultMap="BaseResultMap" >
+        select * from headhunter_position_record where post_id=#{post_id};
+    </select>
+
+</mapper>

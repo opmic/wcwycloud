@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobhunterWorkRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobhunterWorkRecord">
+        <id property="workId" column="work_id" jdbcType="VARCHAR"/>
+        <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="positionName" column="position_name" jdbcType="VARCHAR"/>
+        <result property="jobDescription" column="job_description" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="visible" column="visible" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        work_id
+        ,resume_id,company_name,
+        industry,department,position_name,
+        start_time,end_time,content,
+        visible,create_time,update_time
+    </sql>
+    <select id="selectId" resultMap="TJobhunterWorkRecordMap">
+        SELECT t_jobhunter_work_record.work_id,
+               t_jobhunter_work_record.company_name,
+               t_jobhunter_work_record.industry,
+               t_jobhunter_work_record.department,
+               t_jobhunter_work_record.position_name,
+               t_jobhunter_work_record.start_time,
+               t_jobhunter_work_record.position,
+               t_jobhunter_work_record.end_time,
+               t_jobhunter_work_record.content,
+               t_jobhunter_work_record.job_description,
+               t_jobhunter_work_record.visible
+        FROM t_jobhunter_work_record
+        WHERE t_jobhunter_work_record.resume_id = #{resume_id}
+        ORDER BY
+            t_jobhunter_work_record.end_time DESC
+            LIMIT 2
+    </select>
+    <resultMap id="TJobhunterWorkRecordMap" type="com.wcwy.company.entity.TJobhunterWorkRecord">
+        <id property="workId" column="work_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="department" column="department" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
+        <result property="positionName" column="position_name" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="jobDescription" column="job_description" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="visible" column="visible" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="selectS" resultMap="TJobhunterWorkRecordMap">
+        SELECT t_jobhunter_work_record.work_id,
+               t_jobhunter_work_record.company_name,
+               t_jobhunter_work_record.industry,
+               t_jobhunter_work_record.department,
+               t_jobhunter_work_record.position_name,
+               t_jobhunter_work_record.start_time,
+               t_jobhunter_work_record.job_description,
+               t_jobhunter_work_record.end_time,
+               t_jobhunter_work_record.content,
+               t_jobhunter_work_record.visible
+        FROM t_jobhunter_work_record
+        WHERE t_jobhunter_work_record.resume_id = #{resume_id}
+        ORDER BY
+            t_jobhunter_work_record.end_time DESC
+    </select>
+
+    <select id="resumeId" resultMap="TJobhunterWorkRecordPOMap">
+        SELECT
+            t_jobhunter_work_record.company_name,
+            t_jobhunter_work_record.position_name
+        FROM
+            t_jobhunter_work_record
+        WHERE
+            t_jobhunter_work_record.resume_id =#{resume_id}
+        ORDER BY
+            t_jobhunter_work_record.end_time DESC
+            LIMIT 1
+    </select>
+    <resultMap id="TJobhunterWorkRecordPOMap" type="com.wcwy.company.po.TJobhunterWorkRecordPO">
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="positionName" column="position_name" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

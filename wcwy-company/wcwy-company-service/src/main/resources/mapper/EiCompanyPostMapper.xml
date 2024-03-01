@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.EiCompanyPostMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.EiCompanyPost">
+            <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+            <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+            <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+            <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="moneyReward" column="money_reward" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="hiredBounty" column="hired_bounty" jdbcType="DECIMAL"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        post_id,company_id,begin_salary,
+        end_salary,work_city,post_type,
+        money_reward,hired_bounty,company_name
+    </sql>
+</mapper>

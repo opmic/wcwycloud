@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.WechatUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.WechatUser">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="openid" column="openid" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="INTEGER"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="country" column="country" jdbcType="VARCHAR"/>
+            <result property="headimgurl" column="headimgurl" jdbcType="VARCHAR"/>
+            <result property="privilege" column="privilege" jdbcType="VARCHAR" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+            <result property="unionid" column="unionid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,phone,openid,
+        nickname,sex,province,
+        city,country,headimgurl,
+        privilege,unionid
+    </sql>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobhunterEducationRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobhunterEducationRecord">
+            <id property="eduId" column="edu_id" jdbcType="VARCHAR"/>
+            <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+            <result property="shcoolName" column="shcool_name" jdbcType="VARCHAR"/>
+            <result property="edulType" column="edul_type" jdbcType="INTEGER"/>
+            <result property="education" column="education" jdbcType="VARCHAR"/>
+            <result property="major" column="major" jdbcType="VARCHAR"/>
+            <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+            <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+            <result property="description" column="description" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        edu_id,resume_id,shcool_name,
+        edul_type,education,major,
+        start_time,end_time,description,
+        create_time,update_time
+    </sql>
+    <select id="selectId" resultMap="TJobHunterEducationRecordMap">
+        SELECT
+            t_jobhunter_education_record.edu_id,
+            t_jobhunter_education_record.shcool_name,
+            t_jobhunter_education_record.edul_type,
+            t_jobhunter_education_record.education,
+            t_jobhunter_education_record.major,
+            t_jobhunter_education_record.start_time,
+            t_jobhunter_education_record.end_time,
+            t_jobhunter_education_record.description
+        FROM
+            t_jobhunter_education_record
+        WHERE
+            t_jobhunter_education_record.resume_id =#{resume_id}
+        ORDER BY
+            t_jobhunter_education_record.education DESC
+            LIMIT 2
+    </select>
+    <resultMap id="TJobHunterEducationRecordMap" type="com.wcwy.company.entity.TJobhunterEducationRecord">
+        <id property="eduId" column="edu_id" jdbcType="VARCHAR"/>
+        <result property="shcoolName" column="shcool_name" jdbcType="VARCHAR"/>
+        <result property="edulType" column="edul_type" jdbcType="INTEGER"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="major" column="major" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="education" resultType="String">
+        SELECT
+            t_jobhunter_education_record.education
+        FROM
+            t_jobhunter_education_record
+        WHERE
+            t_jobhunter_education_record.resume_id =#{resume_id}
+            LIMIT 1
+    </select>
+    <select id="selectS" resultMap="TJobHunterEducationRecordMap">
+        SELECT
+            t_jobhunter_education_record.edu_id,
+            t_jobhunter_education_record.shcool_name,
+            t_jobhunter_education_record.edul_type,
+            t_jobhunter_education_record.education,
+            t_jobhunter_education_record.major,
+            t_jobhunter_education_record.start_time,
+            t_jobhunter_education_record.end_time,
+            t_jobhunter_education_record.description
+        FROM
+            t_jobhunter_education_record
+        WHERE
+            t_jobhunter_education_record.resume_id =#{resume_id}
+        ORDER BY
+            t_jobhunter_education_record.education DESC
+
+    </select>
+
+    <select id="resumeId" resultMap="TJobhunterEducationRecordPOMap">
+        SELECT
+            t_jobhunter_education_record.shcool_name,
+            t_jobhunter_education_record.education
+        FROM
+            t_jobhunter_education_record
+        WHERE
+            t_jobhunter_education_record.resume_id = #{resume_id}
+        ORDER BY
+            t_jobhunter_education_record.education DESC
+            LIMIT 1
+    </select>
+
+    <resultMap id="TJobhunterEducationRecordPOMap" type="com.wcwy.company.po.TJobhunterEducationRecordPO">
+        <result property="shcoolName" column="shcool_name" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.GetInvolvedMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.GetInvolved">
+            <id property="getInvolvedId" column="get_involved_id" jdbcType="BIGINT"/>
+            <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+            <result property="inviteEntryId" column="invite_entry_id" jdbcType="VARCHAR"/>
+            <result property="sate" column="sate" jdbcType="INTEGER"/>
+            <result property="result" column="result" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="disposeTime" column="dispose_time" jdbcType="TIMESTAMP"/>
+            <result property="disposeName" column="dispose_name" jdbcType="VARCHAR"/>
+            <result property="cause" column="cause" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        get_involved_id,put_in_resume_id,invite_entry_id,
+        sate,result,create_time,
+        dispose_time,dispose_name,cause
+    </sql>
+</mapper>

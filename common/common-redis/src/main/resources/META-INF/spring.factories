@@ -1,0 +1,10 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wcwy.common.redis.config.RedisConfig,\
+  com.wcwy.common.redis.util.RedisUtils,\
+  com.wcwy.common.redis.util.IDGenerator,\
+  com.wcwy.common.redis.config.RedisIdWorker,\
+  com.wcwy.common.redis.util.RedisService,\
+  com.wcwy.common.redis.config.KeyGeneratorConfig,\
+  com.wcwy.common.redis.config.CacheResolverConfig
+
+

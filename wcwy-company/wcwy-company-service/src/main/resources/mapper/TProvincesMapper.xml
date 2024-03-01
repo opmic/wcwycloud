@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TProvincesMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TProvinces">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+    </resultMap>
+
+<!--    <resultMap id="ProvinceCity" type="com.wcwy.company.dto.TProvincesCitieDTO">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <collection property="list" ofType="com.wcwy.company.entity.TCities">
+            <result property="cityid" column="cityid" jdbcType="CHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>-->
+    <sql id="Base_Column_List">
+        id,provinceid,province
+    </sql>
+<!--    <select id="selectPC" resultMap="ProvinceCity">
+        SELECT
+            t_provinces.provinceid,
+            t_provinces.province,
+            t_cities.cityid,
+            t_cities.city
+        FROM
+            t_provinces
+                INNER JOIN
+            t_cities
+            ON
+                t_provinces.provinceid = t_cities.provinceid
+
+    </select>-->
+
+
+        <select id="selectPC" resultMap="ProvinceCity">
+            SELECT * FROM  t_provinces
+        </select>
+    
+    <resultMap id="ProvinceCity" type="com.wcwy.company.dto.TProvincesCitieDTO">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+        <result property="province" column="province" jdbcType="VARCHAR"/>
+        <collection property="list" javaType="ArrayList"
+                    ofType="com.wcwy.company.entity.TCities"  column="provinceid" select="getTCities"/>
+    </resultMap>
+
+    <select id="getTCities" resultType="com.wcwy.company.entity.TCities">
+        select * FROM t_cities WHERE provinceid=#{provinceid}
+    </select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 文件输出格式 -->
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n"/>
+    <!-- 文件路径 -->
+    <property name="FILE_PATH" value="/home/logs"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+<!--    <appender name="PROD_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        &lt;!&ndash; 过滤日志 &ndash;&gt;
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        &lt;!&ndash; 日志记录器的滚动策略，按日期，按大小记录 &ndash;&gt;
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FILE_PATH}/post/info.%d{yyyy-MM-dd}.log</fileNamePattern>
+            &lt;!&ndash;日志文件保留天数&ndash;&gt;
+            <MaxHistory>15</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>-->
+    <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+    <appender name="PROD_FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 过滤日志 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <!-- 按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${FILE_PATH}/post/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>18</MaxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+       <!-- <appender-ref ref="PROD_FILE"/>-->
+        <appender-ref ref="PROD_FILE_ERROR"/>
+    </root>
+
+
+
+    <!--日志文件的存储路径-->
+    <springProperty scope="context" name="rocketmq_client_log_dir" source="rocketmq.client.logPath"/>
+
+    <!-- rocketmq日志 -->
+    <appender name="RocketmqClientAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH}/logs/rocketmqlogs/rocketmq_client.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${rocketmq_client_log_dir}/history/rocketmq_client.%d{yyyyMMdd}.%i.log</fileNamePattern>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>104857600</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+
+            <!--保留时间,单位:天-->
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %-22c{0} %X{ServiceId} - %m%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="RocketmqClient" additivity="false">
+        <level value="warn" />
+        <appender-ref ref="RocketmqClientAppender"/>
+    </logger>
+</configuration>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TCompanyContractMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TCompanyContract">
+        <id property="contractId" column="contract_id" jdbcType="VARCHAR"/>
+        <result property="signContract" column="sign_contract" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="contractDate" column="contract_date" jdbcType="DATE"/>
+        <result property="auditContract" column="audit_contract" jdbcType="INTEGER"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="auditTime" column="audit_time" jdbcType="TIMESTAMP"/>
+        <result property="auditCause" column="audit_cause" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        contract_id
+        ,sign_contract,contract_date,
+        audit_contract,audit_time,audit_cause,`state`,`name`,
+        create_time,create_id,update_time,
+        deleted
+    </sql>
+</mapper>

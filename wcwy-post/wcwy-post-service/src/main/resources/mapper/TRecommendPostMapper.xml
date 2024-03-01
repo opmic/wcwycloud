@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.TRecommendPostMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.TRecommendPost">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="postAttribute" column="post_attribute" jdbcType="VARCHAR"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="position" column="position" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="provinceid" column="provinceid" jdbcType="INTEGER"/>
+        <result property="cityid" column="cityid" jdbcType="CHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postWealId" column="post_weal_id" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="urgency" column="urgency" jdbcType="INTEGER"/>
+        <result property="salaryRemark" column="salary_remark" jdbcType="VARCHAR"/>
+        <result property="lightspot" column="lightspot" jdbcType="VARCHAR"/>
+        <result property="socialSecurityWelfare" column="social_security_welfare" jdbcType="VARCHAR"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="workExperienceId" column="work_experience_id" jdbcType="INTEGER"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="educationId" column="education_id" jdbcType="INTEGER"/>
+        <result property="isRecruit" column="is_recruit" jdbcType="TINYINT"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="industryContent" column="industry_content" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="workday" column="workday" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="jobCategory" column="job_category" jdbcType="VARCHAR"/>
+        <result property="postCode" column="post_code" jdbcType="VARCHAR"/>
+        <result property="refreshTime" column="refresh_time" jdbcType="TIMESTAMP"/>
+        <result property="audit" column="audit" jdbcType="INTEGER"/>
+        <result property="causeOfFailure" column="cause_of_failure" jdbcType="VARCHAR"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="pageView" column="page_view" jdbcType="BIGINT"/>
+        <result property="applicantQuantity" column="applicant_quantity" jdbcType="BIGINT"/>
+        <result property="browse" column="browse" jdbcType="BIGINT"/>
+        <result property="download" column="download" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="share" column="share" jdbcType="INTEGER"/>
+        <result property="updateId" column="update_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="day" column="day" jdbcType="INTEGER"/>
+        <result property="top" column="top" jdbcType="INTEGER"/>
+        <result property="dayTime" column="day_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        post_id
+        ,recommend_id,company_name,
+        post_count,post_attribute,industry,page_view,applicant_quantity,
+        browse,download,
+        position,work_city,provinceid,
+        cityid,description,begin_salary,
+        post_weal_id,end_salary,urgency,
+        salary_remark,lightspot,social_security_welfare,
+        work_experience,work_experience_id,education_type,
+        education_id,is_recruit,post_label,
+        industry_content,address,workday,
+        status,expiration_date,job_category,
+        post_code,refresh_time,audit,
+        cause_of_failure,create_id,create_time,
+        share,update_id,update_time,
+        deleted,day,top,
+        day_time
+    </sql>
+    <select id="select" resultMap="TRecommendPostDTOMap">
+        SELECT
+        t_recommend_post.post_id,
+        t_recommend_post.recommend_id,
+        t_recommend_post.company_name,
+        t_recommend_post.post_count,
+        t_recommend_post.work_city,
+        t_recommend_post.begin_salary,
+        t_recommend_post.end_salary,
+        t_recommend_post.lightspot,
+        t_recommend_post.work_experience,
+        t_recommend_post.education_type,
+        t_recommend_post.is_recruit,
+        t_recommend_post.post_label,
+        t_recommend_post.address,
+        t_recommend_post.`status`,
+        t_recommend_post.expiration_date,
+        t_recommend_post.audit,
+        t_recommend_post.page_view,
+        t_recommend_post.applicant_quantity,
+        t_recommend_post.browse,
+        t_recommend_post.download,
+        t_recommend_post.create_time,
+        t_recommend_post.day_time,
+        t_recommend_post.top,
+        recommend_basics.username,
+        recommend_basics.head_path,
+        recommend_basics.administrator
+        FROM
+        t_recommend_post
+        INNER JOIN
+        recommend_basics
+        ON
+        t_recommend_post.recommend_id = recommend_basics.recommend_id
+        <where>
+            t_recommend_post.recommend_id =#{userid}
+            <if test="keyword !=null and keyword !=''">
+                and (
+                t_recommend_post.work_city LIKE concat('%',#{keyword},'%') OR
+                t_recommend_post.post_label LIKE concat('%',#{keyword},'%')
+                )
+            </if>
+            <if test="state !=null and state==1 ">
+                and  t_recommend_post.`status` =1
+            </if>
+            <if test="state !=null and state==2 ">
+                and  t_recommend_post.`status` =0
+            </if>
+            <if test="state !=null and state==3 ">
+                and t_recommend_post.audit =0
+            </if>
+            <if test="state !=null and state==4 ">
+                and  t_recommend_post.audit =1
+            </if>
+        </where>
+        ORDER BY
+        t_recommend_post.refresh_time DESC
+    </select>
+    <select id="selectId" resultMap="TRecommendPostDTOMap" parameterType="java.lang.String">
+        SELECT t_recommend_post.post_id,
+               t_recommend_post.recommend_id,
+               t_recommend_post.company_name,
+               t_recommend_post.post_count,
+               t_recommend_post.post_attribute,
+               t_recommend_post.industry,
+               t_recommend_post.position,
+               t_recommend_post.work_city,
+               t_recommend_post.description,
+               t_recommend_post.begin_salary,
+               t_recommend_post.`status`,
+               t_recommend_post.post_weal_id,
+               t_recommend_post.end_salary,
+               t_recommend_post.urgency,
+               t_recommend_post.salary_remark,
+               t_recommend_post.lightspot,
+               t_recommend_post.work_experience,
+               t_recommend_post.work_experience_id,
+               t_recommend_post.education_type,
+               t_recommend_post.education_id,
+               t_recommend_post.is_recruit,
+               t_recommend_post.post_label,
+               t_recommend_post.address,
+               t_recommend_post.workday,
+               t_recommend_post.`status`,
+               t_recommend_post.expiration_date,
+               t_recommend_post.job_category,
+               t_recommend_post.post_code,
+               t_recommend_post.audit,
+               t_recommend_post.page_view,
+               t_recommend_post.applicant_quantity,
+               t_recommend_post.browse,
+               t_recommend_post.download,
+               t_recommend_post.create_time,
+               t_recommend_post.day_time,
+               t_recommend_post.top,
+               recommend_basics.username,
+               recommend_basics.head_path,
+               recommend_basics.phone,
+               recommend_basics.sex,
+               recommend_basics.administrator,
+               recommend_basics.firm_name
+        FROM t_recommend_post
+                 INNER JOIN
+             recommend_basics
+             ON
+                 t_recommend_post.recommend_id = recommend_basics.recommend_id
+        where
+            t_recommend_post.post_id =#{postId}
+    </select>
+
+    <resultMap id="TRecommendPostDTOMap" type="com.wcwy.post.dto.TRecommendPostDTO">
+        <id property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="postAttribute" column="post_attribute" jdbcType="VARCHAR"/>
+        <result property="audit" column="audit" jdbcType="INTEGER"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="position" column="position" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="workCity" column="work_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="beginSalary" column="begin_salary" jdbcType="DECIMAL"/>
+        <result property="postWealId" column="post_weal_id" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="endSalary" column="end_salary" jdbcType="DECIMAL"/>
+        <result property="urgency" column="urgency" jdbcType="INTEGER"/>
+        <result property="lightspot" column="lightspot" jdbcType="VARCHAR"/>
+        <result property="workExperience" column="work_experience" jdbcType="VARCHAR"/>
+        <result property="educationType" column="education_type" jdbcType="VARCHAR"/>
+        <result property="isRecruit" column="is_recruit" jdbcType="TINYINT"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="expirationDate" column="expiration_date" jdbcType="DATE"/>
+        <result property="jobCategory" column="job_category" jdbcType="VARCHAR"/>
+        <result property="pageView" column="page_view" jdbcType="BIGINT"/>
+        <result property="applicantQuantity" column="applicant_quantity" jdbcType="BIGINT"/>
+        <result property="browse" column="browse" jdbcType="BIGINT"/>
+        <result property="download" column="download" jdbcType="BIGINT"/>
+        <result property="dayTime" column="day_time" jdbcType="TIMESTAMP"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="administrator" column="administrator" jdbcType="INTEGER"/>
+        <result property="firmName" column="firm_name" jdbcType="VARCHAR"/>
+    </resultMap>
+</mapper>

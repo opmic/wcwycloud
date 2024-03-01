@@ -1,0 +1,79 @@
+server:
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,application/xml,application/json
+  port: 9001
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+spring:
+
+  application:
+    name: ams-gateway
+  cloud:
+    gateway:
+      globalcors:
+      default-filters:
+        - DedupeResponseHeader=Vary Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_FIRST
+      discovery:
+        locator:
+          enabled: true #开启服务
+          lower-case-service-id: true
+          # lowerCaseServiceId：启动 locator.enabled=true 自动路由时，路由的路径默认会使用大写ID，若想要使用小写ID，可将lowerCaseServiceId设置为true
+      routes:
+        - id:  岗位接口 #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          #          uri: http://localhost:8001
+          uri: lb://wcwy-post #匹配后提供服务的路由地址
+          predicates:
+            - Path=/wcwy-post/**  #断言，路径相匹配的进行路由
+          filters:
+            - StripPrefix=1
+            - SwaggerHeaderFilter
+        - id:  企业接口 #路由的ID，没有固定规则但要求唯一，建议配合服务名
+          #          uri: http://localhost:8001
+          uri: lb://wcwy-company #匹配后提供服务的路由地址
+          predicates:
+            - Path=/wcwy-company/**  #断言，路径相匹配的进行路由
+          filters:
+            - StripPrefix=1
+            - SwaggerHeaderFilter
+        - id: 认证中心
+          #          uri: http://localhost:8001
+          uri: lb://oauth
+          predicates:
+            - Path=/oauth/**
+        - id: websocket
+          uri: lb:ws://wcwy-websocket
+          predicates:
+            - Path=/wcwy-websocket/**
+
+
+
+
+            #- After=2020-02- 21T15:51:37.485+08 :00[Asia/Shanghai] #什么时间生效
+            #- Cookie=username,zzyy #携带cookie为zzyy            #- Header=X-Request-Id, \d+ #请求头要有X-Request-Id属性并且值为整数的正则表达式
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: '@nacos.addr@'
+        username: '@nacos.username@'
+        password: '@nacos.password@'
+      # 配置中心
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml
+        shared-configs[0]:
+          data-id: ams-common.yaml
+          refresh: true
+ribbon:
+  eager-load: #开启饿加载
+    enabled: true
+    clients: wcwy-company,wcwy-post
+oauth:
+  token:
+    expires:
+      remain: 3600
+      total: 604800

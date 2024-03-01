@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/common/common-base/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-base/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-mybatis-plus/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-mybatis-plus/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-oatuh/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-oatuh/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-rabbitmq/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-rabbitmq/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-redis/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-rocketmq/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-rocketmq/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/common-web/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/oauth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/oauth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/openfeign/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/openfeign/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/wcwy-company-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/wcwy-company-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/wcwy-company-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/wcwy-company-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/wcwy-company-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-company/wcwy-company-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/wcwy-post-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/wcwy-post-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/wcwy-post-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/wcwy-post-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/wcwy-post-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-post/wcwy-post-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-system/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-websocket/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wcwy-websocket/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.CollectJobHunterMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.CollectJobHunter">
+        <id property="collectId" column="collect_id" jdbcType="VARCHAR"/>
+        <result property="tCompanyId" column="t_company_id" jdbcType="VARCHAR"/>
+        <result property="tJobHunterId" column="t_job_hunter_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        collect_id
+        ,t_company_id,t_job_hunter_id,
+        create_time
+    </sql>
+    <select id="isCollect" resultType="integer">
+        SELECT if(collect_job_hunter.collect_id is null, 0, 1)
+        FROM collect_job_hunter
+        WHERE collect_job_hunter.t_company_id = #{tCompany}
+          AND collect_job_hunter.t_job_hunter_id = #{tJobHunter}
+    </select>
+    <select id="select" resultMap="CollectJobHunterDTOMap">
+        SELECT
+        collect_job_hunter.collect_id,
+        t_jobhunter.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        collect_job_hunter.create_time,
+        t_jobhunter_resume.resume_id,
+        company_user_role.company_user_role_id ,
+        IF(company_user_role_id !='Null' ,0,1) as download
+        FROM
+        collect_job_hunter
+        INNER JOIN
+        t_jobhunter
+        ON
+        collect_job_hunter.t_job_hunter_id = t_jobhunter.user_id
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        company_user_role
+        ON
+        t_jobhunter.user_id = company_user_role.user_id AND collect_job_hunter.t_company_id=company_user_role.company_id
+        <where>
+            collect_job_hunter.t_company_id =#{userId}
+            <if test="collectJobHunterQuery.keyword !=null and  collectJobHunterQuery.keyword !='' ">
+                AND t_jobhunter.user_name LIKE CONCAT('%',#{collectJobHunterQuery.keyword}, '%')
+            </if>
+            <if test="collectJobHunterQuery.endTime !=null  and collectJobHunterQuery.startTime !=null ">
+                and collect_job_hunter.create_time BETWEEN #{collectJobHunterQuery.startTime} AND #{collectJobHunterQuery.endTime}
+            </if>
+            <if test=" collectJobHunterQuery.endTime !=null  and collectJobHunterQuery.startTime ==null ">
+                and collect_job_hunter.create_time &lt;= #{collectJobHunterQuery.endTime}
+            </if>
+            <if test="collectJobHunterQuery.endTime ==null and collectJobHunterQuery.startTime !=null ">
+                and collect_job_hunter.create_time >= #{collectJobHunterQuery.startTime}
+            </if>
+
+        </where>
+    </select>
+    <resultMap id="CollectJobHunterDTOMap" type="com.wcwy.company.dto.CollectJobHunterDTO">
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="download" column="download" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <association property="tJobhunterWorkRecordPO" column="resume_id" javaType="com.wcwy.company.po.TJobhunterWorkRecordPO" select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.resumeId"/>
+        <association property="tJobhunterEducationRecordPO" column="resume_id" javaType="com.wcwy.company.po.TJobhunterEducationRecordPO" select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.resumeId"/>
+    </resultMap>
+</mapper>

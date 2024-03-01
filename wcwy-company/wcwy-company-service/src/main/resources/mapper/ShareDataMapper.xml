@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.ShareDataMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.ShareData">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="ipAddress" column="ip_address" jdbcType="BIGINT"/>
+            <result property="second" column="second" jdbcType="BIGINT"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="recommend" column="recommend" jdbcType="VARCHAR"/>
+            <result property="visit" column="visit" jdbcType="BIGINT"/>
+            <result property="register" column="register" jdbcType="BIGINT"/>
+            <result property="province" column="province" jdbcType="VARCHAR"/>
+            <result property="city" column="city" jdbcType="VARCHAR"/>
+            <result property="postCount" column="post_count" jdbcType="BIGINT"/>
+            <result property="resumeDownload" column="resume_download" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,ip_address,
+        second,create_time,recommend,
+        visit,register,province,
+        city,post_count,resume_download
+    </sql>
+    <select id="day" resultType="com.wcwy.company.entity.ShareData" parameterType="com.wcwy.company.query.ShareDataQuery">
+        SELECT
+            share_data.type,
+            SUM(share_data.ip_address) as ip_address,
+            SUM(share_data.`second`) as second ,
+            share_data.create_time,
+            SUM(share_data.visit) as visit,
+            SUM(share_data.register) as register,
+            SUM(share_data.resume_download) as resume_download,
+            SUM(share_data.post_count) as post_count,
+            DATE_FORMAT(FLOOR(share_data.create_time),'%Y-%m-%d %H:00:00') time
+        FROM
+            share_data
+        WHERE
+        share_data.recommend =#{shareDataQuery.userId}  and  DATE(share_data.create_time) = DATE(#{shareDataQuery.day})  and  share_data.type =#{shareDataQuery.type}
+            <if test="shareDataQuery.city !=null and shareDataQuery.city !=''">
+                and share_data.city=#{shareDataQuery.city}
+            </if>
+        GROUP BY time ,share_data.type
+        ORDER BY time desc
+    </select>
+    <select id="week" resultType="com.wcwy.company.entity.ShareData">
+        SELECT
+            share_data.type,
+            SUM(share_data.ip_address) as ip_address,
+            SUM(share_data.`second`) as second ,
+            share_data.create_time,
+            SUM(share_data.visit) as visit,
+            SUM(share_data.register) as register,
+            SUM(share_data.resume_download) as resume_download,
+            SUM(share_data.post_count) as post_count,
+
+            DATE_FORMAT(FLOOR(share_data.create_time),'%Y-%m-%d') time
+        FROM
+            share_data
+        WHERE
+        share_data.recommend =#{shareDataQuery.userId} and  DATE(share_data.create_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate})  and  share_data.type =#{shareDataQuery.type}
+        <if test="shareDataQuery.city !=null and shareDataQuery.city !=''">
+            and share_data.city=#{shareDataQuery.city}
+        </if>
+        GROUP BY time
+        ORDER BY time desc
+    </select>
+    <select id="month" resultType="com.wcwy.company.entity.ShareData">
+        SELECT
+            share_data.type,
+            SUM(share_data.ip_address) as ip_address,
+            SUM(share_data.`second`) as second ,
+            share_data.create_time,
+            SUM(share_data.visit) as visit,
+            SUM(share_data.register) as register,
+            SUM(share_data.resume_download) as resume_download,
+            SUM(share_data.post_count) as post_count,
+            DATE_FORMAT(FLOOR(share_data.create_time),'%Y-%m') time
+        FROM
+            share_data
+        WHERE
+        share_data.recommend =#{shareDataQuery.userId} and   DATE(share_data.create_time) BETWEEN DATE(#{shareDataQuery.beginDate})AND DATE(#{shareDataQuery.endDate})  and  share_data.type =#{shareDataQuery.type}
+        <if test="shareDataQuery.city !=null and shareDataQuery.city !=''">
+            and share_data.city=#{shareDataQuery.city}
+        </if>
+        GROUP BY time
+        ORDER BY time desc
+    </select>
+
+    <select id="iPageDay" resultType="com.wcwy.company.entity.ShareData">
+        SELECT
+        share_data.type,
+        SUM(share_data.ip_address) as ip_address,
+        SUM(share_data.`second`) as second ,
+        share_data.create_time,
+        SUM(share_data.visit) as visit,
+        SUM(share_data.register) as register,
+        SUM(share_data.resume_download) as resume_download,
+        SUM(share_data.post_count) as post_count,
+        DATE_FORMAT(FLOOR(share_data.create_time),'%Y-%m-%d %H:00:00') time
+        FROM
+        share_data
+        WHERE
+        DATE(share_data.create_time) BETWEEN DATE(#{shareDataQuery.allBeginDate})AND DATE(#{shareDataQuery.allEndDate}))  and  share_data.type =#{shareDataQuery.type}
+        <if test="shareDataQuery.city !=null and shareDataQuery.city !=''">
+            and share_data.city=#{shareDataQuery.city}
+        </if>
+        GROUP BY time ,share_data.type
+        ORDER BY time desc
+    </select>
+    <select id="iPageWeek" resultType="com.wcwy.company.entity.ShareData">
+        SELECT
+        share_data.type,
+        SUM(share_data.ip_address) as ip_address,
+        SUM(share_data.`second`) as second ,
+        share_data.create_time,
+        SUM(share_data.visit) as visit,
+        SUM(share_data.register) as register,
+        SUM(share_data.resume_download) as resume_download,
+        SUM(share_data.post_count) as post_count,
+
+        DATE_FORMAT(FLOOR(share_data.create_time),'%Y-%m-%d') time
+        FROM
+        share_data
+        WHERE
+        DATE(share_data.create_time) BETWEEN DATE(#{shareDataQuery.allBeginDate})AND DATE(#{shareDataQuery.allEndDate}))  and  share_data.type =#{shareDataQuery.type}
+        <if test="shareDataQuery.city !=null and shareDataQuery.city !=''">
+            and share_data.city=#{shareDataQuery.city}
+        </if>
+        GROUP BY time
+        ORDER BY time desc
+    </select>
+</mapper>

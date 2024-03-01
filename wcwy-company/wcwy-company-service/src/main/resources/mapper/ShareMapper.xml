@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.ShareMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.Share">
+            <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="companyAmout" column="company_amout" jdbcType="BIGINT"/>
+            <result property="jobHunterAmount" column="job_hunter_amount" jdbcType="BIGINT"/>
+            <result property="recommendAmount" column="recommend_amount" jdbcType="BIGINT"/>
+            <result property="headhunterAmount" column="headhunter_amount" jdbcType="BIGINT"/>
+            <result property="campusRecommendAmount" column="campus_recommend_amount" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,company_amout,job_hunter_amount,
+        recommend_amount,headhunter_amount,campus_recommend_amount
+    </sql>
+</mapper>

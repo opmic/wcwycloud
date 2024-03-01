@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.PostWealMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.PostWeal">
+            <id property="wealId" column="weal_id" jdbcType="BIGINT"/>
+            <result property="weal" column="weal" jdbcType="VARCHAR"/>
+            <result property="parebt" column="parebt" jdbcType="BIGINT"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        weal_id,weal,parebt,
+        deleted
+    </sql>
+</mapper>

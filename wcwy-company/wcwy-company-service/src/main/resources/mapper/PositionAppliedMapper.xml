@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.PositionAppliedMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.PositionApplied">
+        <id property="positionAppliedId" column="position_applied_id" jdbcType="VARCHAR"/>
+        <result property="source" column="source" jdbcType="INTEGER"/>
+        <result property="jobHunter" column="job_hunter" jdbcType="VARCHAR"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="promotionTime" column="promotion_time" jdbcType="TIMESTAMP"/>
+        <result property="putTime" column="put_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        position_applied_id
+        ,source,job_hunter,post_type,company_id,recommend_id,
+        post_label,promotion_time,put_time
+    </sql>
+
+
+    <select id="select" resultMap="PositionAppliedDTOMap">
+        SELECT
+        position_applied.position_applied_id,
+        position_applied.source,
+        position_applied.job_hunter,
+        position_applied.post_label,
+        position_applied.post_type,
+        position_applied.company_id,
+        position_applied.promotion_time,
+        position_applied.put_time,
+        t_company.company_name,
+        t_jobhunter.user_name,
+        t_jobhunter.avatar,
+        t_jobhunter.show_sex,
+        t_jobhunter.sex,
+        t_jobhunter.education,
+        t_jobhunter.work_time,
+        t_jobhunter.birthday,
+        referrer_record.download_if,
+        referrer_record.download_time,
+        referrer_record.money,
+        referrer_record.type
+        FROM
+        position_applied
+        INNER JOIN
+        t_company
+        ON
+        position_applied.company_id = t_company.company_id
+        INNER JOIN
+        t_jobhunter
+        ON
+        position_applied.job_hunter = t_jobhunter.user_id
+        LEFT JOIN
+        referrer_record
+        ON
+        position_applied.job_hunter = referrer_record.t_job_hunter_id AND
+        position_applied.recommend_id = referrer_record.recommend_id
+
+        <where>
+            position_applied.source =#{positionAppliedQuery.source} AND position_applied.recommend_id
+            =#{positionAppliedQuery.userid}
+
+            <if test="positionAppliedQuery.keyword !=null and positionAppliedQuery.keyword !=''">
+                AND ( position_applied.post_label LIKE concat('%',#{positionAppliedQuery.keyword},'%') OR
+                t_company.company_name LIKE concat('%',#{positionAppliedQuery.keyword},'%') OR
+                t_jobhunter.user_name LIKE concat('%',#{positionAppliedQuery.keyword},'%') )
+            </if>
+
+        </where>
+        ORDER BY
+        position_applied.put_time DESC
+    </select>
+    <resultMap id="PositionAppliedDTOMap" type="com.wcwy.company.dto.PositionAppliedDTO">
+        <result property="source" column="source" jdbcType="INTEGER"/>
+        <result property="jobHunter" column="job_hunter" jdbcType="VARCHAR"/>
+        <result property="postType" column="post_type" jdbcType="INTEGER"/>
+        <result property="postLabel" column="post_label" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="promotionTime" column="promotion_time" jdbcType="TIMESTAMP"/>
+        <result property="putTime" column="put_time" jdbcType="TIMESTAMP"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+</mapper>

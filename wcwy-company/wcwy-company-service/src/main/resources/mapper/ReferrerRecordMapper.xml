@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.ReferrerRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.ReferrerRecord">
+        <id property="referrerRecordId" column="referrer_record_id" jdbcType="BIGINT"/>
+        <result property="tJobHunterId" column="t_job_hunter_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="correlationType" column="correlation_type" jdbcType="INTEGER"/>
+        <result property="origin" column="origin" jdbcType="INTEGER"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="referrer" column="referrer" jdbcType="BIGINT"/>
+        <result property="browse" column="browse" jdbcType="BIGINT"/>
+        <result property="appoint" column="appoint" jdbcType="BIGINT"/>
+        <result property="interview" column="interview" jdbcType="BIGINT"/>
+        <result property="offer" column="offer" jdbcType="BIGINT"/>
+        <result property="entry" column="entry" jdbcType="BIGINT"/>
+        <result property="weedOut" column="weed_out" jdbcType="BIGINT"/>
+        <result property="feedback" column="feedback" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="deleteTime" column="delete_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="report" column="report" jdbcType="OTHER"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        referrer_record_id,t_job_hunter_id,recommend_id,download_time,download_if,correlation_type,origin,
+        referrer,browse,appoint,
+        interview,offer,entry,
+        weed_out,feedback,deleted,money,type
+    </sql>
+    <select id="referrerRecordSUM" resultType="com.wcwy.company.entity.ReferrerRecord">
+        SELECT SUM(referrer_record.referrer)  AS referrer,
+               SUM(referrer_record.browse)    AS browse,
+               SUM(referrer_record.appoint)   AS appoint,
+               SUM(referrer_record.interview) AS interview,
+               SUM(referrer_record.offer)     AS offer,
+               SUM(referrer_record.entry)     AS entry,
+               SUM(referrer_record.feedback)  AS feedback,
+               SUM(referrer_record.weed_out)  AS weed_out
+        FROM referrer_record
+        WHERE referrer_record.recommend_id = #{userid}
+    </select>
+    <select id="selectReferrerRecordJobHunter" resultMap="ReferrerRecordJobHunterDTOMap">
+        SELECT
+        referrer_record.referrer_record_id,
+        referrer_record.download_time,
+        referrer_record.download_if,
+        referrer_record.correlation_type,
+        referrer_record.recommend_id,
+        referrer_record.referrer,
+        referrer_record.browse,
+        referrer_record.appoint,
+        referrer_record.interview,
+        referrer_record.offer,
+        referrer_record.entry,
+        referrer_record.weed_out,
+        referrer_record.feedback,
+        referrer_record.create_time,
+        referrer_record.delete_time,
+        referrer_record.report,
+        t_jobhunter.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.address,
+        t_jobhunter.avatar,
+        t_jobhunter.sex,
+        t_jobhunter.show_sex,
+        t_jobhunter.education,
+        t_jobhunter.phone,
+        t_jobhunter.current_salary,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        t_jobhunter.login_time,
+        t_jobhunter_resume.resume_id,
+        t_jobhunter_resume.advantage
+        FROM
+        referrer_record
+        INNER JOIN
+        t_jobhunter
+        ON
+        referrer_record.t_job_hunter_id = t_jobhunter.user_id
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        t_jobhunter_expect_position
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_expect_position.resume_id
+        <where>
+            referrer_record.recommend_id =#{userid} and   referrer_record.correlation_type !=4 AND t_jobhunter.perfect=1
+            <if test="referrerRecordQuery.correlationType !=null ">
+                and referrer_record.correlation_type =#{referrerRecordQuery.correlationType}
+            </if>
+
+            <if test="referrerRecordQuery.keyword !=null and referrerRecordQuery.keyword !='' ">
+                and( t_jobhunter.user_name LIKE concat('%',#{referrerRecordQuery.keyword},'%') OR EXISTS(
+                SELECT
+                company.t_jobhunter_education_record.*
+                FROM
+                company.t_jobhunter_education_record
+                WHERE
+                company.t_jobhunter_education_record.resume_id =t_jobhunter_resume.resume_id AND
+                company.t_jobhunter_education_record.shcool_name LIKE concat('%',#{referrerRecordQuery.keyword},'%')
+                ) )
+
+
+            </if>
+            <if test="referrerRecordQuery.sex !=null">
+                AND  t_jobhunter.sex =#{referrerRecordQuery.sex}
+            </if>
+            <if test="referrerRecordQuery.education !=null">
+                AND   t_jobhunter.education=#{referrerRecordQuery.education}
+            </if>
+            <if test="referrerRecordQuery.endAge !=null and referrerRecordQuery.beginAge !=null ">
+                AND  YEAR(t_jobhunter.birthday)  BETWEEN #{referrerRecordQuery.endAge} AND #{referrerRecordQuery.beginAge}
+            </if>
+            <if test="referrerRecordQuery.endAge ==null and referrerRecordQuery.beginAge !=null ">
+                AND YEAR(t_jobhunter.birthday> #{referrerRecordQuery.beginAge}
+            </if>
+            <if test="referrerRecordQuery.endAge !=null and referrerRecordQuery.beginAge ==null ">
+                AND YEAR(t_jobhunter.birthday) &lt; #{referrerRecordQuery.endAge}
+            </if>
+            <if test="referrerRecordQuery.workExperience !='' and referrerRecordQuery.workExperience==1">
+                AND (t_jobhunter.work_time IS NULL OR  t_jobhunter.work_time BETWEEN  #{referrerRecordQuery.endWorkTime} AND #{referrerRecordQuery.beginWorkTime} )
+            </if>
+            <if test="referrerRecordQuery.workExperience !='' and referrerRecordQuery.workExperience>=2   ">
+                AND  t_jobhunter.work_time BETWEEN #{referrerRecordQuery.endWorkTime} AND #{referrerRecordQuery.beginWorkTime}
+            </if>
+            <if test="referrerRecordQuery.tartAnnualSalary !=null and referrerRecordQuery.endAnnualSalary !=null ">
+                AND  t_jobhunter.current_salary BETWEEN #{referrerRecordQuery.tartAnnualSalary} AND #{referrerRecordQuery.endAnnualSalary}
+            </if>
+            <if test="referrerRecordQuery.tartAnnualSalary !=null and referrerRecordQuery.endAnnualSalary ==null">
+                AND  t_jobhunter.current_salary > #{referrerRecordQuery.tartAnnualSalary}
+            </if>
+            <if test="referrerRecordQuery.tartAnnualSalary ==null and referrerRecordQuery.endAnnualSalary !=null">
+                AND  t_jobhunter.current_salary &lt; #{referrerRecordQuery.endAnnualSalary}
+            </if>
+
+
+        <if test="referrerRecordQuery.city !=null and referrerRecordQuery.city !=''">
+            AND
+            t_jobhunter.address ->'$.city'=#{referrerRecordQuery.city}
+        </if>
+            <if test="referrerRecordQuery.expectationCity !=null and referrerRecordQuery.expectationCity !=''">
+                AND t_jobhunter_expect_position.work_city LIKE CONCAT ("%",#{referrerRecordQuery.expectationCity}, "%")
+            </if>
+
+            <if test="referrerRecordQuery.tartExpectationAnnualSalary !=null and referrerRecordQuery.endExpectationAnnualSalary !=null">
+                AND  t_jobhunter.expect_salary BETWEEN #{referrerRecordQuery.tartExpectationAnnualSalary} AND #{referrerRecordQuery.endExpectationAnnualSalary}
+            </if>
+            <if test="referrerRecordQuery.tartExpectationAnnualSalary !=null and referrerRecordQuery.endExpectationAnnualSalary ==null">
+                AND  t_jobhunter.expect_salary >#{referrerRecordQuery.tartExpectationAnnualSalary}
+            </if>
+            <if test="referrerRecordQuery.tartExpectationAnnualSalary ==null and referrerRecordQuery.endExpectationAnnualSalary !=null">
+                AND  t_jobhunter.expect_salary &lt; #{referrerRecordQuery.endExpectationAnnualSalary}
+            </if>
+        </where>
+        GROUP BY t_jobhunter.user_id
+        ORDER BY
+        referrer_record.create_time DESC
+    </select>
+
+
+    <resultMap id="ReferrerRecordJobHunterDTOMap" type="com.wcwy.company.dto.ReferrerRecordJobHunterDTO">
+        <id property="referrerRecordId" column="referrer_record_id" jdbcType="BIGINT"/>
+        <result property="tJobHunterId" column="t_job_hunter_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="correlationType" column="correlation_type" jdbcType="INTEGER"/>
+        <result property="referrer" column="referrer" jdbcType="BIGINT"/>
+        <result property="browse" column="browse" jdbcType="BIGINT"/>
+        <result property="appoint" column="appoint" jdbcType="BIGINT"/>
+        <result property="downloadIf" column="download_if" jdbcType="INTEGER"/>
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="interview" column="interview" jdbcType="BIGINT"/>
+        <result property="offer" column="offer" jdbcType="BIGINT"/>
+        <result property="entry" column="entry" jdbcType="BIGINT"/>
+        <result property="weedOut" column="weed_out" jdbcType="BIGINT"/>
+        <result property="feedback" column="feedback" jdbcType="BIGINT"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="report" column="report" jdbcType="OTHER"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="showSex" column="show_sex" jdbcType="INTEGER"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="currentSalary" column="current_salary" jdbcType="DECIMAL"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="advantage" column="advantage" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+
+        <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+
+     <!--   <collection property="resumePath" column="resume_path"/>-->
+
+
+        <collection property="position" ofType="com.wcwy.company.entity.TJobhunterExpectPosition"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.selectId"></collection>
+        <collection property="workRecord" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectS"></collection>
+        <collection property="record" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectS">
+        </collection>
+    </resultMap>
+
+    <select id="expectation" resultType="java.lang.String">
+        SELECT DISTINCT
+        t_jobhunter_expect_position.position_name -> "$[2]"
+        FROM
+        referrer_record
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        referrer_record.t_job_hunter_id = t_jobhunter_resume.t_jobhunter_id
+        INNER JOIN
+        t_jobhunter_expect_position
+        ON
+        t_jobhunter_resume.resume_id = t_jobhunter_expect_position.resume_id
+        <where>
+            referrer_record.recommend_id = #{userid}
+            <if test="keyword !=null  and keyword !=''">
+                and t_jobhunter_expect_position.position_name LIKE concat('%',#{keyword},'%')
+            </if>
+
+        </where>
+        LIMIT #{pageSize}
+
+    </select>
+    <select id="selectDownload" resultMap="RMDownloadDTOMap">
+        SELECT
+        referrer_record.download_time,
+        t_jobhunter.user_name,
+        t_jobhunter.sex,
+        t_jobhunter.user_id,
+        t_jobhunter.avatar,
+        t_jobhunter.work_time,
+        t_jobhunter.birthday,
+        t_jobhunter_resume.resume_id
+        FROM
+        referrer_record
+        INNER JOIN
+        t_jobhunter
+        ON
+        referrer_record.t_job_hunter_id = t_jobhunter.user_id
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        <where>
+            referrer_record.download_if = 1 and referrer_record.recommend_id=#{userid}
+            <if test="rmDownloadQuery.education !=null and rmDownloadQuery.education.size()>0 ">
+                and t_jobhunter.education IN
+                <foreach collection="rmDownloadQuery.education" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="rmDownloadQuery.birthday !=null  and rmDownloadQuery.birthday !=''  and rmDownloadQuery.birthday != 6">
+                and t_jobhunter.birthday BETWEEN #{rmDownloadQuery.endTime } AND
+                #{rmDownloadQuery.startTime }
+            </if>
+            <if test="rmDownloadQuery.birthday !=null  and rmDownloadQuery.birthday !='' and  rmDownloadQuery.birthday == 6">
+                and t_jobhunter.birthday &lt;= #{rmDownloadQuery.endTime}
+            </if>
+            <if test="rmDownloadQuery.keyword !=null and rmDownloadQuery.keyword !='' ">
+                and( t_jobhunter.user_name LIKE concat('%',#{rmDownloadQuery.keyword},'%') OR EXISTS(
+                SELECT
+                company.t_jobhunter_education_record.*
+                FROM
+                company.t_jobhunter_education_record
+                WHERE
+                company.t_jobhunter_education_record.resume_id =t_jobhunter_resume.resume_id AND
+                company.t_jobhunter_education_record.shcool_name LIKE concat('%',#{rmDownloadQuery.keyword},'%')
+                ) )
+            </if>
+            <if test="rmDownloadQuery.correlationType !=null ">
+                and referrer_record.correlation_type =#{rmDownloadQuery.correlationType}
+            </if>
+            <if test="rmDownloadQuery.startDate !=null and rmDownloadQuery.endDate ==null">
+                and referrer_record.download_time > #{rmDownloadQuery.startDate}
+            </if>
+            <if test="rmDownloadQuery.startDate ==null and rmDownloadQuery.endDate !=null">
+                and referrer_record.download_time &lt; #{rmDownloadQuery.endDate}
+            </if>
+            <if test="rmDownloadQuery.startDate !=null and rmDownloadQuery.endDate !=null">
+                and referrer_record.download_time BETWEEN #{rmDownloadQuery.startDate} and #{rmDownloadQuery.endDate}
+            </if>
+        </where>
+        ORDER BY
+        referrer_record.download_time DESC
+    </select>
+    <select id="graph" resultType="java.util.Map">
+        SELECT date_format(create_time, '%Y-%m') AS `month`,
+               COUNT(*)                          as amount
+        FROM referrer_record
+        WHERE referrer_record.correlation_type = 0
+          AND DATE_FORMAT(create_time, '%Y') = DATE_FORMAT(#{year}, '%Y')
+          AND referrer_record.recommend_id = #{userid}
+        GROUP BY date_format(create_time, '%Y-%m')
+        ORDER BY date_format(create_time, '%Y-%m') ASC
+
+
+    </select>
+    <select id="countJobHunter" resultType="java.lang.Integer" parameterType="java.lang.String">
+        SELECT
+           count( referrer_record.referrer_record_id)
+        FROM
+            referrer_record
+                INNER JOIN
+            t_jobhunter
+            ON
+                referrer_record.t_job_hunter_id = t_jobhunter.user_id
+        WHERE
+            referrer_record.correlation_type = 0 AND
+            referrer_record.recommend_id = #{userid} AND
+            t_jobhunter.perfect = 1
+
+    </select>
+    <resultMap id="RMDownloadDTOMap" type="com.wcwy.company.dto.RMDownloadDTO">
+        <result property="downloadTime" column="download_time" jdbcType="TIMESTAMP"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <collection property="tJobhunterExpectPositions" ofType="com.wcwy.company.entity.TJobhunterExpectPosition"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterExpectPositionMapper.selectId"></collection>
+        <collection property="tJobhunterWorkRecords" ofType="com.wcwy.company.entity.TJobhunterWorkRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterWorkRecordMapper.selectId"></collection>
+        <collection property="tJobhunterEducationRecord" ofType="com.wcwy.company.entity.TJobhunterEducationRecord"
+                    column="resume_id"
+                    select="com.wcwy.company.mapper.TJobhunterEducationRecordMapper.selectId">
+        </collection>
+    </resultMap>
+</mapper>

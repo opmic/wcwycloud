@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.JobHunterGlanceOverMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.JobHunterGlanceOver">
+            <id property="glanceOverId" column="glance_over_id" jdbcType="VARCHAR"/>
+            <result property="glanceOverPost" column="glance_over_post" jdbcType="VARCHAR"/>
+            <result property="glanceOverTime" column="glance_over_time" jdbcType="TIMESTAMP"/>
+            <result property="jobhunterId" column="jobhunter_id" jdbcType="VARCHAR"/>
+            <result property="deletedTime" column="deleted_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        glance_over_id,glance_over_post,glance_over_time,
+        jobhunter_id,deleted_time,deleted
+    </sql>
+</mapper>

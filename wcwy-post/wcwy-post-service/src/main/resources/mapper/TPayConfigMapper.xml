@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.TPayConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.TPayConfig">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="money" column="money" jdbcType="DECIMAL"/>
+            <result property="beanCount" column="bean_count" jdbcType="INTEGER"/>
+            <result property="gradeA" column="grade_A" jdbcType="INTEGER"/>
+            <result property="gradeB" column="grade_B" jdbcType="INTEGER"/>
+            <result property="gradeC" column="grade_C" jdbcType="INTEGER"/>
+            <result property="gradeD" column="grade_D" jdbcType="INTEGER"/>
+            <result property="gradeE" column="grade_E" jdbcType="INTEGER"/>
+            <result property="viewResumeTime" column="view_resume_time" jdbcType="INTEGER"/>
+            <result property="downloadResumeTime" column="download_resume_time" jdbcType="INTEGER"/>
+            <result property="registerCount" column="register_count" jdbcType="INTEGER"/>
+            <result property="registerGold" column="register_gold" jdbcType="INTEGER"/>
+            <result property="goldA" column="gold_A" jdbcType="INTEGER"/>
+            <result property="goldB" column="gold_B" jdbcType="INTEGER"/>
+            <result property="goldC" column="gold_C" jdbcType="INTEGER"/>
+            <result property="rechargeCount" column="recharge_count" jdbcType="INTEGER"/>
+            <result property="ordersCount" column="orders_count" jdbcType="INTEGER"/>
+            <result property="resumeCount" column="resume_count" jdbcType="INTEGER"/>
+            <result property="inviteJobHunterDownloadB" column="invite_job_hunter_download_B" jdbcType="INTEGER"/>
+            <result property="inviteJobHunterDownloadA" column="invite_job_hunter_download_A" jdbcType="INTEGER"/>
+            <result property="inviteFirmDownloadA" column="invite_firm_download_A" jdbcType="INTEGER"/>
+            <result property="inviteFirmDownloadB" column="invite_firm_download_B" jdbcType="INTEGER"/>
+            <result property="inviteFirmPostB" column="invite_firm_post_B" jdbcType="INTEGER"/>
+            <result property="inviteFirmPostA" column="invite_firm_post_A" jdbcType="INTEGER"/>
+            <result property="inviteInteractionPostA" column="invite_interaction_post_A" jdbcType="INTEGER"/>
+            <result property="inviteInteractionPostB" column="invite_interaction_post_B" jdbcType="INTEGER"/>
+            <result property="oneSideCount" column="one_side_count" jdbcType="INTEGER"/>
+            <result property="offerCount" column="offer_count" jdbcType="INTEGER"/>
+            <result property="warrantyCount" column="warranty_count" jdbcType="INTEGER"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="proportion" column="proportion" jdbcType="INTEGER"/>
+            <result property="discountCurrency" column="discount_currency" jdbcType="INTEGER"/>
+            <result property="discountGold" column="discount_gold" jdbcType="INTEGER"/>
+            <result property="fullMoonPayment" column="full_moon_payment" jdbcType="INTEGER"/>
+            <result property="entryPayment" column="entry_payment" jdbcType="INTEGER"/>
+        <result property="resumePay" column="resume_pay" jdbcType="INTEGER"/>
+            <result property="interviewPayment" column="interview_payment" jdbcType="INTEGER"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,money,bean_count,
+        grade_A,grade_B,grade_C,
+        grade_D,grade_E,view_resume_time,
+        download_resume_time,register_count,register_gold,
+        gold_A,gold_B,gold_C,resume_pay,
+        recharge_count,orders_count,resume_count,
+        invite_job_hunter_download_B,invite_job_hunter_download_A,invite_firm_download_A,
+        invite_firm_download_B,invite_firm_post_B,invite_firm_post_A,
+        invite_interaction_post_A,invite_interaction_post_B,one_side_count,
+        offer_count,warranty_count,create_time,
+        proportion,discount_currency,discount_gold,
+        full_moon_payment,entry_payment,interview_payment,
+        update_time
+    </sql>
+</mapper>

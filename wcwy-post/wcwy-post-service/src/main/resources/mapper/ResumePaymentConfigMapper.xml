@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.ResumePaymentConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.ResumePaymentConfig">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="gradeA" column="grade_A" jdbcType="DECIMAL"/>
+            <result property="gradeB" column="grade_B" jdbcType="DECIMAL"/>
+            <result property="gradeC" column="grade_C" jdbcType="DECIMAL"/>
+            <result property="gradeD" column="grade_D" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,grade_A,
+        grade_B,grade_C,grade_D
+    </sql>
+</mapper>

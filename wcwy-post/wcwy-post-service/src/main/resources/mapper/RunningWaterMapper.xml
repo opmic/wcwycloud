@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.RunningWaterMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.RunningWater">
+        <id property="runningWaterId" column="running_water_id" jdbcType="VARCHAR"/>
+        <result property="source" column="source" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="ifIncome" column="if_income" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        running_water_id
+        ,source,user_id,money,
+        if_income,order_id,deleted
+    </sql>
+    <select id="selectPages" resultMap="OrderInfoRunningDTOMap">
+
+        SELECT
+        running_water.running_water_id,
+        running_water.money,
+        running_water.source,
+        running_water.if_income,
+        order_info.order_id,
+        order_info.title,
+        order_info.order_on,
+        order_info.post_id,
+        order_info.payment_type,
+        order_info.put_in_resume_id,
+        order_info.update_time,
+        order_info.create_id,
+        order_info.platform_money,
+        order_info.referrer_money,
+        order_info.share_money,
+        order_info.state,
+        order_info.state_cause,
+        order_info.jobhunter_id,
+        order_info.code_url,
+        order_info.recommend_id,
+        order_info.no_payment_time,
+        order_info.referrer_id,
+        order_info.money AS payment_money,
+        order_info.invoice,
+        order_info.identification,
+        order_info.share_user_id,
+        order_info.create_time
+        FROM
+        running_water
+        LEFT JOIN
+        order_info
+        ON
+        running_water.order_id = order_info.order_id
+        <where>
+            running_water.user_id = #{orderInfoRunningQuery.loginUser} AND deleted=0
+            <if test="orderInfoRunningQuery.orderId !=null and orderInfoRunningQuery.orderId !=''">
+                AND running_water.order_id = #{orderInfoRunningQuery.orderId}
+            </if>
+            <if test="orderInfoRunningQuery.postId !=null and orderInfoRunningQuery.postId !=''">
+                AND order_info.post_id = #{orderInfoRunningQuery.postId}
+            </if>
+            <if test="orderInfoRunningQuery.paymentType !=null and orderInfoRunningQuery.paymentType !=''">
+                AND   order_info.payment_type = #{orderInfoRunningQuery.paymentType}
+            </if>
+            <if test="orderInfoRunningQuery.state !=null">
+                AND   order_info.state = #{orderInfoRunningQuery.state}
+            </if>
+            <if test="orderInfoRunningQuery.jobhunterId !=null and orderInfoRunningQuery.jobhunterId !=''">
+                AND order_info.jobhunter_id = #{orderInfoRunningQuery.jobhunterId}
+            </if>
+            <if test="orderInfoRunningQuery.recommendId !=null and orderInfoRunningQuery.recommendId !=''">
+                AND  order_info.recommend_id = #{orderInfoRunningQuery.recommendId}
+            </if>
+            <if test="orderInfoRunningQuery.identification !=null and orderInfoRunningQuery.identification !=''">
+                AND    order_info.identification = #{orderInfoRunningQuery.identification}
+            </if>
+            <if test="orderInfoRunningQuery.ifIncome !=null ">
+                AND  running_water.if_income = #{orderInfoRunningQuery.ifIncome}
+            </if>
+            <if test="orderInfoRunningQuery.beginTime !=null and orderInfoRunningQuery.endTime !=null ">
+                AND  	running_water.crate_time BETWEEN #{orderInfoRunningQuery.beginTime} AND #{orderInfoRunningQuery.endTime}
+            </if>
+        </where>
+        ORDER BY
+        order_info.create_time DESC
+    </select>
+
+    <resultMap id="OrderInfoRunningDTOMap" type="com.wcwy.post.dto.OrderInfoRunningDTO">
+        <id property="runningWaterId" column="running_water_id" jdbcType="VARCHAR"/>
+        <result property="source" column="source" jdbcType="INTEGER"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="ifIncome" column="if_income" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="orderOn" column="order_on" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="paymentType" column="payment_type" jdbcType="VARCHAR"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="stateCause" column="state_cause" jdbcType="VARCHAR"/>
+        <result property="jobhunterId" column="jobhunter_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="paymentMoney" column="payment_money" jdbcType="DECIMAL"/>
+        <result property="referrerId" column="referrer_id" jdbcType="VARCHAR"/>
+        <result property="invoice" column="invoice" jdbcType="VARCHAR"/>
+        <result property="identification" column="identification" jdbcType="INTEGER"/>
+        <result property="shareUserId" column="share_user_id" jdbcType="VARCHAR"/>
+        <result property="shareMoney" column="share_money" jdbcType="DECIMAL"/>
+        <result property="referrerMoney" column="referrer_money" jdbcType="DECIMAL"/>
+        <result property="platformMoney" column="platform_money" jdbcType="DECIMAL"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: wcwy-company
+  cloud:
+    nacos:
+      discovery:
+        server-addr: '@nacos.addr@'  #Nacos服务注册中心地址
+        password: '@nacos.password@'
+        username: '@nacos.username@'
+        namespace: '@nacos.namespace@'
+      config:
+        server-addr: '@nacos.addr@'   #Nacos作为配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        namespace: '@nacos.namespace@'
+        #group: TEST_DROUP #用于同group分组
+seata:
+  tx-service-group: default_tx_group  #对应seataServer.properties中的service.vgroupMapping.my_test_tx_group 集群分组
+  registry:
+    type: nacos   #注册中心类型：nacos
+    nacos:
+      application: seata-server      # seata-server注册在nacos中的服务名
+      server-addr: '@nacos.addr@'    # nacos的地址端口
+      group : SEATA_GROUP            # seata-server在nacos的分组
+      namespace: '@nacos.namespace@'          # seata-server在nacos的命名空间ID
+      username: '@nacos.username@'                # nacos账号
+      password: '@nacos.password@'               # nacos密码
+  config:
+    type: nacos
+    nacos:
+      server-addr: '@nacos.addr@'
+      group: SEATA_GROUP
+      namespace: '@nacos.namespace@'                 # seata-server的配置文件的命名空间ID
+      dataId: seataServer.properties       # seata-server在nacos的配置dataId
+      username: '@nacos.username@'
+      password: '@nacos.password@'

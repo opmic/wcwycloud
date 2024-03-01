@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.OrderInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.OrderInfo">
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="orderOn" column="order_on" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="paymentType" column="payment_type" jdbcType="VARCHAR"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="state" column="state" jdbcType="INTEGER"/>
+        <result property="stateCause" column="state_cause" jdbcType="VARCHAR"/>
+        <result property="jobhunterId" column="jobhunter_id" jdbcType="VARCHAR"/>
+        <result property="codeUrl" column="code_url" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="money" column="money" jdbcType="DECIMAL"/>
+        <result property="paymentAmount" column="payment_amount" jdbcType="DECIMAL"/>
+        <result property="noPaymentTime" column="no_payment_time" jdbcType="TIMESTAMP"/>
+        <result property="referrerId" column="referrer_id" jdbcType="VARCHAR"/>
+        <result property="invoice" column="invoice" jdbcType="VARCHAR"/>
+        <result property="identification" column="identification" jdbcType="INTEGER"/>
+        <result property="shareUserId" column="share_user_id" jdbcType="VARCHAR"/>
+        <result property="shareMoney" column="share_money" jdbcType="DECIMAL"/>
+        <result property="referrerMoney" column="referrer_money" jdbcType="DECIMAL"/>
+        <result property="platformMoney" column="platform_money" jdbcType="DECIMAL"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="particulars" column="industry" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createName" column="create_name" jdbcType="VARCHAR"/>
+        <result property="payer" column="payer" jdbcType="VARCHAR"/>
+        <result property="payerTime" column="payer_time" jdbcType="TIMESTAMP"/>
+        <result property="updateId" column="update_id" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="recommendTime" column="recommend_time" jdbcType="TIMESTAMP"/>
+        <result property="inviterCompany" column="inviter_company" jdbcType="VARCHAR"/>
+        <result property="inviterCompanyRecommend" column="inviter_company_recommend" jdbcType="VARCHAR"/>
+        <result property="inviterCompanyMoney" column="inviter_company_money" jdbcType="DECIMAL"/>
+        <result property="inviterCompanyRecommendMoney" column="inviter_company_recommend_money" jdbcType="DECIMAL"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        order_id
+        ,title,order_on,
+        post_id,payment_type,put_in_resume_id,
+        state,state_cause,jobhunter_id,
+        code_url,recommend_id,money,payment_amount,payer_time,
+        referrer_id,invoice,identification,share_user_id,share_money,
+        referrer_money,platform_money,create_id,payer,recommend_time,
+        create_time,update_id,update_time
+    </sql>
+    <select id="selectApplyForInvoice" resultType="com.wcwy.post.entity.OrderInfo">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        FROM
+        order_info
+
+        <where>
+            order_info.create_id =#{orderInfoInvoiceQuery.loginUser}
+            <if test="orderInfoInvoiceQuery.endTime !=null and orderInfoInvoiceQuery.beginTime !=null  ">
+                AND order_info.create_time BETWEEN #{orderInfoInvoiceQuery.beginTime} and
+                #{orderInfoInvoiceQuery.endTime}
+            </if>
+            <if test="orderInfoInvoiceQuery.keyword !='' and  orderInfoInvoiceQuery.keyword !=null ">
+                AND order_info.particulars LIKE CONCAT('%',#{orderInfoInvoiceQuery.keyword}, '%')
+            </if>
+            AND (order_info.invoice IS NULL OR order_info.invoice = '' OR order_info.invoice = "")
+            AND order_info.state=2 AND order_info.identification =4
+        </where>
+
+        ORDER BY
+        order_info.create_time DESC
+
+    </select>
+    <select id="divideInto" resultType="com.wcwy.post.pojo.DivideIntoPOJO">
+        SELECT
+        COUNT(order_info.order_id) AS download,
+        SUM(order_info.money) AS costs,
+        SUM(order_info.referrer_money)
+        FROM
+        order_info
+        WHERE
+        order_info.divide_into_if = 1 AND
+        order_info.state = 2 AND
+        <if test="type ==3">
+            order_info.jobhunter_id = #{identityId} AND
+            order_info.recommend_id = #{recommendId}
+        </if>
+        <if test="type ==2">
+            order_info.jobhunter_id = #{identityId} AND
+            order_info.recommend_id = #{recommendId}
+        </if>
+        <if test="type ==1">
+            order_info.jobhunter_id = #{identityId} AND
+            order_info.recommend_id = #{recommendId}
+        </if>
+        GROUP BY
+        order_info.jobhunter_id
+
+    </select>
+    <select id="companys" resultType="java.util.Map">
+        SELECT order_info.create_id        as createId,
+               COUNT(order_info.create_id) as number
+        FROM order_info
+        WHERE order_info.identification IN (2, 3, 5)
+          AND order_info.state = 1
+          AND now() > order_info.no_payment_time
+        GROUP BY order_info.create_id
+    </select>
+    <select id="sumMoney" resultType="java.lang.Double">
+        SELECT SUM(payment_amount)
+        FROM order_info
+        WHERE order_info.create_id = #{userid}
+          AND (order_info.invoice IS NULL OR order_info.invoice = '' OR order_info.invoice = "")
+          AND order_info.state = 2
+          AND order_info.identification = 4
+    </select>
+    <select id="getPostLabel" resultType="java.lang.String">
+        SELECT
+        order_info.particulars -> '$.postLabel'
+        FROM
+        order_info
+        <where>
+            order_info.divide_into_if = 3 AND
+            order_info.state = 2 AND
+            order_info.identification IN (2,3,5) AND
+            order_info.recommend_id = #{userid}
+            <if test="keyword !='' and keyword !=null ">
+                AND order_info.particulars -> '$.postLabel' LIKE CONCAT('%',#{keyword}, '%')
+            </if>
+        </where>
+
+
+    </select>
+    <select id="referralRevenue" resultType="com.wcwy.post.dto.ReferralRevenueDTO">
+        SELECT
+        order_info.put_in_resume_id as putInResumeId,
+        order_info.identification,
+        order_info.referrer_money  as referrerMoney,
+        order_info.particulars,
+        order_info.recommend_time as recommendTime
+        FROM
+        order_info
+        <where>
+            order_info.recommend_id = #{referralRevenueQuery.userId} AND
+            order_info.identification IN (2,3,5) AND
+            order_info.state = 2 AND
+            order_info.divide_into_if = 3
+            <if test="referralRevenueQuery.companyName !=null and  referralRevenueQuery.companyName !=''">
+                AND
+                order_info.particulars -> '$.companyName' = #{referralRevenueQuery.companyName}
+            </if>
+            <if test=" referralRevenueQuery.type !='' and referralRevenueQuery.type==1  ">
+                AND
+                order_info.identification =2
+            </if>
+            <if test=" referralRevenueQuery.type !='' and referralRevenueQuery.type==2 ">
+                AND
+                order_info.identification =3
+            </if>
+            <if test=" referralRevenueQuery.type !='' and referralRevenueQuery.type==3 ">
+                AND
+                order_info.identification =5
+            </if>
+            <if test="referralRevenueQuery.postLabel !=null and referralRevenueQuery.postLabel !='' ">
+                AND
+                order_info.particulars -> '$.postLabel' = #{referralRevenueQuery.postLabel}
+            </if>
+            <if test="referralRevenueQuery.keyword !=null and referralRevenueQuery.keyword !='' ">
+                AND order_info.particulars -> '$.userName' LIKE CONCAT('%',#{referralRevenueQuery.keyword}, '%')
+            </if>
+
+            <if test="referralRevenueQuery.date !=null ">
+                AND
+                YEAR(order_info.recommend_time) =#{referralRevenueQuery.year}
+                AND MONTH(order_info.recommend_time)=#{referralRevenueQuery.month}
+            </if>
+
+
+        </where>
+        ORDER BY
+        order_info.recommend_time DESC
+
+    </select>
+</mapper>

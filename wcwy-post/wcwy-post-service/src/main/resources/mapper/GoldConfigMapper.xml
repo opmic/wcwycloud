@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.GoldConfigMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.GoldConfig">
+            <id property="goldId" column="gold_id" jdbcType="BIGINT"/>
+            <result property="registerGold" column="register_gold" jdbcType="INTEGER"/>
+            <result property="loginGold" column="login_gold" jdbcType="INTEGER"/>
+            <result property="loginCount" column="login_count" jdbcType="INTEGER"/>
+            <result property="postGold" column="post_gold" jdbcType="INTEGER"/>
+            <result property="postCount" column="post_count" jdbcType="INTEGER"/>
+            <result property="recommendationReportBrowse" column="recommendation_report_browse" jdbcType="INTEGER"/>
+            <result property="recommendationReport" column="recommendation_report" jdbcType="INTEGER"/>
+            <result property="interviewInvitation" column="interview_invitation" jdbcType="INTEGER"/>
+            <result property="offer" column="offer" jdbcType="INTEGER"/>
+            <result property="entry" column="entry" jdbcType="INTEGER"/>
+            <result property="shareRegistration" column="share_registration" jdbcType="INTEGER"/>
+        <result property="shareRegistrationCount" column="share_registration_count" jdbcType="INTEGER"/>
+            <result property="createActivity" column="create_activity" jdbcType="INTEGER"/>
+            <result property="videoUploading" column="video_uploading" jdbcType="INTEGER"/>
+            <result property="videoOrder" column="video_order" jdbcType="INTEGER"/>
+        <result property="inviterJobHunter" column="inviter_job_hunter" jdbcType="INTEGER"/>
+        <result property="inviterRecommend" column="inviter_recommend" jdbcType="INTEGER"/>
+        <result property="inviterCompany" column="inviter_company" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        gold_id,register_gold,login_gold,
+        login_count,post_gold,post_count,
+        recommendation_report_browse,recommendation_report,interview_invitation,share_registration_count,
+        offer,entry,share_registration,
+        create_activity,video_uploading,video_order,inviter_job_hunter,inviter_recommend,inviter_company
+    </sql>
+</mapper>

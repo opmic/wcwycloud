@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.RecommendBasicsMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.RecommendBasics">
+            <id property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+            <result property="sex" column="sex" jdbcType="INTEGER"/>
+            <result property="phone" column="phone" jdbcType="VARCHAR"/>
+            <result property="administrator" column="administrator" jdbcType="INTEGER"/>
+            <result property="firmName" column="firm_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        recommend_id,username,head_path,
+        sex,phone,administrator,
+        firm_name
+    </sql>
+</mapper>

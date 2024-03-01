@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobhunterProjectRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobhunterProjectRecord">
+        <id property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="resumeId" column="resume_id" jdbcType="VARCHAR"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="projectRole" column="project_role" jdbcType="VARCHAR"/>
+        <result property="projectUrl" column="project_url" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="responsibility" column="responsibility" jdbcType="VARCHAR"/>
+        <result property="performance" column="performance" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        project_id
+        ,resume_id,project_name,company_name,
+        project_role,project_url,start_time,responsibility,performance,
+        end_time,description,create_time,
+        update_time
+    </sql>
+    <select id="selectId" resultMap="TJobHunterProjectRecordMap">
+        SELECT
+            t_jobhunter_project_record.project_id,
+            t_jobhunter_project_record.project_name,
+            t_jobhunter_project_record.project_role,
+            t_jobhunter_project_record.project_url,
+            t_jobhunter_project_record.company_name,
+            t_jobhunter_project_record.start_time,
+            t_jobhunter_project_record.end_time,
+            t_jobhunter_project_record.responsibility,
+            t_jobhunter_project_record.performance,
+            t_jobhunter_project_record.description
+        FROM
+            t_jobhunter_project_record
+        WHERE
+            t_jobhunter_project_record.resume_id =#{resume_id}
+        ORDER BY
+            t_jobhunter_project_record.end_time DESC
+    </select>
+    <resultMap id="TJobHunterProjectRecordMap" type="com.wcwy.company.entity.TJobhunterProjectRecord">
+        <id property="projectId" column="project_id" jdbcType="VARCHAR"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="projectRole" column="project_role" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="projectUrl" column="project_url" jdbcType="VARCHAR"/>
+        <result property="startTime" column="start_time" jdbcType="VARCHAR"/>
+        <result property="endTime" column="end_time" jdbcType="VARCHAR"/>
+        <result property="responsibility" column="responsibility" jdbcType="VARCHAR"/>
+        <result property="performance" column="performance" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+</mapper>

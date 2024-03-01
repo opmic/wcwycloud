@@ -1,0 +1,63 @@
+spring:
+  cloud:
+    sentinel:
+      log:
+        dir: /home/logs/
+
+  application:
+    name: oauth
+  main:
+    allow-bean-definition-overriding: true
+
+
+
+ip: '@ip@'
+server:
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,application/xml,application/json
+  port: 8694
+feign:
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      useGzipDecoder: true
+      enabled: true
+  httpclient:
+    enabled: true
+  hystrix:
+    enabled: true #关闭feign的hystrix
+  client:
+    config:
+      default:
+        connect-timeout: 4000 #超时设置
+        read-timeout: 4000
+
+#设置feign客户端超时时间 (默认1秒)
+ribbon:
+  eager-load: #开启饿加载
+    enabled: true
+    clients: wcwy-company,wcwy-post
+  MaxAutoRetries: 0 #对当前实例的重试次数
+  MaxAutoRetriesNextServer: 1 #切换实例的重试次数 1
+  #指的是建立连接所用的时间，适用于网络状况i正常的情况下,两端连接所用的时间 5秒
+  ReadTimeout: 5000
+  #指的是建立连接蛋从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: false #把超时发生异常属性关闭
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000  #熔断超时时间

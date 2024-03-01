@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.websocket.mapper.ImMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.websocket.entity.ImMessage">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="toId" column="to_id" jdbcType="BIGINT"/>
+            <result property="fromId" column="from_id" jdbcType="BIGINT"/>
+            <result property="sendTime" column="send_time" jdbcType="BIGINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="extend" column="extend" jdbcType="VARCHAR"/>
+            <result property="messageType" column="message_type" jdbcType="CHAR"/>
+            <result property="chatKey" column="chat_key" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,to_id,from_id,
+        send_time,content,extend,
+        message_type,chat_key
+    </sql>
+</mapper>

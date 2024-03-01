@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.post.mapper.TPostShareMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.post.entity.TPostShare">
+        <id property="shareId" column="share_id" jdbcType="VARCHAR"/>
+        <result property="companyPostId" column="company_post_id" jdbcType="VARCHAR"/>
+        <result property="flow" column="flow" jdbcType="BIGINT"/>
+        <result property="shareSize" column="share_size" jdbcType="BIGINT"/>
+        <result property="downloadSize" column="download_size" jdbcType="BIGINT"/>
+        <result property="browseSize" column="browse_size" jdbcType="BIGINT"/>
+        <result property="interviewSize" column="interview_size" jdbcType="BIGINT"/>
+        <result property="entrySize" column="entry_size" jdbcType="BIGINT"/>
+        <result property="weedOut" column="weed_out" jdbcType="BIGINT"/>
+        <result property="subscribe" column="subscribe" jdbcType="BIGINT"/>
+        <result property="offerSize" column="offer_size" jdbcType="BIGINT"/>
+        <result property="overInsured" column="over_insured" jdbcType="BIGINT"/>
+        <result property="attention" column="attention" jdbcType="BIGINT"/>
+        <result property="closeAnAccount" column="close_an_account" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        share_id
+        ,company_post_id,flow,share_size,
+        download_size,browse_size,interview_size,
+        entry_size,weed_out,subscribe,offer_size,
+        over_insured,attention,close_an_account
+    </sql>
+    <select id="selectTotalPostShare" resultMap="TotalPostShareMap">
+        SELECT
+            sum(t_post_share.flow) AS flow,
+            sum(t_post_share.share_size) AS share_size,
+            sum(t_post_share.download_size) AS download_size,
+            sum(t_post_share.browse_size) AS browse_size,
+            sum(t_post_share.interview_size) AS interview_size,
+            sum(t_post_share.entry_size) AS entry_size,
+            sum(t_post_share.subscribe) AS subscribe,
+            sum(t_post_share.weed_out) AS weed_out,
+            sum(t_post_share.offer_size) AS offer_size
+        FROM
+            post.t_company_post
+                INNER JOIN
+            t_post_share AS t_post_share
+            ON
+                t_company_post.post_id = t_post_share.company_post_id
+        WHERE
+            t_company_post.company_id = #{companyId}
+    </select>
+
+    <resultMap id="TotalPostShareMap" type="com.wcwy.post.dto.TotalPostShare">
+        <result property="flow" column="flow" jdbcType="BIGINT"/>
+        <result property="shareSize" column="share_size" jdbcType="BIGINT"/>
+        <result property="downloadSize" column="download_size" jdbcType="BIGINT"/>
+        <result property="browseSize" column="browse_size" jdbcType="BIGINT"/>
+        <result property="interviewSize" column="interview_size" jdbcType="BIGINT"/>
+        <result property="entrySize" column="entry_size" jdbcType="BIGINT"/>
+        <result property="weedOut" column="weed_out" jdbcType="BIGINT"/>
+        <result property="subscribe" column="subscribe" jdbcType="BIGINT"/>
+        <result property="offerSize" column="offer_size" jdbcType="BIGINT"/>
+    </resultMap>
+</mapper>

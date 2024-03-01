@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.websocket.mapper.ChatNewsMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.websocket.entity.ChatNews">
+            <id property="newsId" column="news_id" jdbcType="BIGINT"/>
+            <result property="chatId" column="chat_id" jdbcType="VARCHAR"/>
+            <result property="toId" column="to_id" jdbcType="VARCHAR"/>
+            <result property="fromId" column="from_id" jdbcType="VARCHAR"/>
+            <result property="sendTime" column="send_time" jdbcType="TIMESTAMP"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="readStatus" column="read_status" jdbcType="INTEGER"/>
+            <result property="msg" column="msg" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        news_id,chat_id,to_id,
+        from_id,send_time,type,
+        read_status,msg
+    </sql>
+    <select id="getList" resultType="com.wcwy.websocket.entity.ChatNews">
+        SELECT
+        chat_news.news_id,
+        chat_news.chat_id,
+        chat_news.to_id,
+        chat_news.from_id,
+        chat_news.send_time,
+        chat_news.type,
+        chat_news.read_status,
+        chat_news.msg
+        FROM
+        chat_news
+
+        INNER JOIN
+
+        (SELECT
+        MAX(send_time) AS cc
+        FROM
+        chat_news
+        GROUP BY
+        chat_news.chat_id
+         )as c
+
+        ON c.cc=chat_news.send_time
+        <where>
+            chat_news.chat_id IN
+            <foreach collection="chatId" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </where>
+        GROUP BY
+        chat_news.chat_id
+
+        ORDER BY
+        chat_news.chat_id DESC
+
+
+    </select>
+</mapper>

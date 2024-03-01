@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.SourceOfReturnsMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.SourceOfReturns">
+        <id property="sourceOfReturnsId" column="source_of_returns_id" jdbcType="VARCHAR"/>
+        <result property="aggregateAmount" column="aggregate_amount" jdbcType="DECIMAL"/>
+        <result property="identity" column="identity" jdbcType="INTEGER"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="sourceUser" column="source_user" jdbcType="VARCHAR"/>
+        <result property="earnings" column="earnings" jdbcType="DECIMAL"/>
+        <result property="orderTime" column="order_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="payer" column="payer" jdbcType="VARCHAR"/>
+        <result property="createId" column="create_id" jdbcType="VARCHAR"/>
+        <result property="deposit" column="deposit" jdbcType="DECIMAL"/>
+        <result property="earningUser" column="earning_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        source_of_returns_id
+        ,aggregate_amount,identity,type,payer,
+        order_id,source_user,earnings,
+        order_time,create_time,create_id,
+        deposit,earning_user
+    </sql>
+    <select id="shareDate" resultType="java.util.Map">
+        SELECT sum(source_of_returns.earnings) as earnings,
+               source_of_returns.identity
+        FROM source_of_returns
+        WHERE source_of_returns.type = 0
+          AND source_of_returns.earning_user = #{userid}
+        GROUP BY source_of_returns.identity
+    </select>
+    <select id="selectJobHunter" resultMap="SourceOfReturnsJobHunterDTO">
+        SELECT
+        t_company.avatar,
+        t_company.company_name,
+        source_of_returns.source_of_returns_id,
+        source_of_returns.order_time,
+        source_of_returns.payer,
+        source_of_returns.aggregate_amount,
+        source_of_returns.earnings,
+        source_of_returns.source_user
+        FROM
+        source_of_returns
+        LEFT JOIN
+        t_company
+        ON
+        source_of_returns.payer = t_company.company_id
+
+        <where>
+            source_of_returns.earning_user =#{sourceOfReturnsQuery.userId} AND source_of_returns.type = 0 and
+            source_of_returns.source_user =#{sourceOfReturnsQuery.jobHunter}
+            <if test="sourceOfReturnsQuery.keyword !='' and sourceOfReturnsQuery.keyword !=null ">
+                and t_company.company_name LIKE CONCAT('%',#{sourceOfReturnsQuery.keyword},'%')
+            </if>
+            <if test="sourceOfReturnsQuery.endDate !=null  and sourceOfReturnsQuery.startDate !=null ">
+                and source_of_returns.order_time BETWEEN #{sourceOfReturnsQuery.startDate} AND
+                #{sourceOfReturnsQuery.endDate}
+            </if>
+            <if test=" sourceOfReturnsQuery.endDate !=null  and sourceOfReturnsQuery.startDate ==null ">
+                and source_of_returns.order_time &lt;= #{sourceOfReturnsQuery.endDate}
+            </if>
+            <if test="sourceOfReturnsQuery.endDate ==null and sourceOfReturnsQuery.startDate !=null ">
+                and source_of_returns.order_time >= #{shareQuery.startDate}
+            </if>
+        </where>
+        ORDER BY
+        source_of_returns.create_time DESC
+    </select>
+
+
+    <resultMap id="SourceOfReturnsJobHunterDTO" type="com.wcwy.company.dto.SourceOfReturnsJobHunterDTO">
+        <id property="sourceOfReturnsId" column="source_of_returns_id" jdbcType="VARCHAR"/>
+        <result property="aggregateAmount" column="aggregate_amount" jdbcType="DECIMAL"/>
+        <result property="earnings" column="earnings" jdbcType="DECIMAL"/>
+        <result property="orderTime" column="order_time" jdbcType="TIMESTAMP"/>
+        <result property="payer" column="payer" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectCompany" resultType="com.wcwy.company.dto.SourceOfReturnsCompanyDTO">
+        SELECT
+        date_format(create_time, '%Y-%m') AS mont,
+        SUM(aggregate_amount) AS totalRevenue,
+        SUM(earnings) AS myEarnings
+        FROM
+        source_of_returns
+        <where>
+            source_of_returns.source_user = #{sourceOfReturnsQuery.company} AND
+            source_of_returns.earning_user = #{sourceOfReturnsQuery.userId} AND
+            source_of_returns.type = 0
+            <if test="sourceOfReturnsQuery.year !=null ">
+                and DATE_FORMAT(create_time,'%Y') = DATE_FORMAT(#{sourceOfReturnsQuery.year},'%Y')
+            </if>
+        </where>
+
+        GROUP BY
+        date_format(create_time, '%Y-%m')
+    </select>
+    <select id="todayProfit" resultType="java.lang.String">
+        select sum(earnings)
+        from source_of_returns
+        where type = 0
+          AND earning_user = #{userid}
+          AND create_time BETWEEN CONCAT(CURDATE(), ' 00:00:00') AND CONCAT(CURDATE(), ' 23:59:59');
+
+    </select>
+
+    <select id="setMonthProfit" resultType="java.lang.String">
+        SELECT sum(earnings)
+        FROM source_of_returns
+        WHERE type = 0 AND earning_user = #{userid} AND MONTH (create_time) = MONTH (NOW())
+    </select>
+
+    <select id="setSumProfit" resultType="java.lang.String">
+        SELECT sum(earnings)
+        FROM source_of_returns
+        WHERE type = 0
+          AND earning_user = #{userid}
+    </select>
+    <select id="earnings" resultType="java.util.Map" parameterType="java.lang.String">
+        SELECT SUM(source_of_returns.earnings) AS earnings,
+               source_of_returns.type
+        FROM source_of_returns
+        WHERE source_of_returns.earning_user = #{userid}
+        GROUP BY source_of_returns.type
+
+    </select>
+    <select id="selectCompanyName" resultType="java.lang.String">
+        SELECT
+        Distinct t_company.company_name
+        FROM
+        source_of_returns
+        INNER JOIN
+        t_company
+        ON
+        source_of_returns.payer = t_company.company_id
+        <where>
+            source_of_returns.earning_user = #{userid}
+            <if test="keyword !='' and keyword !=null">
+                AND t_company.company_name LIKE concat('%',#{keyword},'%')
+            </if>
+        </where>
+
+
+    </select>
+    <select id="identityEarningsJobHunter" resultMap="IdentityEarningsDTOMap">
+        SELECT
+        t_jobhunter.user_id,
+        t_company.company_name,
+        source_of_returns.aggregate_amount,
+        source_of_returns.earnings,
+        t_jobhunter.user_name as name,
+        t_jobhunter.create_time,
+        t_jobhunter.avatar,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        source_of_returns.order_time
+        FROM
+        source_of_returns
+        INNER JOIN
+        t_company
+        ON
+        source_of_returns.payer = t_company.company_id
+        INNER JOIN
+        t_jobhunter
+        ON
+        source_of_returns.source_user = t_jobhunter.user_id
+        <where>
+            source_of_returns.earning_user = #{shareRevenueDetailsQuery.userId} AND source_of_returns.identity =2 AND
+            source_of_returns.type = 0
+            <if test="shareRevenueDetailsQuery.keyword !=null and shareRevenueDetailsQuery.keyword !=''">
+                AND
+                (
+                t_company.company_name LIKE concat('%',#{shareRevenueDetailsQuery.keyword},'%') OR
+                t_jobhunter.user_name LIKE concat('%',#{shareRevenueDetailsQuery.keyword},'%')
+                )
+            </if>
+            <if test="shareRevenueDetailsQuery.date !=null  ">
+                AND
+                YEAR(source_of_returns.order_time) =#{shareRevenueDetailsQuery.year}
+                AND MONTH(source_of_returns.order_time)=#{shareRevenueDetailsQuery.month}
+            </if>
+        </where>
+
+        ORDER BY
+        source_of_returns.order_time DESC
+    </select>
+    <select id="identityEarnings" resultType="java.util.Map">
+        SELECT SUM(source_of_returns.earnings) AS earnings, source_of_returns.type
+        FROM source_of_returns
+        <where>
+            source_of_returns.earning_user = #{userid}
+            <if test=" year !=null and  month !=null and year !='' and  month !='' ">
+                AND
+                YEAR(source_of_returns.create_time) =#{year}
+                AND MONTH(source_of_returns.create_time)=#{month}
+            </if>
+        </where>
+
+        GROUP BY source_of_returns.type
+
+    </select>
+    <select id="identityEarningsRecommend" resultMap="IdentityEarningsDTOMap">
+        SELECT
+        t_recommend.username AS `name`,
+        t_recommend.id AS user_id,
+        t_recommend.head_path AS avatar,
+        t_recommend.industry,
+        t_recommend.registrant_time AS create_time,
+        sum(source_of_returns.aggregate_amount) AS aggregate_amount,
+        sum(source_of_returns.earnings) AS earnings,
+        t_recommend.sex,
+        t_recommend.birth as birthday
+        FROM
+        source_of_returns
+        INNER JOIN
+        t_recommend
+        ON
+        source_of_returns.source_user = t_recommend.id
+        <where>
+            source_of_returns.earning_user = #{shareRevenueDetailsQuery.userId} AND source_of_returns.identity = 1 AND
+            source_of_returns.type = 0
+            <if test="shareRevenueDetailsQuery.keyword !=null and shareRevenueDetailsQuery.keyword !='' ">
+                AND t_recommend.username LIKE concat('%',#{shareRevenueDetailsQuery.keyword},'%')
+            </if>
+            <if test="shareRevenueDetailsQuery.date !=null ">
+                AND
+                YEAR(t_recommend.registrant_time) =#{shareRevenueDetailsQuery.year}
+                AND MONTH(t_recommend.registrant_time)=#{shareRevenueDetailsQuery.month}
+            </if>
+        </where>
+
+        GROUP BY
+        t_recommend.id
+        ORDER BY
+        t_recommend.registrant_time DESC
+
+    </select>
+    <select id="identityEarningsCompany" resultMap="IdentityEarningsDTOMap">
+        SELECT
+        t_company.company_id as user_id,
+        t_company.company_name as name,
+        t_company.firm_size ,
+        t_company.company_type_id,
+        t_company.create_time,
+        SUM(source_of_returns.aggregate_amount) as aggregate_amount,
+        SUM(source_of_returns.earnings) as earnings,
+        t_company.avatar
+        FROM
+        source_of_returns
+        INNER JOIN
+        t_company
+        ON
+        source_of_returns.source_user = t_company.company_id
+        <where>
+            source_of_returns.identity = 0 AND
+            source_of_returns.type = 0 AND source_of_returns.earning_user =#{shareRevenueDetailsQuery.userId}
+            <if test="shareRevenueDetailsQuery.keyword !=null and shareRevenueDetailsQuery.keyword !='' ">
+                AND t_company.company_name LIKE concat('%',#{shareRevenueDetailsQuery.keyword},'%')
+            </if>
+            <if test="shareRevenueDetailsQuery.date !=null ">
+                AND
+                YEAR(t_company.create_time) =#{shareRevenueDetailsQuery.year}
+                AND MONTH(t_company.create_time)=#{shareRevenueDetailsQuery.month}
+            </if>
+        </where>
+
+        GROUP BY
+        t_company.company_id
+        ORDER BY
+        t_company.create_time DESC
+
+    </select>
+    <select id="identityShareEarnings" resultType="java.util.Map">
+        SELECT SUM(source_of_returns.earnings) AS earnings, source_of_returns.identity
+        FROM source_of_returns
+        <where>
+            source_of_returns.earning_user = #{userid} and source_of_returns.type = 0
+            <if test=" year !=null and  month !=null and year !='' and  month !='' ">
+                AND
+                YEAR(source_of_returns.create_time) =#{year}
+                AND MONTH(source_of_returns.create_time)=#{month}
+            </if>
+        </where>
+
+        GROUP BY source_of_returns.identity
+
+    </select>
+
+    <resultMap id="IdentityEarningsDTOMap" type="com.wcwy.company.dto.IdentityEarningsDTO">
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="birthday" column="birthday" jdbcType="DATE"/>
+        <result property="workTime" column="work_time" jdbcType="DATE"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="downloadTime" column="order_time" jdbcType="DATE"/>
+        <result property="aggregateAmount" column="aggregate_amount" jdbcType="DECIMAL"/>
+        <result property="earnings" column="earnings" jdbcType="DECIMAL"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="companyTypeId" column="company_type_id" jdbcType="VARCHAR"/>
+        <result property="firmSize" column="firm_size" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+    </resultMap>
+</mapper>

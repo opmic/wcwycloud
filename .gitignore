@@ -1,0 +1,6 @@
+/gateway/target/
+/oauth/target/
+/wcwy-company/wcwy-company-service/target/
+/wcwy-post/wcwy-post-service/target/
+/wcwy-websocket/target/
+/rocketmq_client_log_dir_IS_UNDEFINED/

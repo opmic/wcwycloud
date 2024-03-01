@@ -1,0 +1,11 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.wcwy.common.web.config.FeignConfig,\
+  com.wcwy.common.web.exception.GlobalExceptionHandler,\
+  com.wcwy.common.web.sentinel.DefaultBlockExceptionHandler,\
+  com.wcwy.common.web.log.HttpAspect,\
+  com.wcwy.common.web.sentinel.RequestOriginParserDefinition,\
+  com.wcwy.common.web.aspectj.RateLimiterAspect,\
+  com.wcwy.common.web.config.AsyncConfiguration,\
+  com.wcwy.common.web.config.WebConfiguration,\
+  com.wcwy.common.web.config.AutoIdempotentInterceptor,\
+  com.wcwy.common.web.config.CacheClient

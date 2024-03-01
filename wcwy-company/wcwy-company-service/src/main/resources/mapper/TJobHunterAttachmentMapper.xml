@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TJobHunterAttachmentMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TJobHunterAttachment">
+            <id property="attachmentId" column="attachment_id" jdbcType="VARCHAR"/>
+            <result property="tJobHunterId" column="t_job_hunter_id" jdbcType="VARCHAR"/>
+            <result property="path" column="path" jdbcType="VARCHAR"/>
+            <result property="createDate" column="create_date" jdbcType="DATE"/>
+            <result property="top" column="top" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        attachment_id,t_job_hunter_id,path,
+        create_date,top
+    </sql>
+    <select id="selectId" resultType="String">
+        SELECT
+            t_job_hunter_attachment.path
+        FROM
+            t_job_hunter_attachment
+        WHERE
+            t_job_hunter_attachment.t_job_hunter_id =#{user_id}
+    </select>
+    <select id="selectPath" resultType="java.util.List">
+        SELECT
+            t_job_hunter_attachment.path as resumePath
+        FROM
+            t_job_hunter_attachment
+        WHERE
+            t_job_hunter_attachment.top = 0 AND
+            t_job_hunter_attachment.t_job_hunter_id =#{t_job_hunter_id}
+    </select>
+</mapper>

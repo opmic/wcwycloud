@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.BankCardMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.BankCard">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="userTel" column="user_tel" jdbcType="VARCHAR"/>
+            <result property="bankSubName" column="bank_sub_name" jdbcType="VARCHAR"/>
+            <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
+            <result property="bankNum" column="bank_num" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+            <result property="card" column="card" jdbcType="VARCHAR"/>
+            <result property="cardFront" column="card_front" jdbcType="VARCHAR"/>
+            <result property="cardVerso" column="card_verso" jdbcType="VARCHAR"/>
+            <result property="audit" column="audit" jdbcType="INTEGER"/>
+            <result property="auditCause" column="audit_cause" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="auditTime" column="audit_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_name,user_tel,
+        bank_sub_name,bank_name,bank_num,
+        user_id,real_name,card,
+        card_front,card_verso,audit,
+        audit_cause,create_time,audit_time
+    </sql>
+</mapper>

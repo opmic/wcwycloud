@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.PromotionPostMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.PromotionPost">
+        <id property="promotionPostId" column="promotion_post_id" jdbcType="VARCHAR"/>
+        <result property="postId" column="post_id" jdbcType="VARCHAR"/>
+        <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+        <result property="promotionTime" column="promotion_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        promotion_post_id
+        ,post_id,promotion_time,recommend_id
+    </sql>
+</mapper>

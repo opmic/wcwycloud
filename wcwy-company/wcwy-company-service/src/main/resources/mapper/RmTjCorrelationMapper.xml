@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.RmTjCorrelationMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.RmTjCorrelation">
+            <id property="correlationId" column="correlation_id" jdbcType="VARCHAR"/>
+            <result property="correlationType" column="correlation_type" jdbcType="INTEGER"/>
+            <result property="jobHunterId" column="job_hunter_id" jdbcType="VARCHAR"/>
+            <result property="recommendId" column="recommend_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        correlation_id,correlation_type,job_hunter_id,
+        recommend_id,create_time,deleted
+    </sql>
+</mapper>

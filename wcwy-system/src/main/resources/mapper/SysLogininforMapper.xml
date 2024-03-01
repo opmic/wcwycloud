@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.system.mapper.SysLogininforMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.system.entity.SysLogininfor">
+            <id property="infoId" column="info_id" jdbcType="BIGINT"/>
+            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="ipaddr" column="ipaddr" jdbcType="VARCHAR"/>
+            <result property="loginLocation" column="login_location" jdbcType="VARCHAR"/>
+            <result property="browser" column="browser" jdbcType="VARCHAR"/>
+            <result property="os" column="os" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="CHAR"/>
+            <result property="msg" column="msg" jdbcType="VARCHAR"/>
+            <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        info_id,user_name,ipaddr,
+        login_location,browser,os,
+        status,msg,login_time
+    </sql>
+
+    <insert id="insertLogininfor" parameterType="com.wcwy.system.entity.SysLogininfor">
+        insert into sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time)
+        values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate())
+    </insert>
+    <delete id="deleteLogininforByIds" parameterType="java.lang.Long">
+        delete from sys_logininfor where info_id in
+        <foreach collection="array" item="infoId" open="(" separator="," close=")">
+            #{infoId}
+        </foreach>
+    </delete>
+
+    <select id="selectLogininforList" parameterType="com.wcwy.system.entity.SysLogininfor" resultMap="BaseResultMap">
+        select info_id, user_name, ipaddr, login_location, browser, os, status, msg, login_time from sys_logininfor
+        <where>
+            <if test="ipaddr != null and ipaddr != ''">
+                AND ipaddr like concat('%', #{ipaddr}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="userName != null and userName != ''">
+                AND user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND login_time &gt;= #{params.beginTime}
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND login_time &lt;= #{params.endTime}
+            </if>
+        </where>
+        order by info_id desc
+    </select>
+
+
+
+    <update id="cleanLogininfor">
+        truncate table sys_logininfor
+    </update>
+</mapper>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.TRecommendMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.TRecommend">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+        <result property="birth" column="birth" jdbcType="TIMESTAMP"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="realName" column="real_name" jdbcType="VARCHAR"/>
+        <result property="card" column="card" jdbcType="VARCHAR"/>
+        <result property="wechatId" column="wechat_id" jdbcType="VARCHAR"/>
+        <result property="cardFront" column="card_front" jdbcType="VARCHAR"/>
+        <result property="cardVerso" column="card_verso" jdbcType="VARCHAR"/>
+        <result property="currencyCount" column="currency_count" jdbcType="DECIMAL"/>
+        <result property="gold" column="gold" jdbcType="DECIMAL"/>
+        <result property="address" column="address" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="recommendedCity" column="recommended_city" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="manMessage" column="man_message" jdbcType="VARCHAR"/>
+        <result property="academy" column="academy" jdbcType="VARCHAR"/>
+        <result property="careerId" column="career_id" jdbcType="VARCHAR"/>
+        <result property="entranceTime" column="entrance_time" jdbcType="TIMESTAMP"/>
+        <result property="graduateTime" column="graduate_time" jdbcType="TIMESTAMP"/>
+        <result property="recruitment" column="recruitment" jdbcType="INTEGER"/>
+        <result property="identity" column="identity" jdbcType="INTEGER"/>
+        <result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
+        <result property="gradeId" column="grade_id" jdbcType="VARCHAR"/>
+        <result property="empiricalValue" column="empirical_value" jdbcType="BIGINT"/>
+        <result property="certificate" column="certificate" jdbcType="VARCHAR"/>
+        <result property="sharePerson" column="share_person" jdbcType="VARCHAR"/>
+        <result property="examineStatus" column="examine_status" jdbcType="INTEGER"/>
+        <result property="examineResult" column="examine_result" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="administrator" column="administrator" jdbcType="INTEGER"/>
+        <result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
+        <result property="subsidiary" column="subsidiary" jdbcType="VARCHAR"/>
+        <result property="registrantTime" column="registrant_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="updateId" column="update_id" jdbcType="VARCHAR"/>
+        <result property="logoutTime" column="logout_time" jdbcType="TIMESTAMP"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+        <result property="wxOpenid" column="wx_openid" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="origin" column="origin" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,username,login_name,
+        password,logo,age,real_name,
+        birth,head_path,education,
+        sex,phone,card,address,
+        wechat_id,card_front,card_verso,gold,
+        currency_count,man_message,academy,
+        career_id,entrance_time,graduate_time,
+        recruitment,identity,company_name,
+        position,grade_id,empirical_value,
+        certificate,share_person,examine_status,
+        examine_result,status,administrator,
+        parent_id,subsidiary,registrant_time,
+        update_time,update_id,logout_time,
+        login_time,wx_openid,deleted,origin
+    </sql>
+
+    <select id="rolePermission" resultType="com.wcwy.company.entity.TPermission">
+        SELECT *
+        FROM t_permission
+        WHERE id IN (select permission_id
+                     from t_role_permission
+                     where role_id in (SELECT role_id FROM t_recommend_role WHERE recommend_id = #{recommendId}))
+
+    </select>
+    <select id="pageList" resultMap="TRecommendPOMap">
+        SELECT
+        t_recommend.id,
+        t_recommend.username,
+        t_recommend.logo,
+        t_recommend.birth,
+        t_recommend.head_path,
+        t_recommend.education,
+        t_recommend.sex,
+        t_recommend.phone,
+        t_recommend.wechat_id,
+        t_recommend.card,
+        t_recommend.card_front,
+        t_recommend.currency_count,
+        t_recommend.man_message,
+        t_recommend.card_verso,
+        t_recommend.academy,
+        t_recommend.career_id,
+        t_recommend.entrance_time,
+        t_recommend.graduate_time,
+        t_recommend.recruitment,
+        t_recommend.identity,
+        t_recommend.grade_id,
+        t_recommend.company_id,
+        t_recommend.empirical_value,
+        t_recommend.share_person,
+        t_recommend.certificate,
+        t_recommend.examine_status,
+        t_recommend.examine_result,
+        t_recommend.logout_time,
+        t_recommend.login_time
+        FROM
+        t_recommend
+        <where>
+            <if test="tRecommendQuery.id !=null and tRecommendQuery.id !=''">
+                t_recommend.id =#{tRecommendQuery.id }
+            </if>
+            <if test="tRecommendQuery.username !=null and tRecommendQuery.username !=''">
+                AND t_recommend.username LIKE concat('%',#{tRecommendQuery.username},'%')
+            </if>
+            <if test="tRecommendQuery.phone !=null and tRecommendQuery.phone !=''">
+                AND t_recommend.phone LIKE concat('%',#{tRecommendQuery.phone},'%')
+            </if>
+            <if test="tRecommendQuery.card !=null and tRecommendQuery.card !=''">
+                AND t_recommend.card =#{card}
+            </if>
+            <if test="tRecommendQuery.sharePerson !=null and tRecommendQuery.sharePerson !=''">
+                AND t_recommend.share_person =#{sharePerson}
+            </if>
+            AND t_recommend.`status` =0
+        </where>
+    </select>
+
+    <resultMap id="TRecommendPOMap" type="com.wcwy.company.po.TRecommendPO">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="logo" column="logo" jdbcType="VARCHAR"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+        <result property="birth" column="birth" jdbcType="TIMESTAMP"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="card" column="card" jdbcType="VARCHAR"/>
+        <result property="wechatId" column="wechat_id" jdbcType="VARCHAR"/>
+        <result property="cardFront" column="card_front" jdbcType="VARCHAR"/>
+        <result property="cardVerso" column="card_verso" jdbcType="VARCHAR"/>
+        <result property="manMessage" column="man_message" jdbcType="VARCHAR"/>
+        <result property="academy" column="academy" jdbcType="VARCHAR"/>
+        <result property="careerId" column="career_id" jdbcType="VARCHAR"/>
+        <result property="entranceTime" column="entrance_time" jdbcType="TIMESTAMP"/>
+        <result property="graduateTime" column="graduate_time" jdbcType="TIMESTAMP"/>
+        <result property="recruitment" column="recruitment" jdbcType="BIGINT"/>
+        <result property="identity" column="identity" jdbcType="INTEGER"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="gradeId" column="grade_id" jdbcType="VARCHAR"/>
+        <result property="empiricalValue" column="empirical_value" jdbcType="BIGINT"/>
+        <result property="certificate" column="certificate" jdbcType="VARCHAR"/>
+        <result property="sharePerson" column="share_person" jdbcType="VARCHAR"/>
+        <result property="examineStatus" column="examine_status" jdbcType="INTEGER"/>
+        <result property="examineResult" column="examine_result" jdbcType="VARCHAR"/>
+        <result property="logoutTime" column="logout_time" jdbcType="TIMESTAMP"/>
+        <result property="loginTime" column="login_time" jdbcType="TIMESTAMP"/>
+
+    </resultMap>
+
+    <select id="shareRecommend" resultMap="TRecommendShareMap">
+        SELECT
+        t_recommend.registrant_time,
+        t_recommend.id,
+        t_recommend.origin,
+        SUM(source_of_returns.aggregate_amount) as costs,
+        SUM(source_of_returns.earnings) as earnings,
+        t_recommend.username,
+        t_recommend.industry,
+        t_recommend.sex,
+        t_recommend.head_path
+        FROM
+        t_recommend
+        LEFT JOIN
+        source_of_returns
+        ON
+        t_recommend.id = source_of_returns.source_user
+        <where>
+            t_recommend.share_person =#{userid}
+            <if test="shareQuery.origin !=null">
+                and t_recommend.origin=#{shareQuery.origin}
+            </if>
+            <if test="shareQuery.endDate !=null  and shareQuery.startDate !=null ">
+                and t_recommend.registrant_time BETWEEN #{shareQuery.startDate} AND #{shareQuery.endDate}
+            </if>
+            <if test=" shareQuery.endDate !=null  and shareQuery.startDate ==null ">
+                and t_recommend.registrant_time &lt;= #{shareQuery.endDate}
+            </if>
+            <if test="shareQuery.endDate ==null and shareQuery.startDate !=null ">
+                and t_recommend.registrant_time >= #{shareQuery.startDate}
+            </if>
+            <if test="shareQuery.keyword !='' and shareQuery.keyword !=null">
+                and t_recommend.username LIKE CONCAT('%',#{shareQuery.keyword},'%')
+            </if>
+        </where>
+        GROUP BY
+        t_recommend.id
+        ORDER BY
+        t_recommend.registrant_time DESC
+    </select>
+
+    <resultMap id="TRecommendShareMap" type="com.wcwy.company.po.TRecommendShare">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="headPath" column="head_path" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="industry" column="industry" jdbcType="VARCHAR"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result property="registrantTime" column="registrant_time" jdbcType="TIMESTAMP"/>
+        <result property="costs" column="costs" jdbcType="DECIMAL"/>
+        <result property="earnings" column="earnings" jdbcType="DECIMAL"/>
+    </resultMap>
+
+    <select id="graph" resultType="java.util.Map">
+        SELECT date_format(registrant_time, '%Y-%m') AS `month`,
+               COUNT(*)                              as amount
+        FROM t_recommend
+        WHERE DATE_FORMAT(registrant_time, '%Y') = DATE_FORMAT(#{year}, '%Y')
+          AND t_recommend.share_person = #{userid}
+        GROUP BY date_format(registrant_time, '%Y-%m')
+        ORDER BY date_format(registrant_time, '%Y-%m') ASC
+
+    </select>
+    <select id="getRecommendDataDTO" resultType="com.wcwy.company.dto.RecommendDataDTO">
+        SELECT revenue_sharing.total_revenue,
+               revenue_sharing.withdraw_deposit,
+               t_recommend.gold,
+               t_recommend.currency_count,
+               (SELECT COUNT(referrer_record.referrer_record_id)
+                FROM referrer_record
+                         INNER JOIN
+                     t_jobhunter
+                     ON
+                         referrer_record.t_job_hunter_id = t_jobhunter.user_id
+                WHERE referrer_record.recommend_id = #{userid}
+                  and t_jobhunter.perfect = 1) AS talents
+        FROM t_recommend
+                 LEFT JOIN
+             revenue_sharing
+             ON
+                 t_recommend.id = revenue_sharing.user_id
+        WHERE t_recommend.id = #{userid}
+
+
+    </select>
+    <select id="selectBasic" resultType="com.wcwy.company.entity.TRecommend">
+        SELECT t_recommend.id,
+               t_recommend.username,
+               t_recommend.birth,
+               t_recommend.head_path,
+               t_recommend.sex,
+               t_recommend.login_time
+        FROM t_recommend
+        where t_recommend.id = #{id}
+    </select>
+    <select id="enterpriseInviter" resultType="com.wcwy.company.entity.TRecommend"
+            parameterType="java.lang.String">
+        SELECT t_recommend.username,
+               t_recommend.sex,
+               t_recommend.phone,
+               t_recommend.head_path
+        FROM t_company
+                 INNER JOIN
+             t_recommend
+             ON
+                 t_company.share_person = t_recommend.id
+        WHERE t_company.company_id = #{companyId}
+
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        t_recommend
+        <where>
+            t_recommend.share_person =#{id} AND
+            t_recommend.registrant_time BETWEEN #{currentStartDate} AND #{currentEndTime} AND
+            t_recommend.identity =#{identity}
+            <if test=" city !=null and city !=''">
+                AND t_recommend.address ->'$.city'=#{city}
+            </if>
+        </where>
+
+
+    </select>
+    <select id="mapList" resultType="java.util.Map">
+        SELECT
+        COUNT(*) as counts,
+        DATE_FORMAT(FLOOR(t_recommend.registrant_time),'%Y-%m-%d') AS time
+        FROM
+        t_recommend
+        <where>
+            t_recommend.share_person =#{id} AND
+            t_recommend.registrant_time BETWEEN #{currentStartDate} AND #{currentEndTime} AND
+            t_recommend.identity =#{identity}
+            <if test=" city !=null and city !=''">
+                AND t_recommend.address ->'$.city'=#{city}
+            </if>
+        </where>
+        GROUP BY
+        time
+        ORDER BY
+        time DESC
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.websocket.mapper.ImFriendMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.websocket.entity.ImFriend">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="friendId" column="friend_id" jdbcType="BIGINT"/>
+            <result property="state" column="state" jdbcType="CHAR"/>
+            <result property="message" column="message" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="createBy" column="create_by" jdbcType="BIGINT"/>
+            <result property="updateBy" column="update_by" jdbcType="BIGINT"/>
+            <result property="delFlag" column="del_flag" jdbcType="CHAR"/>
+            <result property="remarks" column="remarks" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,friend_id,
+        state,message,create_time,
+        update_time,create_by,update_by,
+        del_flag,remarks
+    </sql>
+    <select id="getUserFriends" resultType="com.wcwy.websocket.entity.ChatId">
+        SELECT
+            u.	user_id,
+               u.id
+        FROM
+            (
+                SELECT
+                    friend_id AS user_id
+                FROM
+                    im_friend
+                WHERE
+                    user_id = #{userId}
+                  AND state =#{state}
+                  AND del_flag='0'
+                UNION ALL
+                SELECT
+                    user_id AS user_id
+                FROM
+                    im_friend
+                WHERE
+                    friend_id = #{userId}
+                  AND state =#{state}
+                  AND del_flag='0'
+            ) ug JOIN chat_id u  ON u.id = ug.user_id
+    </select>
+</mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wcwy.company.mapper.CompanyUserRoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.wcwy.company.entity.CompanyUserRole">
+        <id property="companyUserRoleId" column="company_user_role_id" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="companyId" column="company_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="putInResumeId" column="put_in_resume_id" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="source" column="source" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        company_user_role_id
+        ,user_id,company_id,source,
+        create_time,put_in_resume_id,deleted
+    </sql>
+    <select id="select" resultType="com.wcwy.company.dto.CompanyUserRoleDTO">
+        SELECT
+        company_user_role.user_id,
+        t_jobhunter.user_name,
+        t_jobhunter.birthday,
+        t_jobhunter.work_time,
+        t_jobhunter.phone,
+        t_jobhunter.sex,
+        t_jobhunter.avatar,
+        t_jobhunter.phone_number,
+        company_user_role.create_time,
+        IF(collect_job_hunter.collect_id !='Null',0,1) AS collect,
+        t_jobhunter_resume.resume_id
+        FROM
+        company_user_role
+        INNER JOIN
+        t_jobhunter
+        ON
+        company_user_role.user_id = t_jobhunter.user_id
+        INNER JOIN
+        t_jobhunter_resume
+        ON
+        t_jobhunter.user_id = t_jobhunter_resume.t_jobhunter_id
+        LEFT JOIN
+        collect_job_hunter
+        ON
+        t_jobhunter.user_id = collect_job_hunter.t_job_hunter_id AND
+        collect_job_hunter.t_company_id = company_user_role.company_id
+        LEFT JOIN
+        put_in_resume
+        ON
+        company_user_role.put_in_resume_id = put_in_resume.put_in_resume_id
+        <where>
+            company_user_role.company_id =#{userId}
+
+            <if test="companyUserRoleQuery.education !=null and companyUserRoleQuery.education.size()>0 ">
+                and t_jobhunter.education IN
+                <foreach collection="companyUserRoleQuery.education" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="companyUserRoleQuery.keyword !=null and companyUserRoleQuery.keyword !='' ">
+                AND t_jobhunter.user_name LIKE CONCAT('%',#{companyUserRoleQuery.keyword}, '%')
+            </if>
+
+            <if test="companyUserRoleQuery.birthday !=null  and companyUserRoleQuery.birthday !=''  and companyUserRoleQuery.birthday != 6">
+                and t_jobhunter.birthday BETWEEN #{companyUserRoleQuery.endTime } AND
+                #{companyUserRoleQuery.startTime }
+            </if>
+            <if test="companyUserRoleQuery.birthday !=null  and companyUserRoleQuery.birthday !='' and  companyUserRoleQuery.birthday == 6">
+                and t_jobhunter.birthday &lt;= #{companyUserRoleQuery.endTime}
+            </if>
+            <if test="companyUserRoleQuery.source !=null  ">
+                and put_in_resume.easco = #{companyUserRoleQuery.source}
+            </if>
+        </where>
+    </select>
+    <select id="selectWorkEducation" resultType="com.wcwy.company.dto.CompanyUserRoleDTO">
+        SELECT
+        a.education,
+        a.resume_id,
+        a.shcool_name,
+        b.company_name,
+        b.position_name
+        FROM
+        t_jobhunter_resume
+        LEFT JOIN
+        (SELECT
+        t_jobhunter_education_record.education,
+        t_jobhunter_education_record.shcool_name,
+        t_jobhunter_education_record.resume_id
+
+        FROM
+        t_jobhunter_education_record
+        WHERE
+        t_jobhunter_education_record.resume_id
+            IN
+        <foreach collection="collect" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+            	AND
+        (SELECT count(1) FROM t_jobhunter_education_record t2 WHERE
+        t_jobhunter_education_record.resume_id=t2.resume_id AND t2.end_time>=t_jobhunter_education_record.end_time
+        ) &lt;=1
+
+        ORDER BY t_jobhunter_education_record.edu_id DESC
+        ) AS a
+        ON 	t_jobhunter_resume.resume_id=a.resume_id
+
+        LEFT JOIN
+        ( SELECT
+        t_jobhunter_work_record.company_name,
+        t_jobhunter_work_record.position_name,
+        t_jobhunter_work_record.resume_id
+        FROM
+        t_jobhunter_work_record
+
+        WHERE
+        t_jobhunter_work_record.resume_id  IN
+        <foreach collection="collect" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND
+        (SELECT count(1) FROM t_jobhunter_work_record t2 WHERE
+        t_jobhunter_work_record.resume_id=t2.resume_id AND t2.end_time>=t_jobhunter_work_record.end_time) &lt;=1) as b
+
+        ON 	t_jobhunter_resume.resume_id=b.resume_id
+        WHERE
+        t_jobhunter_resume.resume_id IN    <foreach collection="collect" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+
+
+
+    </select>
+</mapper>
